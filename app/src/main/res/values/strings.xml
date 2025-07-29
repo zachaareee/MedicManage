@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">MedManage</string>
+
+
+    <!-- Strings for activity_main.xml -->
+    <string name="image_description">MedManage app logo</string>
+    <string name="welcome_text">Welcome to MedManage</string>
+    <string name="login_button_text">LOGIN</string>
+    <string name="new_user_prompt">New user? Sign up below</string>
+    <string name="signup_button_text">SIGN UP</string>
+</resources>
