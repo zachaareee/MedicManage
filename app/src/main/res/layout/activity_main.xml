@@ -26,6 +26,7 @@
         android:text="@string/welcome_text"
         android:textColor="@color/yellow"
         android:textSize="13pt"
+        app:layout_constraintBottom_toTopOf="@+id/imageView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -56,8 +57,10 @@
         android:id="@+id/button5"
         android:layout_width="197dp"
         android:layout_height="54dp"
+        android:layout_marginBottom="192dp"
         android:backgroundTint="@color/material_on_background_disabled"
         android:text="@string/signup_button_text"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
