@@ -10,19 +10,22 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="309dp"
-        android:layout_height="357dp"
+        android:layout_width="298dp"
+        android:layout_height="289dp"
         android:contentDescription="@string/image_description"
+        android:src="@drawable/logo"
         app:layout_constraintBottom_toTopOf="@+id/button2"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-         />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="75dp"
+        android:layout_marginBottom="30dp"
         android:text="@string/welcome_text"
         android:textColor="@color/yellow"
         android:textSize="13pt"
@@ -35,10 +38,14 @@
         android:id="@+id/button2"
         android:layout_width="242dp"
         android:layout_height="65dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="10dp"
         android:backgroundTint="@color/yellow"
         android:text="@string/login_button_text"
         android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
@@ -46,9 +53,11 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
         android:text="@string/new_user_prompt"
         android:textColor="@color/yellow"
         android:textSize="7pt"
+        app:layout_constraintBottom_toTopOf="@+id/button5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button2" />
@@ -57,14 +66,15 @@
         android:id="@+id/button5"
         android:layout_width="197dp"
         android:layout_height="54dp"
-        android:layout_marginBottom="192dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="50dp"
         android:backgroundTint="@color/material_on_background_disabled"
         android:text="@string/signup_button_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
