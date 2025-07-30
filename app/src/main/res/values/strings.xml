@@ -20,7 +20,7 @@
     <string name ="foodReq">Food Requirements</string>
 
 
-    <string name = "appname">Medic_Manage</string>
+    <string name = "appname">MedicManage</string>
     <string name = "hello_administrator">"Hello Administrator👋"</string>
     <string name = "medication">Medications</string>
     <string name = "add">Add</string>
