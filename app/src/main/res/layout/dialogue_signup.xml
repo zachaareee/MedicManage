@@ -9,48 +9,48 @@
         android:id="@+id/etUserType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="User Type (student/nurse)"
+        android:hint="@string/user_type"
         android:inputType="textCapWords"/>
 
     <EditText
         android:id="@+id/etId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="ID Number"
+        android:hint="@string/id_num"
         android:inputType="number"/>
 
     <EditText
         android:id="@+id/etFirstName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="First Name"
+        android:hint="@string/first_name"
         android:inputType="textCapWords"/>
 
     <EditText
         android:id="@+id/etSurname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Surname"
+        android:hint="@string/last_name"
         android:inputType="textCapWords"/>
 
     <EditText
         android:id="@+id/etUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Username"
+        android:hint="@string/username"
         android:inputType="text"/>
 
     <EditText
         android:id="@+id/etMedReq"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Medical Requirements (for students)"
+        android:hint="@string/medicalReq"
         android:inputType="text"/>
 
     <EditText
         android:id="@+id/etFoodReq"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Food Requirements (for students)"
+        android:hint="@string/foodReq"
         android:inputType="text"/>
 </LinearLayout>

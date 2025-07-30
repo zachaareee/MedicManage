@@ -8,4 +8,18 @@
     <string name="login_button_text">LOGIN</string>
     <string name="new_user_prompt">New user? Sign up below</string>
     <string name="signup_button_text">SIGN UP</string>
+
+
+    <!-- Strings for dialogue_signup.xml -->
+    <string name ="user_type">User Type (Student/Nurse)</string>
+    <string name ="id_num">ID Number</string>
+    <string name ="first_name">First Name</string>
+    <string name ="last_name">Surname</string>
+    <string name ="username">Username</string>
+    <string name ="medicalReq">Medical Requirements</string>
+    <string name ="foodReq">Food Requirements</string>
+
+
+
+
 </resources>
