@@ -3,13 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android
     android:padding="16dp">
+
 
     <EditText
         android:id="@+id/etUserType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/user_type"
+        android:textColorHighlight="@color/yellow"
         android:inputType="textCapWords"/>
 
     <EditText
@@ -17,6 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/id_num"
+        android:textColorHighlight="@color/yellow"
         android:inputType="number"/>
 
     <EditText
@@ -24,6 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/first_name"
+        android:textColorHighlight="@color/yellow"
         android:inputType="textCapWords"/>
 
     <EditText
@@ -31,6 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/last_name"
+        android:textColorHighlight="@color/yellow"
         android:inputType="textCapWords"/>
 
     <EditText
@@ -38,6 +44,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/username"
+        android:textColorHighlight="@color/yellow"
         android:inputType="text"/>
 
     <EditText
@@ -45,6 +52,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/medicalReq"
+        android:textColorHighlight="@color/yellow"
         android:inputType="text"/>
 
     <EditText
@@ -52,5 +60,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/foodReq"
+        android:textColorHighlight="@color/yellow"
         android:inputType="text"/>
 </LinearLayout>
