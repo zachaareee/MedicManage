@@ -1,0 +1,139 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "78192b553110368825041bb1fb0132f3",
+    "entities": [
+      {
+        "tableName": "Student",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`stuNum` INTEGER NOT NULL, `stuName` TEXT, `stuSurname` TEXT, `medReq` TEXT, `foodReq` TEXT, `userName` TEXT, `password` TEXT, PRIMARY KEY(`stuNum`))",
+        "fields": [
+          {
+            "fieldPath": "stuNum",
+            "columnName": "stuNum",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "stuName",
+            "columnName": "stuName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "stuSurname",
+            "columnName": "stuSurname",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "medRequirement",
+            "columnName": "medReq",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "foodReq",
+            "columnName": "foodReq",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "userName",
+            "columnName": "userName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "password",
+            "columnName": "password",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "stuNum"
+          ]
+        }
+      },
+      {
+        "tableName": "Nurse",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`empNum` INTEGER NOT NULL, `empName` TEXT, `empSurname` TEXT, `empUsername` TEXT, `password` TEXT, PRIMARY KEY(`empNum`))",
+        "fields": [
+          {
+            "fieldPath": "empNum",
+            "columnName": "empNum",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "empName",
+            "columnName": "empName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "empSurname",
+            "columnName": "empSurname",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "empUserName",
+            "columnName": "empUsername",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "password",
+            "columnName": "password",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "empNum"
+          ]
+        }
+      },
+      {
+        "tableName": "medication",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`medID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `description` TEXT, `quantity` INTEGER NOT NULL, `stock_available` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "medID",
+            "columnName": "medID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "quantity",
+            "columnName": "quantity",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "stock_available",
+            "columnName": "stock_available",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "medID"
+          ]
+        }
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '78192b553110368825041bb1fb0132f3')"
+    ]
+  }
+}
