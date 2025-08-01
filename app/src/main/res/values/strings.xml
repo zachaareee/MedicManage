@@ -7,7 +7,7 @@
     <string name="welcome_text">Welcome to MedicManage</string>
     <string name="login_button_text">LOGIN</string>
     <string name="new_user_prompt">New user? Sign up below</string>
-    <string name="signup_button_text">SIGN UP</string>
+    <string name="signup_button_text">Sign Up</string>
 
 
     <!-- Strings for dialogue_signup.xml -->
@@ -32,6 +32,8 @@
 
     <string name = "cancel">Cancel</string>
     <string name = "yes">Yes</string>
+    <string name = "profiledetails">Profile Details</string>
+
 
 
 

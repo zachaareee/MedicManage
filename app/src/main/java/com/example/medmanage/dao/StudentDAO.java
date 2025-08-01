@@ -1,4 +1,4 @@
-package com.example.medmanage;
+package com.example.medmanage.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -7,9 +7,11 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.example.medmanage.model.Student;
+
 import java.util.List;
 @Dao
-interface StudentDAO {
+public interface StudentDAO {
         @Insert
         void addStudent(Student student);
         @Update
@@ -19,6 +21,6 @@ interface StudentDAO {
         @Query("select * from student")
         LiveData<List<Student>> getAllStudents();
 
-        @Query("select * from student where stuNum==:stuNum")
-        Student getStudent(int stuNum);
+        @Query("select * from student where userName =:empUsername AND password =:password LIMIT  1")
+        Student getNStudentByUsernameAndPassword(String empUsername, String password);
 }

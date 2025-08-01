@@ -1,4 +1,4 @@
-package com.example.medmanage;
+package com.example.medmanage.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -25,14 +25,17 @@ public class Student {
 
     @ColumnInfo(name = "userName")
     String userName;
+    @ColumnInfo(name = "password")
+    String password;
 
-    public Student(int stuNum, String stuName, String stuSurname, String userName, String foodReq, String medRequirement){
+    public Student(int stuNum, String stuName, String stuSurname, String userName, String foodReq, String medRequirement,String password){
         this.stuNum = stuNum;
         this.stuName = stuName;
         this.stuSurname = stuSurname;
         this.userName= userName;
         this.foodReq = foodReq;
         this.medRequirement = medRequirement;
+        this.password = password;
 
     }
 
@@ -65,6 +68,8 @@ public class Student {
         return foodReq;
     }
 
+    public String getPassword(){return password;}
+
     public void setFoodReq(String foodReq) {
         this.foodReq = foodReq;
     }
@@ -88,6 +93,8 @@ public class Student {
     public void setUserName(String userName) {
         this.userName = userName;
     }
+
+    public void getPassword(String password){this.password =password;}
 
 
 }

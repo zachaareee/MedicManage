@@ -1,9 +1,11 @@
-package com.example.medmanage;
+package com.example.medmanage.dao;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+
+import com.example.medmanage.model.Appointment;
 
 import java.util.List;
 
