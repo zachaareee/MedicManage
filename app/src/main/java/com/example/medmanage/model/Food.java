@@ -1,4 +1,4 @@
-package com.example.medmanage;
+package com.example.medmanage.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

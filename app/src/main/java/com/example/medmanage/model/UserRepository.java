@@ -1,8 +1,13 @@
-package com.example.medmanage;
+package com.example.medmanage.model;
 
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
+
+import com.example.medmanage.dao.MedicationDAO;
+import com.example.medmanage.dao.NurseDAO;
+import com.example.medmanage.dao.StudentDAO;
+import com.example.medmanage.database.databaseMedicManage;
 
 import java.util.List;
 
