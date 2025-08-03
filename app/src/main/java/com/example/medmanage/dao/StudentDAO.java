@@ -21,6 +21,6 @@ public interface StudentDAO {
         @Query("select * from student")
         LiveData<List<Student>> getAllStudents();
 
-        @Query("select * from student where userName =:empUsername AND password =:password LIMIT  1")
-        Student getNStudentByUsernameAndPassword(String empUsername, String password);
+        @Query("select * from student where userName =:userName AND password =:password LIMIT  1")
+        Student getNStudentByUsernameAndPassword(String userName, String password);
 }

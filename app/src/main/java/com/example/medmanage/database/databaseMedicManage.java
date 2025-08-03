@@ -31,11 +31,15 @@ public abstract class databaseMedicManage extends RoomDatabase {
     private static final int NUMBER_OF_THREADS = 4;
     public static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
+    // Corrected getDatabase() method in databaseMedicManage.java
     public static databaseMedicManage getDatabase(final Context context) {
         if (INSTANCE == null) {
             synchronized (databaseMedicManage.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), databaseMedicManage.class, "medicmanage_db").build();
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
+                                    databaseMedicManage.class, "medicmanage_db")
+                            .addCallback(sRoomDatabaseCallback) // Corrected line
+                            .build();
                 }
             }
         }
