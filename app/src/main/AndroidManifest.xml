@@ -12,9 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MedManage">
 
-        <!-- Only MainActivity declared as launcher -->
+
         <activity
-            android:name=".activities.LoginActivity"
+            android:name=".activities.FoodViewActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,6 +25,12 @@
             android:name=".activities.DashboardActivity"
             android:exported="false">
         </activity>
+        <activity android:name=".activities.EditFoodActivity"
+            android:exported="false">
+
+        </activity>
+
+
 
     </application>
 

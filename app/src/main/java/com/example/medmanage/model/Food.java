@@ -1,12 +1,15 @@
 package com.example.medmanage.model;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity(tableName = "Food")
-public class Food {
+public class Food  implements Serializable {
     @ColumnInfo(name = "foodID")
     @PrimaryKey(autoGenerate = true)
     int foodID;
@@ -60,8 +63,9 @@ public class Food {
         this.quantity =quantity;
     }
 
-
-
-
-
+    @NonNull
+    @Override
+    public String toString() {
+        return "Name:  " + foodName + " ," + "Quantity:"+ " " + quantity;
+     }
 }
