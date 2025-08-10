@@ -16,8 +16,16 @@
     <string name ="first_name">First Name</string>
     <string name ="last_name">Surname</string>
     <string name ="username">Username</string>
+    <string name="Password">Password</string>
     <string name ="medicalReq">Medical Requirements</string>
     <string name ="foodReq">Food Requirements</string>
+
+    <string name="logo">logo</string>
+    <string name="student">Student</string>
+    <string name="nurse">Nurse</string>
+    <string name="remember_me">Remember me </string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="new_to_medicmanage">New to Medic Manage?</string>
 
 
     <string name = "appname">MedicManage</string>
