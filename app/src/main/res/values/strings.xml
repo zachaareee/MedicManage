@@ -22,6 +22,7 @@
     <string name ="medicationReq">Medication Requirement</string>
     <string name ="foodReq">Food Requirement</string>
     <string name ="studentno">Student No</string>
+    <string name="staff_no">staff_no</string>
 
     <string name="logo">logo</string>
     <string name="student">Student</string>
@@ -66,6 +67,11 @@
     <string name="increment">+</string>
     <string name="view_foodlist">View Food List\n</string>
     <string name="log_out">Log Out\n</string>
+    <string name="koo">Koo</string>
+    <string name="beans">Beans\n</string>
+    <string name="update_profile">Update Profile Details\n</string>
+    <string name="surname">Surname\n</string>
+    <string name="employee_no">Employee No.</string>
 
 
 </resources>

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/blue"
     android:fillViewport="true"
-    tools:context=".activities.SignupActivity">
+    tools:context=".activities.UpdateProfileActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -26,97 +26,88 @@
             app:srcCompat="@drawable/logo" />
 
         <TextView
-            android:id="@+id/textView_signupTitle"
+            android:id="@+id/textView_updateTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/signup"
+            android:text="@string/update_profile"
             android:textColor="@color/yellow"
             android:textSize="25sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView_logo" />
 
-        <!-- User Type Selection -->
-        <RadioGroup
-            android:id="@+id/radioGroup_userType"
-            android:layout_width="0dp"
+        <!-- Form Fields -->
+        <TextView
+            android:id="@+id/label_firstName"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="24dp"
+            android:text="@string/name"
+            android:textColor="@color/yellow"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textView_signupTitle">
+            app:layout_constraintTop_toBottomOf="@id/textView_updateTitle" />
 
-            <RadioButton
-                android:id="@+id/radioButton_student"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/radio_button_selector"
-                android:button="@android:color/transparent"
-                android:checked="true"
-                android:gravity="center"
-                android:padding="12dp"
-                android:text="@string/student"
-                android:textColor="@drawable/radio_text_color"
-                android:textSize="18sp" />
-
-            <RadioButton
-                android:id="@+id/radioButton_nurse"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/radio_button_selector"
-                android:button="@android:color/transparent"
-                android:gravity="center"
-                android:padding="12dp"
-                android:text="@string/nurse"
-                android:textColor="@drawable/radio_text_color"
-                android:textSize="18sp" />
-        </RadioGroup>
-
-        <!-- Common Fields -->
         <EditText
             android:id="@+id/editText_firstName"
             android:layout_width="0dp"
             android:layout_height="48dp"
-            android:layout_marginTop="16dp"
             android:background="@drawable/rounded_edittext_background"
-            android:hint="@string/first_name"
-            android:inputType="textPersonName"
-            android:padding="8dp"
+            android:inputType="@string/text_name"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/radioGroup_userType" />
+            app:layout_constraintTop_toBottomOf="@id/label_firstName" />
+
+        <TextView
+            android:id="@+id/label_lastName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/surname"
+            android:textColor="@color/yellow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editText_firstName" />
 
         <EditText
             android:id="@+id/editText_lastName"
             android:layout_width="0dp"
             android:layout_height="48dp"
-            android:layout_marginTop="16dp"
             android:background="@drawable/rounded_edittext_background"
-            android:hint="@string/last_name"
             android:inputType="textPersonName"
-            android:padding="8dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/editText_firstName" />
+            app:layout_constraintTop_toBottomOf="@id/label_lastName" />
 
         <!-- Nurse Specific Field -->
+        <TextView
+            android:id="@+id/label_staffNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/employee_no"
+            android:textColor="@color/yellow"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editText_lastName"
+            tools:visibility="visible"/>
+
         <EditText
             android:id="@+id/editText_staffNo"
             android:layout_width="0dp"
             android:layout_height="48dp"
-            android:layout_marginTop="16dp"
             android:background="@drawable/rounded_edittext_background"
-            android:hint="@string/staff_no"
             android:inputType="number"
-            android:padding="8dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/editText_lastName" />
+            app:layout_constraintTop_toBottomOf="@id/label_staffNo"
+            tools:visibility="visible" />
 
         <!-- Student Specific Fields -->
         <LinearLayout
@@ -130,46 +121,52 @@
             app:layout_constraintTop_toBottomOf="@id/editText_staffNo"
             tools:visibility="visible">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/studentno"
+                android:textColor="@color/yellow"/>
             <EditText
                 android:id="@+id/editText_studentNo"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@drawable/rounded_edittext_background"
-                android:hint="@string/studentno"
                 android:inputType="number"
-                android:padding="8dp" />
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/medicationReq"
+                android:textColor="@color/yellow"/>
             <EditText
                 android:id="@+id/editText_medicationReq"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_marginTop="16dp"
                 android:background="@drawable/rounded_edittext_background"
-                android:hint="@string/medicationReq"
                 android:inputType="text"
-                android:padding="8dp" />
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/foodReq"
-                android:textColor="@color/yellow"
-                android:textSize="18sp" />
-
+                android:textColor="@color/yellow" />
             <RadioGroup
                 android:id="@+id/radioGroup_foodReq"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-
                 <RadioButton
                     android:id="@+id/radioButton_foodYes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/yes"
                     android:textColor="@color/white" />
-
                 <RadioButton
                     android:id="@+id/radioButton_foodNo"
                     android:layout_width="wrap_content"
@@ -180,31 +177,49 @@
         </LinearLayout>
 
         <!-- Common Fields Continued -->
+        <TextView
+            android:id="@+id/label_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/username"
+            android:textColor="@color/yellow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_studentFields" />
+
         <EditText
             android:id="@+id/editText_username"
             android:layout_width="0dp"
             android:layout_height="48dp"
-            android:layout_marginTop="16dp"
             android:background="@drawable/rounded_edittext_background"
-            android:hint="@string/username"
             android:inputType="textPersonName"
-            android:padding="8dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_studentFields" />
+            app:layout_constraintTop_toBottomOf="@id/label_username" />
+
+        <TextView
+            android:id="@+id/label_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Password"
+            android:textColor="@color/yellow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editText_username" />
 
         <EditText
             android:id="@+id/editText_password"
             android:layout_width="0dp"
             android:layout_height="48dp"
-            android:layout_marginTop="16dp"
             android:background="@drawable/rounded_edittext_background"
-            android:hint="@string/Password"
             android:inputType="textPassword"
-            android:padding="8dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/editText_username" />
+            app:layout_constraintTop_toBottomOf="@id/label_password" />
 
         <!-- Buttons -->
         <Button

@@ -85,6 +85,7 @@ public class Student {
     public void setStuNum(int stuNum) {
         this.stuNum = stuNum;
     }
+    public void setPassword(String password){ this.password=password;}
 
     public void setStuSurname(String stuSurname) {
         this.stuSurname = stuSurname;
@@ -95,6 +96,8 @@ public class Student {
     }
 
     public void getPassword(String password){this.password =password;}
+
+
 
 
 }
