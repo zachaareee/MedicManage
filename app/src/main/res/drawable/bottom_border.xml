@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <!-- This is the main background color of the view, transparent in this case -->
+            <solid android:color="@android:color/transparent" />
+        </shape>
+    </item>
+
+    <item android:top="-2dp" android:right="-2dp" android:left="-2dp">
+        <shape>
+            <!-- This creates the border line -->
+            <solid android:color="@android:color/transparent" />
+            <stroke
+                android:width="1dp"
+                android:color="#DDDDDD" /> <!-- A light grey color for the line -->
+        </shape>
+    </item>
+</layer-list>

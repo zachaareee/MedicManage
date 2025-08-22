@@ -11,7 +11,7 @@ import com.example.medmanage.model.Food;
 import java.util.List;
 
 @Dao
- interface FoodDAO {
+public interface FoodDAO {
 
         @Insert
         void addFood(Food food);
@@ -22,8 +22,9 @@ import java.util.List;
         @Query("select * from food")
         List<Food> getAllFood();
 
-        @Query("select * from food where foodID = foodID")
-        Food getFoodName(int foodID);
+
+        @Query("SELECT * FROM food ORDER BY qty DESC")
+        List<Food> getAllSortedByQuantityDesc();
 
     }
 

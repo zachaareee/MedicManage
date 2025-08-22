@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "78192b553110368825041bb1fb0132f3",
+    "identityHash": "54a5cf6335945081a36b356db0cd63ef",
     "entities": [
       {
         "tableName": "Student",
@@ -129,11 +129,45 @@
             "medID"
           ]
         }
+      },
+      {
+        "tableName": "Food",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`foodID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `Brand` TEXT, `Name` TEXT, `qty` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "foodID",
+            "columnName": "foodID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "foodBrand",
+            "columnName": "Brand",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "foodName",
+            "columnName": "Name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "quantity",
+            "columnName": "qty",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "foodID"
+          ]
+        }
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '78192b553110368825041bb1fb0132f3')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '54a5cf6335945081a36b356db0cd63ef')"
     ]
   }
 }
