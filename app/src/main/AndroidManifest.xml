@@ -15,13 +15,14 @@
 
         <!-- This is the starting screen of your app -->
         <activity
-            android:name=".activities.UpdateProfileActivity"
+            android:name=".activities.FoodViewActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
 
         <!-- Declarations for your other activities -->
 <!--        <activity-->
