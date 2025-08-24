@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0A2342">
+
+    <TextView
+        android:id="@+id/greetingTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/first_name"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/headerDivider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/yellow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/greetingTextView" />
+
+    <TextView
+        android:id="@+id/medicationsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/medication"
+        android:textColor="@color/yellow"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/headerDivider" />
+
+    <!-- Selector ROW with dropdown arrow -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/medicationSelector"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/rounded_button_white"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:minHeight="44dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/medicationsTitle">
+
+        <!-- Text on the left -->
+        <TextView
+            android:id="@+id/medicationSelectorText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:text="@string/selection"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/dropdownArrow"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="RtlHardcoded" />
+
+        <!-- Dropdown arrow on the right -->
+        <ImageView
+            android:id="@+id/dropdownArrow"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/down_arrow"
+
+            app:tint="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/brandTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/rounded_white_border"
+        android:gravity="center_vertical"
+        android:padding="16dp"
+        android:textColor="@color/yellow"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@id/medicationSelector"
+        app:layout_constraintStart_toStartOf="@id/medicationSelector"
+        app:layout_constraintTop_toBottomOf="@id/medicationSelector"
+        tools:text="Brand" />
+
+    <TextView
+        android:id="@+id/dosageTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/rounded_white_border"
+        android:gravity="center_vertical"
+        android:padding="16dp"
+        android:textColor="@color/yellow"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@id/brandTextView"
+        app:layout_constraintStart_toStartOf="@id/brandTextView"
+        app:layout_constraintTop_toBottomOf="@id/brandTextView"
+        tools:text="Dosage" />
+
+    <TextView
+        android:id="@+id/quantityTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/rounded_white_border"
+        android:gravity="center_vertical"
+        android:padding="16dp"
+        android:textColor="@color/yellow"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@id/dosageTextView"
+        app:layout_constraintStart_toStartOf="@id/dosageTextView"
+        app:layout_constraintTop_toBottomOf="@id/dosageTextView"
+        tools:text="Quantity on Hand" />
+
+    <LinearLayout
+        android:id="@+id/buttonContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        app:layout_constraintEnd_toEndOf="@id/quantityTextView"
+        app:layout_constraintStart_toStartOf="@id/quantityTextView"
+        app:layout_constraintTop_toBottomOf="@id/quantityTextView">
+
+        <Button
+            android:id="@+id/addButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/yellow"
+            android:text="@string/add"
+            android:textColor="#0A2342" />
+
+        <Button
+            android:id="@+id/updateButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/yellow"
+            android:text="@string/update"
+            android:textColor="#0A2342" />
+
+        <Button
+            android:id="@+id/deleteButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/yellow"
+            android:text="@string/delete"
+            android:textColor="#0A2342" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

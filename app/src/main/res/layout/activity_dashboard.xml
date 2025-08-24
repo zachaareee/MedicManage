@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="192dp"
-        android:background="@drawable/rounded_button_background"
+        android:background="@drawable/rounded_button_yellow"
         android:paddingStart="24dp"
         android:paddingTop="12dp"
         android:paddingEnd="24dp"

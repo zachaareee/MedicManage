@@ -103,7 +103,7 @@
         android:layout_marginTop="34dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
-        android:background="@drawable/rounded_edittext_background"
+        android:background="@drawable/rounded_button_white"
         android:ems="10"
 
         android:importantForAutofill="no"
@@ -122,7 +122,7 @@
         android:layout_height="45dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/rounded_edittext_background"
+        android:background="@drawable/rounded_button_white"
         android:ems="10"
         android:importantForAutofill="no"
         android:inputType="textPersonName"
@@ -138,7 +138,7 @@
         android:layout_width="256dp"
         android:layout_height="45dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/rounded_edittext_background"
+        android:background="@drawable/rounded_button_white"
         android:ems="10"
         android:importantForAutofill="no"
         android:inputType="textPersonName"
@@ -157,7 +157,7 @@
         android:layout_height="45dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
-        android:background="@drawable/rounded_edittext_background"
+        android:background="@drawable/rounded_button_white"
         android:ems="10"
         android:importantForAutofill="no"
 
@@ -176,7 +176,7 @@
         android:layout_height="45dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
-        android:background="@drawable/rounded_edittext_background"
+        android:background="@drawable/rounded_button_white"
         android:ems="10"
         android:importantForAutofill="no"
 
@@ -257,7 +257,7 @@
         android:layout_marginTop="1dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
-        android:background="@drawable/rounded_edittext_background"
+        android:background="@drawable/rounded_button_white"
         android:ems="10"
         android:importantForAutofill="no"
 
