@@ -38,9 +38,9 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.log_in);
 
         // Initialize UI components
-        usernameEditText = findViewById(R.id.editTextTextPersonName);
-        passwordEditText = findViewById(R.id.editTextTextPassword);
-        loginButton = findViewById(R.id.button);
+        usernameEditText = findViewById(R.id.usernameEditText);
+        passwordEditText = findViewById(R.id.passwordEditText);
+        loginButton = findViewById(R.id.loginButton);
 
         // Initialize Room Database
         db = databaseMedicManage.getDatabase(getApplicationContext());

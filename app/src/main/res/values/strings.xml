@@ -73,8 +73,12 @@
     <string name="surname">Surname\n</string>
     <string name="employee_no">Employee No.</string>
 
+
+    //fixing errors
     <string name="name">Name</string>
     <string name="text_name">Full Name</string>
+    <string name="password">Password</string>
+    <string name="sign_in">Sign In</string>
 
 
 </resources>

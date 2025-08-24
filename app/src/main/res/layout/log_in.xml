@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:background="@drawable/rounded_edittext_background"
-            android:hint="Username"
+            android:hint="@string/username"
             android:inputType="text"
             android:padding="12dp"
             android:textColor="@color/black" />
