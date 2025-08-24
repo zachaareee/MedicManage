@@ -31,9 +31,9 @@
 <!--        <activity-->
 <!--            android:name=".activities.DashboardActivity"-->
 <!--            android:exported="false" />-->
-<!--        <activity-->
-<!--            android:name=".activities.EditFoodActivity"-->
-<!--            android:exported="false" />-->
+        <activity
+            android:name=".activities.EditFoodActivity"
+            android:exported="false" />
 <!--        <activity-->
 <!--            android:name=".activities.UpdateProfileActivity"-->
 <!--            android:exported="false" />-->
