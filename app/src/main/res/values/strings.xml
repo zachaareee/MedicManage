@@ -73,5 +73,8 @@
     <string name="surname">Surname\n</string>
     <string name="employee_no">Employee No.</string>
 
+    <string name="name">Name</string>
+    <string name="text_name">Full Name</string>
+
 
 </resources>
