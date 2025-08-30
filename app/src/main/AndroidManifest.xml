@@ -15,15 +15,13 @@
 
         <!-- This is the starting screen of your app -->
         <activity
-            android:name=".activities.FoodViewActivity"
+            android:name=".activities.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
         <!-- Declarations for your other activities -->
 <!--        <activity-->
 <!--            android:name=".activities.FoodViewActivity"-->
@@ -31,9 +29,9 @@
 <!--        <activity-->
 <!--            android:name=".activities.DashboardActivity"-->
 <!--            android:exported="false" />-->
-        <activity
-            android:name=".activities.EditFoodActivity"
-            android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".activities.EditFoodActivity"-->
+<!--            android:exported="false" />-->
 <!--        <activity-->
 <!--            android:name=".activities.UpdateProfileActivity"-->
 <!--            android:exported="false" />-->

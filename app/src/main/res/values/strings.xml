@@ -85,5 +85,6 @@
     <string name = "med_qoh">Quantity on Hand</string>
     <string name = "medications">Medications</string>
     <string name = "selection">Select Medication</string>
+    <string name="appname">MedicManage</string>
 
 </resources>

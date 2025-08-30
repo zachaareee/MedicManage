@@ -1,49 +1,74 @@
 package com.example.medmanage.activities;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.medmanage.model.Nurse;
-import com.example.medmanage.model.Student;
-
-
-import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.medmanage.R;
 import com.example.medmanage.database.databaseMedicManage;
+import com.example.medmanage.model.Nurse;
+import com.example.medmanage.model.Student;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * LoginActivity handles user authentication.
- * It provides a single login form and attempts to authenticate the user
- * as either a Nurse or a Student.
+ * It uses the UI components from sign_in.xml to log in a user as
+ * either a Student or an Administrator (Nurse) and can save credentials
+ * if "Remember me" is checked.
  */
 public class LoginActivity extends AppCompatActivity {
 
+    // --- UI Components ---
     private EditText usernameEditText;
     private EditText passwordEditText;
     private Button loginButton;
+    private RadioGroup userTypeGroup;
+    private CheckBox rememberMeCheckBox;
+
+    // --- Database and SharedPreferences ---
     private databaseMedicManage db;
+    private SharedPreferences sharedPreferences;
+
+    // Define constants for SharedPreferences
+    private static final String PREFS_NAME = "MedManagePrefs";
+    private static final String PREF_USERNAME = "username";
+    private static final String PREF_PASSWORD = "password";
+    private static final String PREF_USER_TYPE = "user_type";
+    private static final String PREF_REMEMBER = "remember";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.log_in);
+        setContentView(R.layout.sign_in);
 
-        // Initialize UI components
-        usernameEditText = findViewById(R.id.usernameEditText);
-        passwordEditText = findViewById(R.id.passwordEditText);
-        loginButton = findViewById(R.id.loginButton);
+        // Initialize UI components using the correct IDs from sign_in.xml
+        usernameEditText = findViewById(R.id.username_edit_text);
+        passwordEditText = findViewById(R.id.password_edit_text);
+        loginButton = findViewById(R.id.sign_in_button);
+        userTypeGroup = findViewById(R.id.user_type_group);
+        rememberMeCheckBox = findViewById(R.id.remember_me_checkbox);
 
         // Initialize Room Database
         db = databaseMedicManage.getDatabase(getApplicationContext());
+
+        // Initialize SharedPreferences
+        sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+
+        // Load saved preferences
+        loadPreferences();
 
         // Set up login button click listener
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -55,69 +80,116 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /**
-     * Attempts to log in the user.
-     * The application first tries to log in as a Nurse, and if that fails,
-     * it tries to log in as a Student.
+     * Loads credentials from SharedPreferences if "Remember me" was previously checked.
      */
-    @SuppressLint("StaticFieldLeak")
+    private void loadPreferences() {
+        boolean remember = sharedPreferences.getBoolean(PREF_REMEMBER, false);
+        if (remember) {
+            usernameEditText.setText(sharedPreferences.getString(PREF_USERNAME, ""));
+            passwordEditText.setText(sharedPreferences.getString(PREF_PASSWORD, ""));
+            String userType = sharedPreferences.getString(PREF_USER_TYPE, "student");
+            if ("student".equals(userType)) {
+                userTypeGroup.check(R.id.student_radio_btn);
+            } else {
+                userTypeGroup.check(R.id.admin_radio_btn);
+            }
+            rememberMeCheckBox.setChecked(true);
+        }
+    }
+
+    /**
+     * Saves or clears credentials in SharedPreferences based on the "Remember me" checkbox.
+     */
+    private void saveOrClearPreferences(String username, String password, String userType) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        if (rememberMeCheckBox.isChecked()) {
+            editor.putString(PREF_USERNAME, username);
+            editor.putString(PREF_PASSWORD, password);
+            editor.putString(PREF_USER_TYPE, userType);
+            editor.putBoolean(PREF_REMEMBER, true);
+        } else {
+            editor.clear(); // Clear all saved preferences
+        }
+        editor.apply();
+    }
+
+
+    /**
+     * Attempts to log in the user based on the selected user type.
+     * Uses a modern background thread instead of the deprecated AsyncTask.
+     */
     private void attemptLogin() {
         final String username = usernameEditText.getText().toString().trim();
         final String password = passwordEditText.getText().toString().trim();
+        final int selectedUserTypeId = userTypeGroup.getCheckedRadioButtonId();
 
-        // Basic input validation
+        // --- Input Validation ---
         if (username.isEmpty() || password.isEmpty()) {
-            Toast.makeText(LoginActivity.this, "Please fill in all fields.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please fill in all fields.", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Perform database query in a background thread using AsyncTask
-        new AsyncTask<Void, Void, Object>() { // Object can be Nurse, Student, or null
-            @Override
-            protected Object doInBackground(Void... voids) {
-                // First, try to log in as a Nurse
-                Nurse nurse = db.nurseDAO().getNurseByUsernameAndPassword(username, password);
-                if (nurse != null) {
-                    return nurse;
-                }
+        if (selectedUserTypeId == -1) {
+            Toast.makeText(this, "Please select a user type (Student or Administrator).", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-                // If not a Nurse, try to log in as a Student
-                @SuppressLint("StaticFieldLeak") Student student = db.studentDAO().getNStudentByUsernameAndPassword(username, password);
-                if (student != null) {
-                    return student;
-                }
+        // --- Database query on a background thread ---
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Handler handler = new Handler(Looper.getMainLooper());
 
-                // No user found
-                return null;
+        executor.execute(() -> {
+            // Background work
+            Object loggedInUser = null;
+
+            if (selectedUserTypeId == R.id.admin_radio_btn) {
+                // Try to log in as an Administrator (Nurse)
+                loggedInUser = db.nurseDAO().getNurseByUsernameAndPassword(username, password);
+            } else if (selectedUserTypeId == R.id.student_radio_btn) {
+                // Try to log in as a Student
+                loggedInUser = db.studentDAO().getNStudentByUsernameAndPassword(username, password);
             }
 
-            @Override
-            protected void onPostExecute(Object loggedInUser) {
-                if (loggedInUser != null) {
-                    String loggedInUsername = "";
-                    String loggedInUserType = "";
-
-                    if (loggedInUser instanceof Nurse) {
-                        loggedInUsername = ((Nurse) loggedInUser).getEmpUserName();
-                        loggedInUserType = "nurse";
-                    } else if (loggedInUser instanceof Student) {
-                        loggedInUsername = ((Student) loggedInUser).getUserName();
-                        loggedInUserType = "student";
-                    }
-
-                    // Login successful
-                    Toast.makeText(LoginActivity.this, "Login Successful! Welcome, " + loggedInUsername, Toast.LENGTH_SHORT).show();
-                    // Navigate to DashboardActivity
-                    Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
-                    intent.putExtra("USERNAME", loggedInUsername);
-                    intent.putExtra("USER_TYPE", loggedInUserType);
-                    startActivity(intent);
-                    finish(); // Close LoginActivity so user can't go back to it
+            final Object finalLoggedInUser = loggedInUser;
+            handler.post(() -> {
+                // UI work (onPostExecute)
+                if (finalLoggedInUser != null) {
+                    onLoginSuccess(finalLoggedInUser, username, password);
                 } else {
-                    // Login failed
                     Toast.makeText(LoginActivity.this, "Invalid credentials.", Toast.LENGTH_SHORT).show();
                 }
-            }
-        }.execute();
+            });
+        });
+    }
+
+    /**
+     * Handles the logic for a successful login.
+     *
+     * @param user The logged-in Nurse or Student object.
+     * @param username The username used to log in.
+     * @param password The password used to log in.
+     */
+    private void onLoginSuccess(Object user, String username, String password) {
+        String loggedInUsername = "";
+        String loggedInUserType = "";
+
+        if (user instanceof Nurse) {
+            loggedInUsername = ((Nurse) user).getEmpUserName();
+            loggedInUserType = "nurse"; // This corresponds to "Administrator"
+        } else if (user instanceof Student) {
+            loggedInUsername = ((Student) user).getUserName();
+            loggedInUserType = "student";
+        }
+
+        // Save preferences if "Remember me" is checked, or clear them if not.
+        saveOrClearPreferences(username, password, loggedInUserType);
+
+        // Show success message and navigate to the dashboard
+        Toast.makeText(this, "Login Successful! Welcome, " + loggedInUsername, Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, DashboardActivity.class);
+        intent.putExtra("USERNAME", loggedInUsername);
+        intent.putExtra("USER_TYPE", loggedInUserType);
+        startActivity(intent);
+        finish(); // Close LoginActivity
     }
 }
-

@@ -132,7 +132,7 @@
         android:layout_marginEnd="32dp"
         android:background="@drawable/edit_text_bg"
         android:drawableEnd="@drawable/ic_visibility"
-        android:hint="@string/forgot_password"
+        android:hint="@string/password"
         android:inputType="textPassword"
         android:padding="12dp"
         android:paddingEnd="12dp"
