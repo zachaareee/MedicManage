@@ -65,11 +65,16 @@ public abstract class databaseMedicManage extends RoomDatabase {
         private final StudentDAO mStudentDao;
         private final FoodDAO mFoodDao;
 
+        private final MedicationDAO mMedicationDao;
+
+
 
         PopulateDbAsyncTask(databaseMedicManage db) {
             mNurseDao = db.nurseDAO();
             mStudentDao = db.studentDAO();
             mFoodDao = db.foodDAO();
+            mMedicationDao = db.medicationDAO();
+
         }
 
         @Override
@@ -97,6 +102,8 @@ public abstract class databaseMedicManage extends RoomDatabase {
             mFoodDao.addFood(new Food(14, "IWISA", "Super Maize Meal", 150));
             mFoodDao.addFood(new Food(15, "Shoprite Rite Brand", "Sunflower Oil", 110));
 
+
+            mMedicationDao.addMedication(new Medication("AntiDepressent", ""));
 
             return null;
         }

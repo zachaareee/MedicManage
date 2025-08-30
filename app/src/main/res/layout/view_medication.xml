@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0A2342">
+    android:background="@color/blue">
 
     <TextView
         android:id="@+id/greetingTextView"
@@ -28,60 +28,160 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/greetingTextView" />
 
+    <!-- Medication Selection Label -->
+
+    <!-- Medication Spinner with Custom Layout -->
+
     <TextView
         android:id="@+id/medicationsTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="@string/medication"
+        android:text="@string/med_med"
         android:textColor="@color/yellow"
         android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/headerDivider" />
 
-    <!-- Selector ROW with dropdown arrow -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/medicationSelector"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/medicationLabel"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:clickable="false"
+        android:focusable="false"
+        android:text="@string/med_selection"
+        android:textColor="@color/yellow"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.13"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/medicationsTitle" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/medicationSpinnerContainer"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="32dp"
-        android:background="@drawable/rounded_button_white"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:minHeight="44dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/rounded_white_border"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/medicationsTitle">
 
-        <!-- Text on the left -->
-        <TextView
-            android:id="@+id/medicationSelectorText"
+        <Spinner
+            android:id="@+id/medicationSpinner"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:gravity="center_vertical"
-            android:maxLines="1"
-            android:text="@string/selection"
-            android:textColor="@color/black"
-            android:textSize="16sp"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:paddingStart="16dp"
+            android:paddingEnd="40dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/dropdownArrow"
             app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="RtlHardcoded" />
+            app:layout_constraintVertical_bias="1.0" />
 
-        <!-- Dropdown arrow on the right -->
         <ImageView
-            android:id="@+id/dropdownArrow"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:id="@+id/medicationDropdownArrow"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="16dp"
             android:src="@drawable/down_arrow"
+            android:scaleType="fitCenter"
+            android:contentDescription="@string/med_dropdown_arrow"
+            app:tint="@color/yellow"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            app:tint="@color/black"
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <!-- Brand Spinner with Custom Layout (initially disabled) -->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/brandSpinnerContainer"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/rounded_white_border"
+        android:alpha="0.5"
+        app:layout_constraintEnd_toEndOf="@id/medicationSpinnerContainer"
+        app:layout_constraintStart_toStartOf="@id/medicationSpinnerContainer"
+        app:layout_constraintTop_toBottomOf="@id/medicationSpinnerContainer">
+
+        <Spinner
+            android:id="@+id/brandSpinner"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:paddingStart="16dp"
+            android:paddingEnd="40dp"
+            android:enabled="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/brandDropdownArrow"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/down_arrow"
+            android:scaleType="fitCenter"
+            android:contentDescription="Brand dropdown arrow"
+            app:tint="@color/yellow"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Dosage Spinner with Custom Layout (initially disabled) -->
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/dosageSpinnerContainer"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/rounded_white_border"
+        android:alpha="0.5"
+        app:layout_constraintEnd_toEndOf="@id/brandSpinnerContainer"
+        app:layout_constraintStart_toStartOf="@id/brandSpinnerContainer"
+        app:layout_constraintTop_toBottomOf="@id/brandSpinnerContainer">
+
+        <Spinner
+            android:id="@+id/dosageSpinner"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:enabled="false"
+            android:paddingStart="16dp"
+            android:paddingEnd="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <ImageView
+            android:id="@+id/dosageDropdownArrow"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/down_arrow"
+            android:scaleType="fitCenter"
+            android:contentDescription="@string/med_dropdown_arrow"
+            app:tint="@color/yellow"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -89,91 +189,66 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/brandTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/rounded_white_border"
-        android:gravity="center_vertical"
-        android:padding="16dp"
-        android:textColor="@color/yellow"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@id/medicationSelector"
-        app:layout_constraintStart_toStartOf="@id/medicationSelector"
-        app:layout_constraintTop_toBottomOf="@id/medicationSelector"
-        tools:text="Brand" />
-
-    <TextView
-        android:id="@+id/dosageTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/rounded_white_border"
-        android:gravity="center_vertical"
-        android:padding="16dp"
-        android:textColor="@color/yellow"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@id/brandTextView"
-        app:layout_constraintStart_toStartOf="@id/brandTextView"
-        app:layout_constraintTop_toBottomOf="@id/brandTextView"
-        tools:text="Dosage" />
-
-    <TextView
         android:id="@+id/quantityTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="48dp"
         android:background="@drawable/rounded_white_border"
         android:gravity="center_vertical"
         android:padding="16dp"
         android:textColor="@color/yellow"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@id/dosageTextView"
-        app:layout_constraintStart_toStartOf="@id/dosageTextView"
-        app:layout_constraintTop_toBottomOf="@id/dosageTextView"
+        app:layout_constraintEnd_toEndOf="@id/dosageSpinnerContainer"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/dosageSpinnerContainer"
+        app:layout_constraintTop_toBottomOf="@id/dosageSpinnerContainer"
         tools:text="Quantity on Hand" />
 
-    <LinearLayout
-        android:id="@+id/buttonContainer"
+    <Button
+        android:id="@+id/addButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:orientation="horizontal"
-        android:weightSum="3"
-        app:layout_constraintEnd_toEndOf="@id/quantityTextView"
-        app:layout_constraintStart_toStartOf="@id/quantityTextView"
-        app:layout_constraintTop_toBottomOf="@id/quantityTextView">
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp"
+        android:layout_weight="1"
+        android:backgroundTint="@color/yellow"
+        android:text="@string/med_add"
+        android:textColor="#0A2342"
+        app:layout_constraintBottom_toTopOf="@+id/updateButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/quantityTextView" />
 
-        <Button
-            android:id="@+id/addButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_weight="1"
-            android:backgroundTint="@color/yellow"
-            android:text="@string/add"
-            android:textColor="#0A2342" />
+    <Button
+        android:id="@+id/updateButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginBottom="20dp"
+        android:layout_weight="1"
+        android:backgroundTint="@color/yellow"
+        android:text="@string/med_update"
+        android:textColor="#0A2342"
+        app:layout_constraintBottom_toTopOf="@+id/deleteButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <Button
-            android:id="@+id/updateButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_weight="1"
-            android:backgroundTint="@color/yellow"
-            android:text="@string/update"
-            android:textColor="#0A2342" />
-
-        <Button
-            android:id="@+id/deleteButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_weight="1"
-            android:backgroundTint="@color/yellow"
-            android:text="@string/delete"
-            android:textColor="#0A2342" />
-    </LinearLayout>
+    <Button
+        android:id="@+id/deleteButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginBottom="96dp"
+        android:layout_weight="1"
+        android:backgroundTint="@color/yellow"
+        android:text="@string/med_delete"
+        android:textColor="#0A2342"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
