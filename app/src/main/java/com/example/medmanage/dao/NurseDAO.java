@@ -24,5 +24,7 @@ public interface NurseDAO {
     @Query("select * from nurse where empUsername=:empUsername AND password =:password LIMIT  1")
     Nurse getNurseByUsernameAndPassword(String empUsername, String password);
 
+    @Query("SELECT * FROM nurse WHERE empUsername = :empUsername LIMIT 1")
+    Nurse getNurseByUsername(String empUsername);
 
 }

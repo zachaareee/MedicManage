@@ -23,4 +23,6 @@ public interface StudentDAO {
 
         @Query("select * from student where userName =:userName AND password =:password LIMIT  1")
         Student getNStudentByUsernameAndPassword(String userName, String password);
+        @Query("SELECT * FROM student WHERE userName = :userName LIMIT 1")
+        Student getStudentByUsername(String userName);
 }

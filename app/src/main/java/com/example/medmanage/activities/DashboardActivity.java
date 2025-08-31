@@ -16,6 +16,8 @@ public class DashboardActivity extends AppCompatActivity {
     private Button logoutButton;
     private Button viewFoodButton; // Button to open the food list
 
+    private Button viewProfile;
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +27,7 @@ public class DashboardActivity extends AppCompatActivity {
         welcomeTextView = findViewById(R.id.welcomeTextView);
         logoutButton = findViewById(R.id.logoutButton);
         viewFoodButton = findViewById(R.id.viewFoodButton);
+        viewProfile = findViewById(R.id.profiledetails);
 
         // Get user data from the Intent that started this activity
         Intent intent = getIntent();
@@ -33,11 +36,12 @@ public class DashboardActivity extends AppCompatActivity {
 
         // Display welcome message
         if (username != null) {
-            welcomeTextView.setText("@string/welcome" + username + "!");
+            // Correctly get the string resource first
+            String welcomeMessage = getString(R.string.welcome_text) + " " + username + "!";
+            welcomeTextView.setText(welcomeMessage);
         } else {
-            welcomeTextView.setText("@string/welcome");
+            welcomeTextView.setText(R.string.welcome_text);
         }
-
         // Set up listener for the "View Food List" button
         viewFoodButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,6 +61,18 @@ public class DashboardActivity extends AppCompatActivity {
                 loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(loginIntent);
                 finish();
+            }
+        });
+        // ... inside the onCreate method
+
+        viewProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent viewIntent = new Intent(DashboardActivity.this, ViewProfileDetailsActivity.class);
+                // Add the username and userType to the intent
+                viewIntent.putExtra("USERNAME", username);
+                viewIntent.putExtra("USER_TYPE", userType);
+                startActivity(viewIntent);
             }
         });
     }
