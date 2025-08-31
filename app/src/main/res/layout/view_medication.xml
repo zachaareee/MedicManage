@@ -136,7 +136,7 @@
             android:layout_marginEnd="16dp"
             android:src="@drawable/down_arrow"
             android:scaleType="fitCenter"
-            android:contentDescription="Brand dropdown arrow"
+            android:contentDescription="@string/brand_dropdown_arrow"
             app:tint="@color/yellow"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

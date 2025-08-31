@@ -84,4 +84,5 @@
     <string name="save">Save</string>
     <string name="dosage_example">e.g. 500mg</string>
     <string name="appname">Medic Manage\n</string>
+    <string name="brand_dropdown_arrow">Brand dropdown arrow</string>
 </resources>
