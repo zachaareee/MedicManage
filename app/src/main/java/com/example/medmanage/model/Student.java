@@ -4,9 +4,12 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+import java.io.Serializable;
+
+
 
 @Entity(tableName = "Student")
-public class Student {
+public class Student implements Serializable {
     @ColumnInfo(name = "stuNum")
     @PrimaryKey(autoGenerate = false)
     int stuNum;
@@ -61,7 +64,7 @@ public class Student {
     }
 
     public String getMedRequirement(){
-        return userName;
+        return medRequirement;
     }
 
     public String getFoodReq(){

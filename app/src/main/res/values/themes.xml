@@ -1,21 +1,64 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Theme.MedManage" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <!-- Primary brand color -->
+    <style name="Theme.MedManage" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/blue</item>
         <item name="colorPrimaryVariant">@color/blue</item>
         <item name="colorOnPrimary">@color/white</item>
 
-        <!-- Secondary brand color -->
         <item name="colorSecondary">@color/yellow</item>
         <item name="colorSecondaryVariant">@color/yellow</item>
         <item name="colorOnSecondary">@color/black</item>
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
 
+        <item name="android:fontFamily">@font/font_family</item>
+    </style>
 
-        <!-- Customize your theme here. -->
-        <item name ="android:fontFamily">@font/font_family</item>
+    <style name="ProfileInfoBox.Editable" parent="ProfileInfoBox">
+        <item name="android:enabled">false</item>
+        <item name="android:textColorHint">@android:color/darker_gray</item>
+    </style>
+    <style name="ProfileLabel" parent="Widget.AppCompat.TextView">
+        <item name="android:layout_marginTop">24dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">16sp</item>
+    </style>
 
+    <style name="ProfileValue" parent="Widget.AppCompat.TextView">
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:textColor">@color/yellow</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="ProfileValueBox">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/details_item_background</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="ProfileInfoBox">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:background">@drawable/profile_info_box_background</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:gravity">center</item>
 
     </style>
+
+    <style name="ProfileDeleteButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:text">@string/delete</item>
+        <item name="android:backgroundTint">@android:color/transparent</item>
+        <item name="android:textColor">@color/yellow</item>
+        <item name="cornerRadius">8dp</item>
+    </style>
+
 </resources>

@@ -102,8 +102,8 @@ public abstract class databaseMedicManage extends RoomDatabase {
             mFoodDao.addFood(new Food(14, "IWISA", "Super Maize Meal", 150));
             mFoodDao.addFood(new Food(15, "Shoprite Rite Brand", "Sunflower Oil", 110));
 
-
-            mMedicationDao.addMedication(new Medication("AntiDepressent", ""));
+            //was just creating this to reove the unfinished one
+            mMedicationDao.addMedication(new Medication("AntiDepressent", "hi",5,52));
 
             return null;
         }

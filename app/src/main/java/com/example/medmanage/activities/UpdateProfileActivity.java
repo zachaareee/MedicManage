@@ -39,6 +39,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.update_profile);
 
+
         db = databaseMedicManage.getDatabase(getApplicationContext());
         initializeViews();
 
@@ -103,44 +104,54 @@ public class UpdateProfileActivity extends AppCompatActivity {
         cancelButton.setOnClickListener(v -> finish());
     }
 
-    private void updateUser() {
-        ExecutorService executor = databaseMedicManage.databaseWriteExecutor;
-        executor.execute(() -> {
-            if (currentUser instanceof Student) {
-                updateStudent();
-            } else if (currentUser instanceof Nurse) {
-                updateNurse();
-            }
-        });
-    }
 
-    private void updateStudent() {
-        Student student = (Student) currentUser;
-        student.setStuName(firstNameEditText.getText().toString().trim());
-        student.setStuSurname(lastNameEditText.getText().toString().trim());
-        student.setUserName(usernameEditText.getText().toString().trim());
-        student.setPassword(passwordEditText.getText().toString().trim());
-        student.setMedRequirement(medicationReqEditText.getText().toString().trim());
+private void updateUser() {
+    // Read all data from UI fields on the main thread FIRST
+    final String firstName = firstNameEditText.getText().toString().trim();
+    final String lastName = lastNameEditText.getText().toString().trim();
+    final String username = usernameEditText.getText().toString().trim();
+    final String password = passwordEditText.getText().toString().trim();
+    final int selectedFoodReqId = foodReqRadioGroup.getCheckedRadioButtonId();
+    final String medication = medicationReqEditText.getText().toString().trim();
 
-        int selectedFoodReqId = foodReqRadioGroup.getCheckedRadioButtonId();
-        if (selectedFoodReqId != -1) {
-            String foodReq = ((RadioButton) findViewById(selectedFoodReqId)).getText().toString();
-            student.setFoodReq(foodReq);
+    // Now execute the database operation on a background thread
+    ExecutorService executor = databaseMedicManage.databaseWriteExecutor;
+    executor.execute(() -> {
+        if (currentUser instanceof Student) {
+            // Pass the collected data to the student update method
+            final String foodReq = (selectedFoodReqId == R.id.radioButton_foodYes) ? "Yes" : "No";
+            updateStudent(firstName, lastName, username, password, medication, foodReq);
+
+        } else if (currentUser instanceof Nurse) {
+            updateNurse(firstName, lastName, username, password);
         }
+    });
+}
+
+    // Modified updateStudent to accept parameters
+    private void updateStudent(String firstName, String lastName, String username, String password, String medication, String foodReq) {
+        Student student = (Student) currentUser;
+        student.setStuName(firstName);
+        student.setStuSurname(lastName);
+        student.setUserName(username);
+        student.setPassword(password);
+        student.setMedRequirement(medication);
+        student.setFoodReq(foodReq);
 
         db.studentDAO().updateStudent(student);
         runOnUiThread(() -> {
             Toast.makeText(this, "Profile updated successfully!", Toast.LENGTH_SHORT).show();
-            finish();
+            finish(); // Go back to the previous screen
         });
     }
 
-    private void updateNurse() {
+    // Modified updateNurse to accept parameters (do the same for the nurse)
+    private void updateNurse(String firstName, String lastName, String username, String password) {
         Nurse nurse = (Nurse) currentUser;
-        nurse.setEmpName(firstNameEditText.getText().toString().trim());
-        nurse.setEmpSurname(lastNameEditText.getText().toString().trim());
-        nurse.setEmpUserName(usernameEditText.getText().toString().trim());
-        nurse.setPassword(passwordEditText.getText().toString().trim());
+        nurse.setEmpName(firstName);
+        nurse.setEmpSurname(lastName);
+        nurse.setEmpUserName(username);
+        nurse.setPassword(password);
 
         db.nurseDAO().updateNurse(nurse);
         runOnUiThread(() -> {

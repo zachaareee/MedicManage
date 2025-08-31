@@ -3,7 +3,6 @@
     android:id="@+id/timeSlotTextView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/time_slot_selector_background"
     android:gravity="center"
     android:padding="12dp"
     android:layout_margin="4dp"

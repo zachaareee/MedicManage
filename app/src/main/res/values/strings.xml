@@ -1,12 +1,11 @@
 <resources>
     <string name="app_name">MedManage</string>
-    //strings to welcome users to app
+    ``strings to welcome users to app
     <string name="image_description">MedManage app logo</string>
     <string name="welcome_text">Welcome to MedicManage</string>
     <string name="login_button_text">LOGIN</string>
     <string name="new_user_prompt">New user? Sign up below</string>
     <string name="signup_button_text">Sign Up</string>
-    //strings for signup
 
 
     <string name="signup">Sign Up </string>
@@ -23,7 +22,6 @@
     <string name="staff_no">staff_no</string>
 
 
-    //strings for general use
     <string name="logo">logo</string>
     <string name="student">Student</string>
     <string name="nurse">Nurse</string>
@@ -33,7 +31,6 @@
 
 
 
-    //Strings needed for basic communication with user
     <string name="application_name">MedicManage</string>
     <string name="hello_administrator">"Hello Administrator👋"</string>
     <string name="add">Add</string>
@@ -44,7 +41,6 @@
     <string name="no">No</string>
     <string name="CONFIRM">Confirm</string>
     <string name="Cancel">Cancel</string>
-    //Food List
     <string name="loading_food_list">Loading food list...</string>
     <string name="failure_to_load_food_list"> Failed to Load food list</string>
     <string name="available_food">Available Food</string>
@@ -67,14 +63,12 @@
     <string name="update_profile">Update Profile Details\n</string>
     <string name="surname">Surname\n</string>
     <string name="employee_no">Employee No.</string>
-    //fixing errors
     <string name="name">Name</string>
     <string name="text_name">Full Name</string>
     <string name="password">Password</string>
     <string name="sign_in">Sign In</string>
 
 
-    //medications specific phrases
     <string name="med_brand">Brand</string>
     <string name="med_dose">Dosage</string>
     <string name="med_qoh">Quantity on Hand</string>
@@ -95,5 +89,17 @@
     <string name="book">Book Slot</string>
     <string name="sess_avail_times">Available Times</string>
     <string name="available_times">Available Times</string>
+    <string name="add_medication">Add Medication</string>
+    <string name="medication">Medication</string>
+    <string name="dosage_example">Dosage</string>
+    <string name="Save">Save</string>
+    <string name="view_profile_details">View Profile Details</string>
+
+    <string name="profile">Profile</string>
+    <string name="profile_icon_desc">Profile Icon</string>
+    <string name="medication_requirement">Medication Requirement</string>
+    <string name="food_requirement">Food Requirement</string>
+    <string name="password_asterisks">********</string>
+    <string name="confirmation_message">Are you sure you want to delete your MedicManage Account?\n\nOnce deleted you will not be able to restore your account or log in again.</string>
 
 </resources>
