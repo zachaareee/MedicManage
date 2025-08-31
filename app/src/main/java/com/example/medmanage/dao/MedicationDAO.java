@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -13,8 +14,8 @@ import java.util.List;
 @Dao
 public interface MedicationDAO {
 
-        @Insert
-        void addMedication(Medication medication);
+        @Insert(onConflict = OnConflictStrategy.REPLACE)
+        void insert(Medication medication);
         @Update
         void updateMedication(Medication medication);
         @Delete

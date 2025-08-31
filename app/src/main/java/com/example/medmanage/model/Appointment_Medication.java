@@ -15,5 +15,10 @@ public class Appointment_Medication {
     public int appointmentNum;
     public int medID;
 
+    public Appointment_Medication(int appointmentNum, int medID) {
+        this.appointmentNum = appointmentNum;
+        this.medID = medID;
+    }
+
 
 }

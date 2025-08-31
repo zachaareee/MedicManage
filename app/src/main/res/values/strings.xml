@@ -1,19 +1,15 @@
 <resources>
     <string name="app_name">MedManage</string>
-    //strings to welcome users to app
     <string name="image_description">MedManage app logo</string>
     <string name="welcome_text">Welcome to MedicManage</string>
     <string name="login_button_text">LOGIN</string>
     <string name="new_user_prompt">New user? Sign up below</string>
     <string name="signup_button_text">Sign Up</string>
-    //strings for signup
-
-
-    <string name="signup">Sign Up </string>
+    <string name="signup">Sign Up</string>
     <string name="profile_details">Profile Details</string>
     <string name="user_type">User Type (Student/Nurse)</string>
     <string name="id_num">ID Number</string>
-    <string name="first_name"> Name</string>
+    <string name="first_name">Name</string>
     <string name="last_name">Surname</string>
     <string name="username">Username</string>
     <string name="Password">Password</string>
@@ -22,18 +18,13 @@
     <string name="studentno">Student No</string>
     <string name="staff_no">staff_no</string>
 
-
-    //strings for general use
     <string name="logo">logo</string>
     <string name="student">Student</string>
     <string name="nurse">Nurse</string>
-    <string name="remember_me">Remember me </string>
+    <string name="remember_me">Remember me</string>
     <string name="forgot_password">Forgot Password</string>
     <string name="new_to_medicmanage">New to Medic Manage?</string>
 
-
-
-    //Strings needed for basic communication with user
     <string name="application_name">MedicManage</string>
     <string name="hello_administrator">"Hello Administrator👋"</string>
     <string name="add">Add</string>
@@ -44,56 +35,53 @@
     <string name="no">No</string>
     <string name="CONFIRM">Confirm</string>
     <string name="Cancel">Cancel</string>
-    //Food List
     <string name="loading_food_list">Loading food list...</string>
-    <string name="failure_to_load_food_list"> Failed to Load food list</string>
+    <string name="failure_to_load_food_list">Failed to Load food list</string>
     <string name="available_food">Available Food</string>
     <string name="select_item">Select an item to view details</string>
     <string name="selected_food_details">Selected Food Details</string>
-    <string name="food_name">Name: </string>
-    <string name="food_type">Type: </string>
+    <string name="food_name">Name:</string>
+    <string name="food_type">Type:</string>
     <string name="food">Food</string>
     <string name="available_quantity">Available Quantity</string>
     <string name="edit">edit</string>
     <string name="booklogo">Book Logo</string>
     <string name="quantity_edit">Editing Quantity for</string>
-    <string name="decrease">-\n</string>
-    <string name="save_changes">Save Changes\n</string>
+    <string name="decrease">-</string>
+    <string name="save_changes">Save Changes</string>
     <string name="increment">+</string>
-    <string name="view_foodlist">View Food List\n</string>
-    <string name="log_out">Log Out\n</string>
+    <string name="view_foodlist">View Food List</string>
+    <string name="log_out">Log Out</string>
     <string name="koo">Koo</string>
-    <string name="beans">Beans\n</string>
-    <string name="update_profile">Update Profile Details\n</string>
-    <string name="surname">Surname\n</string>
+    <string name="beans">Beans</string>
+    <string name="update_profile">Update Profile Details</string>
+    <string name="surname">Surname</string>
     <string name="employee_no">Employee No.</string>
-    //fixing errors
     <string name="name">Name</string>
     <string name="text_name">Full Name</string>
     <string name="password">Password</string>
     <string name="sign_in">Sign In</string>
 
-
-    //medications specific phrases
     <string name="med_brand">Brand</string>
     <string name="med_dose">Dosage</string>
     <string name="med_qoh">Quantity on Hand</string>
     <string name="med_med">Medications</string>
-
     <string name="med_selection">Select Medication</string>
     <string name="med_generic">Generic</string>
     <string name="med_cancel">Cancel</string>
     <string name="med_save">Save</string>
     <string name="med_add">Add Medication</string>
-    <string name ="med_update">Update Medication</string>
+    <string name="med_update">Update Medication</string>
     <string name="med_dosage_example">Dosage e.g. 500mg</string>
     <string name="med_delete_message">Are you sure you want to delete this medication?</string>
-    <string name ="med_update_message">Are you happy with your updates?</string>
-    <string name ="med_add_message">Are you sure you want to add this medication?</string>
+    <string name="med_update_message">Are you happy with your updates?</string>
+    <string name="med_add_message">Are you sure you want to add this medication?</string>
     <string name="med_dropdown_arrow">Medication dropdown arrow</string>
     <string name="med_delete">Delete Medication</string>
     <string name="book">Book Slot</string>
     <string name="sess_avail_times">Available Times</string>
     <string name="available_times">Available Times</string>
-
+    <string name="save">Save</string>
+    <string name="dosage_example">e.g. 500mg</string>
+    <string name="appname">Medic Manage\n</string>
 </resources>

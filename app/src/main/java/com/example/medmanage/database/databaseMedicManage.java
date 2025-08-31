@@ -7,7 +7,11 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.annotation.NonNull;
 
+import com.example.medmanage.dao.AppointmentDAO;
+import com.example.medmanage.dao.Appointment_MedicationDAO;
 import com.example.medmanage.dao.FoodDAO;
+import com.example.medmanage.model.Appointment;
+import com.example.medmanage.model.Appointment_Medication;
 import com.example.medmanage.model.Food;
 import com.example.medmanage.model.Medication;
 import com.example.medmanage.model.Nurse;
@@ -20,7 +24,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Student.class, Nurse.class, Medication.class, Food.class}, version = 1)
+@Database(entities = {Student.class, Nurse.class, Medication.class, Food.class, Appointment.class, Appointment_Medication.class}, version = 2)
 public abstract class databaseMedicManage extends RoomDatabase {
     public abstract StudentDAO studentDAO();
 
@@ -28,6 +32,9 @@ public abstract class databaseMedicManage extends RoomDatabase {
 
     public abstract MedicationDAO medicationDAO();
     public abstract FoodDAO foodDAO();
+
+    public abstract  AppointmentDAO appointmentDAO();
+    public abstract Appointment_MedicationDAO appointmentMedicationDAO();
 
     private static volatile databaseMedicManage INSTANCE;
 
@@ -67,6 +74,10 @@ public abstract class databaseMedicManage extends RoomDatabase {
 
         private final MedicationDAO mMedicationDao;
 
+        private final AppointmentDAO mAppointmentDAO;
+        private final Appointment_MedicationDAO mAppointmentMedicationDAO;
+
+
 
 
         PopulateDbAsyncTask(databaseMedicManage db) {
@@ -74,6 +85,8 @@ public abstract class databaseMedicManage extends RoomDatabase {
             mStudentDao = db.studentDAO();
             mFoodDao = db.foodDAO();
             mMedicationDao = db.medicationDAO();
+            mAppointmentDAO = db.appointmentDAO();
+            mAppointmentMedicationDAO = db.appointmentMedicationDAO();
 
         }
 
@@ -103,7 +116,12 @@ public abstract class databaseMedicManage extends RoomDatabase {
             mFoodDao.addFood(new Food(15, "Shoprite Rite Brand", "Sunflower Oil", 110));
 
 
-            mMedicationDao.addMedication(new Medication("AntiDepressent", ""));
+            mMedicationDao.insert(new Medication("Paracetamol", "Panado", "500mg", 100));
+            mMedicationDao.insert(new Medication("Ibuprofen", "Advil", "200mg", 50));
+
+
+            mAppointmentDAO.insertAppointment(new Appointment(227050010, 1001, 6, "2025-09-15", "10:30"));
+
 
             return null;
         }

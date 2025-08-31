@@ -6,7 +6,7 @@
     android:gravity="center"
     android:padding="8dp"
     android:layout_margin="4dp"
-    android:background="@drawable/date_selector_background">
+    android:background="@drawable/date_background">
 
     <TextView
         android:id="@+id/dayOfWeekTextView"

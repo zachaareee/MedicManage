@@ -8,27 +8,23 @@ public class Medication {
 
     @PrimaryKey(autoGenerate = true)
     private int medID;
-    private String name;
-    private String description;
-    // The quantity field needs to be accessible to Room.
-    private int quantity;
-    private int stock_available;
+    private String medName;
+    private String brand;
+    private String dosage;
 
-    // Constructor
-    public Medication(String name, String description, int quantity, int stock_available) {
-        this.name = name;
-        this.description = description;
-        this.quantity = quantity;
-        this.stock_available = stock_available;
+
+    private int quantityOnHand;
+
+    // Constructor updated
+    public Medication(String medName, String brand, String dosage, int quantityOnHand) {
+        this.medName = medName;
+        this.brand = brand;
+        this.dosage = dosage;
+        this.quantityOnHand = quantityOnHand;
     }
 
-    // Getters and Setters for Room to access the fields.
-    // This is the crucial fix: a public getter for the quantity.
-    public int getQuantity() {
-        return quantity;
-    }
+    // --- Getters and Setters ---
 
-    // Other getters and setters...
     public int getMedID() {
         return medID;
     }
@@ -37,31 +33,35 @@ public class Medication {
         this.medID = medID;
     }
 
-    public String getName() {
-        return name;
+    public String getMedName() {
+        return medName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setMedName(String medName) {
+        this.medName = medName;
     }
 
-    public String getDescription() {
-        return description;
+    public String getBrand() {
+        return brand;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public String getDosage() {
+        return dosage;
     }
 
-    public int getStock_available() {
-        return stock_available;
+    public void setDosage(String dosage) {
+        this.dosage = dosage;
     }
 
-    public void setStock_available(int stock_available) {
-        this.stock_available = stock_available;
+    public int getQuantityOnHand() {
+        return quantityOnHand;
+    }
+
+    public void setQuantityOnHand(int quantityOnHand) {
+        this.quantityOnHand = quantityOnHand;
     }
 }
