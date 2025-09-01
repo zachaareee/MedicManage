@@ -5,20 +5,22 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 
 @Entity(primaryKeys = {"appointmentNum", "medID"},
-        tableName = "Appointment Medication",
-        foreignKeys = {@ForeignKey(entity = Appointment.class, parentColumns = "appointmentNum", childColumns = "appointmentNum", onDelete = ForeignKey.CASCADE),
-                        @ForeignKey(entity = Medication.class, parentColumns = "medID", childColumns = "medID", onDelete = ForeignKey.CASCADE)},
-        indices = {@Index(value = {"appointmentNum"}),
+        tableName = "appointment_medication",
+        foreignKeys = {
+                @ForeignKey(entity = Appointment.class, parentColumns = "appointmentNum", childColumns = "appointmentNum", onDelete = ForeignKey.CASCADE),
+                @ForeignKey(entity = Medication.class, parentColumns = "medID", childColumns = "medID", onDelete = ForeignKey.CASCADE)
+        },
+        indices = {
+                @Index(value = {"appointmentNum"}),
                 @Index(value = {"medID"})
         })
 public class Appointment_Medication {
     public int appointmentNum;
     public int medID;
 
+
     public Appointment_Medication(int appointmentNum, int medID) {
         this.appointmentNum = appointmentNum;
         this.medID = medID;
     }
-
-
 }

@@ -83,7 +83,7 @@ public class ViewProfileDetailsActivity extends AppCompatActivity {
             profileSurname.setText("Surname\n" + student.getStuSurname());
             profileUsername.setText("Username\n" + student.getUserName());
             profileNumber.setText("Student Number\n" + student.getStuNum());
-            medicationRequirement.setText("Medication Requirement\n" + student.getMedRequirement());
+            medicationRequirement.setText("Medication Requirement\n" + student.getMedReq());
             foodRequirement.setText("Food Requirement\n" + student.getFoodReq());
             profilePassword.setText("Password\n********");
 
@@ -128,7 +128,7 @@ public class ViewProfileDetailsActivity extends AppCompatActivity {
         ExecutorService executor = databaseMedicManage.databaseWriteExecutor;
         executor.execute(() -> {
             if (currentUser instanceof Student) {
-                db.studentDAO().deleteStudent((Student) currentUser);
+                db.studentDAO().updateStudent((Student) currentUser);
             } else if (currentUser instanceof Nurse) {
                 db.nurseDAO().deleteNurse((Nurse) currentUser);
             }

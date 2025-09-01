@@ -79,7 +79,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
             studentNoEditText.setText(String.valueOf(student.getStuNum()));
             usernameEditText.setText(student.getUserName());
             passwordEditText.setText(student.getPassword());
-            medicationReqEditText.setText(student.getMedRequirement());
+            medicationReqEditText.setText(student.getMedReq());
             if ("Yes".equalsIgnoreCase(student.getFoodReq())) {
                 ((RadioButton) findViewById(R.id.radioButton_foodYes)).setChecked(true);
             } else {
@@ -135,7 +135,7 @@ private void updateUser() {
         student.setStuSurname(lastName);
         student.setUserName(username);
         student.setPassword(password);
-        student.setMedRequirement(medication);
+        student.setMedReq(medication);
         student.setFoodReq(foodReq);
 
         db.studentDAO().updateStudent(student);

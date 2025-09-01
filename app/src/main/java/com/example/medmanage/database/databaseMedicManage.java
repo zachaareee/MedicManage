@@ -24,7 +24,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Student.class, Nurse.class, Medication.class, Food.class, Appointment.class, Appointment_Medication.class}, version = 2)
+@Database(entities = {Student.class, Nurse.class, Medication.class, Food.class, Appointment.class, Appointment_Medication.class}, version = 3)
 public abstract class databaseMedicManage extends RoomDatabase {
     public abstract StudentDAO studentDAO();
 
