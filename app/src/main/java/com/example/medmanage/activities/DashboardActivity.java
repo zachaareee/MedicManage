@@ -15,7 +15,8 @@ public class DashboardActivity extends AppCompatActivity {
     private TextView welcomeTextView;
     private Button logoutButton;
     private Button viewFoodButton; // Button to open the food list
-
+    private Button medicationButton;
+    private Button appointmentButton;
     private Button viewProfile;
 
     @SuppressLint("SetTextI18n")
@@ -28,6 +29,8 @@ public class DashboardActivity extends AppCompatActivity {
         logoutButton = findViewById(R.id.logoutButton);
         viewFoodButton = findViewById(R.id.viewFoodButton);
         viewProfile = findViewById(R.id.profiledetails);
+        medicationButton =findViewById(R.id.medicationButton);
+
 
         // Get user data from the Intent that started this activity
         Intent intent = getIntent();
@@ -75,5 +78,15 @@ public class DashboardActivity extends AppCompatActivity {
                 startActivity(viewIntent);
             }
         });
+        medicationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent medIntent = new Intent(DashboardActivity.this,ViewMedicationActivity.class);
+                medIntent.putExtra("USERNAME", username);
+                medIntent.putExtra("USER_TYPE", userType);
+                startActivity(medIntent);
+            }
+        });
+
     }
 }

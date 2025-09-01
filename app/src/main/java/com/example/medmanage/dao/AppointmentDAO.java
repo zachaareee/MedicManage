@@ -30,4 +30,5 @@ public interface AppointmentDAO {
 
     @Query("SELECT * FROM appointment WHERE date = :date AND time = :time LIMIT 1")
     Appointment getAppointmentByDateTime(String date, String time);
+
 }

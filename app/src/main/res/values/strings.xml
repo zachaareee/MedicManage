@@ -79,9 +79,11 @@
     <string name="med_dropdown_arrow">Medication dropdown arrow</string>
     <string name="med_delete">Delete Medication</string>
     <string name="book">Book Slot</string>
+    <string name="Drop_down_arrow">Drop Down Arrow</string>
     <string name="sess_avail_times">Available Times</string>
     <string name="available_times">Available Times</string>
     <string name="save">Save</string>
+    <string name="no_food_items">No of Food Items</string>
     <string name="dosage_example">e.g. 500mg</string>
     <string name="appname">Medic Manage\n</string>
     <string name="brand_dropdown_arrow">Brand dropdown arrow</string>
@@ -121,5 +123,27 @@
     <string name="quit_booking_title">Quit Booking</string>
     <string name="quit_booking_message">Are you sure you want to quit and go back?</string>
     <string name="ok">OK</string>
+    <string name="TODO">TODO</string>
+
+        <string name="appointment_details_title">Appointment Details</string>
+        <string name="appointment_details_label">Appointment Details:</string>
+            <string name = "appointment_details">Appointments by Time</string>
+        <string name="date_placeholder">Date</string>
+        <string name="time_placeholder">Time</string>
+        <string name="no_appointment_scheduled">No Appointment Scheduled</string>
+        <string name="home_tab">Home</string>
+        <string name="schedule_tab">Schedule</string>
+        <string name="profile_tab">Profile</string>
+
+    <string name="student_num">Student Number</string>
+    <string name="date">Date</string>
+<string name="appointment_by_time">Appointments by Time</string>
+
+    <string name="medication">Medication</string>
+    <string name="appointment">Appointment</string>
+    <string name="dashboard"> Dashboard</string>
+    <string name="select_food_item">Select Food Item from List</string>
+    <string name="select_appointment">Select Appointment from list</string>
+    <string name="schedule_appointment">Schedule Appointment</string>
     <string name="error_existing_booking"> <b>You already have an active booking.</b> Please cancel your current appointment to schedule a new one.</string>
 </resources>

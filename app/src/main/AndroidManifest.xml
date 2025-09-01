@@ -13,18 +13,12 @@
         android:theme="@style/Theme.MedManage">
 
 
-        <!-- This is the starting screen of your app -->
-        <activity
-            android:name=".activities.MainScreenActivity"
-            android:exported="false">
-          <!--  <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter> -->
-        </activity>
-        <!-- Declarations for your other activities -->
         <activity android:name=".activities.ViewProfileDetailsActivity"
             android:exported="false"/>
+
+        <activity android:name=".activities.ViewMedicationActivity"
+            android:exported="false"/>
+
         <activity
             android:name=".activities.FoodViewActivity"
             android:exported="false" />
@@ -45,13 +39,12 @@
             android:name=".activities.EditFoodActivity"
             android:exported="false" />
 
-        <activity android:name=".activities.ViewMedicationActivity"
-            android:exported="false">
 
 
-        </activity>
 
-        <activity android:name=".activities.ScheduleAppointmentActivity"
+
+
+        <activity android:name=".activities.MainScreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
