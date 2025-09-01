@@ -20,11 +20,20 @@ public interface MedicationDAO {
         void updateMedication(Medication medication);
         @Delete
         void deleteMedication(Medication medication);
-        @Query("select * from medication")
-        LiveData<List<Medication>> getAllMedication();
+        @Query("SELECT * FROM medication ORDER BY medName ASC")
+        LiveData<List<Medication>> getAllMedications();
+        @Query("SELECT DISTINCT medName FROM medication ORDER BY medName ASC")
+        LiveData<List<String>> getDistinctMedNames();
 
-        @Query("select * from medication where medID== :medID")
-        Medication getMedName(int medID);
+        @Query("SELECT DISTINCT brand FROM medication WHERE medName = :medName ORDER BY brand ASC")
+        LiveData<List<String>> getBrandsForMedName(String medName);
 
+        @Query("SELECT DISTINCT dosage FROM medication WHERE medName = :medName AND brand = :brand ORDER BY dosage ASC")
+        LiveData<List<String>> getDosagesForMedNameAndBrand(String medName, String brand);
 
+        @Query("SELECT * FROM medication WHERE medName = :medName AND brand = :brand AND dosage = :dosage LIMIT 1")
+        LiveData<Medication> getMedicationDetails(String medName, String brand, String dosage);
 }
+
+
+

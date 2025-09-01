@@ -64,4 +64,9 @@ public class Medication {
     public void setQuantityOnHand(int quantityOnHand) {
         this.quantityOnHand = quantityOnHand;
     }
+
+    @Override
+    public String toString() {
+        return this.medName;
+    }
 }
