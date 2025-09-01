@@ -39,7 +39,7 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_profile);
 
-        db = databaseMedicManage.getDatabase(getApplicationContext());
+        databaseMedicManage.getDatabase(getApplicationContext(),null);
         initializeViews();
         setupListeners();
     }

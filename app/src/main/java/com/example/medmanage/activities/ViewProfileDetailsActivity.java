@@ -32,7 +32,7 @@ public class ViewProfileDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_profile);
-        db = databaseMedicManage.getDatabase(getApplicationContext());
+        databaseMedicManage.getDatabase(getApplicationContext(),null);
         initializeViews();
 
         updateButton.setOnClickListener(v -> openUpdateActivity());

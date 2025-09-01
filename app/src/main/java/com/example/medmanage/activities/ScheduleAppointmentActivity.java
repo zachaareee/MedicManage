@@ -60,7 +60,7 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
         */
 
 
-        appDb = databaseMedicManage.getDatabase(getApplicationContext());
+        databaseMedicManage.getDatabase(getApplicationContext(),null);
         databaseExecutor = databaseMedicManage.databaseWriteExecutor;
 
         dateRecyclerView = findViewById(R.id.dateRecyclerView);

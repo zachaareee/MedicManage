@@ -40,7 +40,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
         setContentView(R.layout.update_profile);
 
 
-        db = databaseMedicManage.getDatabase(getApplicationContext());
+        databaseMedicManage.getDatabase(getApplicationContext(),null);
         initializeViews();
 
         currentUser = getIntent().getSerializableExtra("USER_TO_EDIT");

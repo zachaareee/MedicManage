@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
         rememberMeCheckBox = findViewById(R.id.remember_me_checkbox);
 
         // Initialize Room Database
-        db = databaseMedicManage.getDatabase(getApplicationContext());
+        databaseMedicManage.getDatabase(getApplicationContext(),null);
 
         // Initialize SharedPreferences
         sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
@@ -172,13 +172,17 @@ public class LoginActivity extends AppCompatActivity {
     private void onLoginSuccess(Object user, String username, String password) {
         String loggedInUsername = "";
         String loggedInUserType = "";
+        int loggedInStudentId = -1; // Default to -1 (an invalid ID)
 
         if (user instanceof Nurse) {
             loggedInUsername = ((Nurse) user).getEmpUserName();
             loggedInUserType = "nurse"; // This corresponds to "Administrator"
+            // The student ID remains -1 for a nurse
         } else if (user instanceof Student) {
             loggedInUsername = ((Student) user).getUserName();
             loggedInUserType = "student";
+            // CORRECT: Get the student ID from the Student object
+            loggedInStudentId = ((Student) user).getStuNum();
         }
 
         // Save preferences if "Remember me" is checked, or clear them if not.
@@ -189,6 +193,9 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(this, DashboardActivity.class);
         intent.putExtra("USERNAME", loggedInUsername);
         intent.putExtra("USER_TYPE", loggedInUserType);
+        // Pass the student ID. It will be the correct ID for a student, or -1 for a nurse.
+        intent.putExtra("STUDENT_ID", loggedInStudentId);
+
         startActivity(intent);
         finish(); // Close LoginActivity
     }

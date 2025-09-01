@@ -19,12 +19,13 @@ public class UserRepository {
     private final AppointmentDAO appointmentDAO;
 
     private final LiveData<List<Student>> allStudents;
+    databaseMedicManage db;
     private final LiveData<List<Nurse>> allNurses;
     private final LiveData<List<Medication>> allMedications;
     private final LiveData<List<Appointment>> allAppointments; // Added for consistency
 
     public UserRepository(Application application) {
-        databaseMedicManage db = databaseMedicManage.getDatabase(application);
+        databaseMedicManage.getDatabase(application, null);
         studentDAO = db.studentDAO();
         nurseDAO = db.nurseDAO();
         medicationDAO = db.medicationDAO();

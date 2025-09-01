@@ -52,7 +52,7 @@ public class FoodViewActivity extends AppCompatActivity {
         setContentView(R.layout.food_list_view);
 
         //database
-        db = databaseMedicManage.getDatabase(getApplicationContext());
+        databaseMedicManage.getDatabase(getApplicationContext(),null);
 
         // UI Views
         // CHANGED: Find the new views for the custom spinner
