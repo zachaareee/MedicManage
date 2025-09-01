@@ -26,15 +26,15 @@ public class UserViewModel extends AndroidViewModel{
         allMedications = repository.getAllMedications();
     }
     public void insertStudent(Student student){
-        repository.InsertStudent(student);
+        repository.insertStudent(student);
 
     }
     public void insertNurse(Nurse nurse){
-        repository.InsertNurse(nurse);
+        repository.insertNurse(nurse);
 
     }
     public void insertMedication(Medication medication){
-        repository.InsertMedication(medication);
+        repository.insertMedication(medication);
 
     }
     public LiveData<List<Student>> getAllStudents(){

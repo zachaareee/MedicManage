@@ -1,0 +1,224 @@
+package com.example.medmanage.activities;
+
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import com.example.medmanage.R;
+import com.example.medmanage.adapters.DateAdapter;
+import com.example.medmanage.adapters.TimeAdapter;
+import com.example.medmanage.database.databaseMedicManage;
+import com.example.medmanage.model.Appointment;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.ExecutorService;
+import java.util.stream.Collectors;
+
+public class ScheduleAppointmentActivity extends AppCompatActivity {
+
+    public static final String STUDENT_ID_EXTRA = "student_id_extra";
+    private RecyclerView dateRecyclerView, timeSlotsRecyclerView;
+    private Button bookButton, quitButton;
+    private DateAdapter dateAdapter;
+    private TimeAdapter timeAdapter;
+    private Date selectedDate = null;
+    private String selectedTime = null;
+    private int currentStudentId;
+    private databaseMedicManage appDb;
+    private ExecutorService databaseExecutor;
+    private final SimpleDateFormat dbFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.schedule_appointment);
+
+        currentStudentId = 225703262;
+
+        appDb = databaseMedicManage.getDatabase(getApplicationContext());
+        databaseExecutor = databaseMedicManage.databaseWriteExecutor;
+
+        dateRecyclerView = findViewById(R.id.dateRecyclerView);
+        timeSlotsRecyclerView = findViewById(R.id.timeSlotsRecyclerView);
+        bookButton = findViewById(R.id.bookButton);
+        quitButton = findViewById(R.id.quitButton);
+        TextView monthTextView = findViewById(R.id.monthTextView);
+
+        SimpleDateFormat monthFormat = new SimpleDateFormat("MMMM yyyy", Locale.getDefault());
+        monthTextView.setText(monthFormat.format(new Date()));
+
+        // Check if the user already has a booking when the screen opens
+        checkforExistingAppointment();
+
+        bookButton.setOnClickListener(v -> bookAppointment());
+        quitButton.setOnClickListener(v -> showQuitConfirmationDialog());
+    }
+
+    private void checkforExistingAppointment() {
+        final String todayDate = dbFormat.format(new Date());
+        databaseExecutor.execute(() -> {
+            Appointment activeAppointment = appDb.appointmentDAO().getActiveAppointmentForStudent(currentStudentId, todayDate);
+            runOnUiThread(() -> {
+                if (activeAppointment != null) {
+                    // If an appointment exists, show the dialog
+                    showAlreadyBookedDialog();
+                } else {
+                    // If no appointment exists, set up the screen for booking
+                    setupDateRecyclerView();
+                    setupTimeRecyclerView();
+                }
+            });
+        });
+    }
+
+    private void showAlreadyBookedDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.confirmation_dialogue, null); // Reusing your custom dialog layout
+        builder.setView(dialogView);
+        builder.setCancelable(false); // Prevent dismissing by tapping outside
+
+        final TextView message = dialogView.findViewById(R.id.confirmationMessageTextView);
+        final Button positiveButton = dialogView.findViewById(R.id.positiveButton);
+        final Button negativeButton = dialogView.findViewById(R.id.negativeButton);
+        message.setText(R.string.error_existing_booking);
+        positiveButton.setText(R.string.ok);
+
+        // We only need one button, so hide the "No" button
+        negativeButton.setVisibility(View.GONE);
+
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+
+        // When the user clicks "OK", close the activity
+        positiveButton.setOnClickListener(v -> {
+            dialog.dismiss();
+            finish();
+        });
+    }
+
+    private void setupDateRecyclerView() {
+        dateRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        List<Date> dates = generateNextSevenWeekdays();
+        dateAdapter = new DateAdapter(this, dates, date -> {
+            selectedDate = date;
+            selectedTime = null;
+            if (date != null) {
+                fetchBookedSlotsForDate(date);
+            } else {
+                timeAdapter.setBookedTimes(new ArrayList<>());
+            }
+        });
+        dateRecyclerView.setAdapter(dateAdapter);
+    }
+
+    private void setupTimeRecyclerView() {
+        timeSlotsRecyclerView.setLayoutManager(new androidx.recyclerview.widget.GridLayoutManager(this, 3));
+        List<String> times = generateTimeSlots();
+        timeAdapter = new TimeAdapter(this, times, time -> selectedTime = time);
+        timeSlotsRecyclerView.setAdapter(timeAdapter);
+    }
+
+    private void fetchBookedSlotsForDate(Date date) {
+        String dateToQuery = dbFormat.format(date);
+        appDb.appointmentDAO().getAppointmentsByDate(dateToQuery).observe(this, appointmentsOnDate -> {
+            if (appointmentsOnDate != null) {
+                List<String> bookedTimes = appointmentsOnDate.stream()
+                        .map(Appointment::getTime)
+                        .collect(Collectors.toList());
+                timeAdapter.setBookedTimes(bookedTimes);
+            }
+        });
+    }
+
+    private void bookAppointment() {
+        if (selectedDate == null || selectedTime == null) {
+            Toast.makeText(this, R.string.select_date_and_time, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        final String dateToStore = dbFormat.format(selectedDate);
+
+        databaseExecutor.execute(() -> {
+            Appointment existingSlot = appDb.appointmentDAO().getAppointmentByDateTime(dateToStore, selectedTime);
+            if (existingSlot != null) {
+                runOnUiThread(() -> Toast.makeText(this, R.string.slot_unavailable, Toast.LENGTH_SHORT).show());
+                return;
+            }
+
+            final int nurseId = 1001;
+            final int foodId = 1;
+
+            Appointment newAppointment = new Appointment(currentStudentId, nurseId, foodId, dateToStore, selectedTime);
+            appDb.appointmentDAO().insertAppointment(newAppointment);
+
+            runOnUiThread(() -> {
+                Toast.makeText(this, R.string.appointment_booked_success, Toast.LENGTH_SHORT).show();
+                finish();
+            });
+        });
+    }
+
+    private void showQuitConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_quit_schedule, null);
+        builder.setView(dialogView);
+
+        final Button yesButton = dialogView.findViewById(R.id.positiveButton);
+        final Button noButton = dialogView.findViewById(R.id.negativeButton);
+
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+
+        yesButton.setOnClickListener(v -> finish());
+        noButton.setOnClickListener(v -> dialog.dismiss());
+    }
+
+    private List<String> generateTimeSlots() {
+        List<String> timeSlots = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 8);
+        calendar.set(Calendar.MINUTE, 30);
+
+        Calendar endCalendar = Calendar.getInstance();
+        endCalendar.set(Calendar.HOUR_OF_DAY, 15);
+        endCalendar.set(Calendar.MINUTE, 30);
+
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+
+        while (calendar.before(endCalendar) || calendar.equals(endCalendar)) {
+            timeSlots.add(timeFormat.format(calendar.getTime()));
+            calendar.add(Calendar.MINUTE, 30);
+        }
+        return timeSlots;
+    }
+
+    private List<Date> generateNextSevenWeekdays() {
+        List<Date> dateList = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
+
+        if (calendar.get(Calendar.HOUR_OF_DAY) >= 16) {
+            calendar.add(Calendar.DAY_OF_YEAR, 1);
+        }
+
+        while (dateList.size() < 7) {
+            int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+            if (dayOfWeek != Calendar.SATURDAY && dayOfWeek != Calendar.SUNDAY) {
+                dateList.add(calendar.getTime());
+            }
+            calendar.add(Calendar.DAY_OF_YEAR, 1);
+        }
+        return dateList;
+    }
+}

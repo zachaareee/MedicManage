@@ -1,5 +1,6 @@
 package com.example.medmanage.dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -10,21 +11,23 @@ import java.util.List;
 
 @Dao
 public interface AppointmentDAO {
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAppointment(Appointment appointment);
 
-    // Added a @Delete method for consistency
     @Delete
     void deleteAppointment(Appointment appointment);
 
-    @Query("SELECT * FROM appointment")
-    List<Appointment> getAllAppointments();
+    // ADDED: The missing method to get all appointments.
+    @Query("SELECT * FROM appointment ORDER BY date, time ASC")
+    LiveData<List<Appointment>> getAllAppointments();
 
-    // Corrected the WHERE clause to use the method's parameter
-    @Query("SELECT * FROM appointment WHERE appointmentNum = :appointmentNum LIMIT 1")
-    Appointment getAppointmentById(int appointmentNum);
+    @Query("SELECT * FROM appointment WHERE date = :date")
+    LiveData<List<Appointment>> getAppointmentsByDate(String date);
 
-    // Added the necessary method to check for double-bookings
+    @Query("SELECT * FROM appointment WHERE stuNum = :studentId AND date >= :currentDate LIMIT 1")
+    Appointment getActiveAppointmentForStudent(int studentId, String currentDate);
+
     @Query("SELECT * FROM appointment WHERE date = :date AND time = :time LIMIT 1")
     Appointment getAppointmentByDateTime(String date, String time);
 }
