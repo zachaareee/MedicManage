@@ -130,7 +130,7 @@
             <string name = "appointment_details">Appointments by Time</string>
         <string name="date_placeholder">Date</string>
         <string name="time_placeholder">Time</string>
-        <string name="no_appointment_scheduled">No Appointment Scheduled</string>
+
         <string name="home_tab">Home</string>
         <string name="schedule_tab">Schedule</string>
         <string name="profile_tab">Profile</string>
@@ -146,4 +146,9 @@
     <string name="select_appointment">Select Appointment from list</string>
     <string name="schedule_appointment">Schedule Appointment</string>
     <string name="error_existing_booking"> <b>You already have an active booking.</b> Please cancel your current appointment to schedule a new one.</string>
+    <string name="cancel_appointment_title">Cancel Appointment</string>
+    <string name="cancel_appointment_message">Are you sure you want to permanently cancel this appointment?</string>
+    <string name="appointment_cancelled_success">Your appointment has been successfully canceled.</string>
+    <string name="no_appointment_scheduled">No Appointment Scheduled</string>
+    <string name="cancel_appointment_button_text">Cancel Appointment</string>
 </resources>

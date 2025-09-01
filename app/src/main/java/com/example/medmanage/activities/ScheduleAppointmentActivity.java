@@ -15,6 +15,9 @@ import com.example.medmanage.adapters.DateAdapter;
 import com.example.medmanage.adapters.TimeAdapter;
 import com.example.medmanage.database.databaseMedicManage;
 import com.example.medmanage.model.Appointment;
+import com.example.medmanage.model.Appointment_Medication;
+import com.example.medmanage.model.Medication;
+import com.example.medmanage.model.Student;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -42,8 +45,20 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.schedule_appointment);
-
+        //FOR TESTING (hi phumi)
         currentStudentId = 225703262;
+
+/*
+        // Get the logged-in student's ID passed from the previous activity.
+        currentStudentId = getIntent().getIntExtra(STUDENT_ID_EXTRA, -1);
+        if (currentStudentId == -1) {
+            // If no ID was passed, show an error and close the activity.
+            Toast.makeText(this, "Error: User not identified.", Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
+        */
+
 
         appDb = databaseMedicManage.getDatabase(getApplicationContext());
         databaseExecutor = databaseMedicManage.databaseWriteExecutor;
@@ -57,54 +72,12 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
         SimpleDateFormat monthFormat = new SimpleDateFormat("MMMM yyyy", Locale.getDefault());
         monthTextView.setText(monthFormat.format(new Date()));
 
-        // Check if the user already has a booking when the screen opens
-        checkforExistingAppointment();
+        setupDateRecyclerView();
+        setupTimeRecyclerView();
+        setTimeSlotsActive(false);
 
         bookButton.setOnClickListener(v -> bookAppointment());
         quitButton.setOnClickListener(v -> showQuitConfirmationDialog());
-    }
-
-    private void checkforExistingAppointment() {
-        final String todayDate = dbFormat.format(new Date());
-        databaseExecutor.execute(() -> {
-            Appointment activeAppointment = appDb.appointmentDAO().getActiveAppointmentForStudent(currentStudentId, todayDate);
-            runOnUiThread(() -> {
-                if (activeAppointment != null) {
-                    // If an appointment exists, show the dialog
-                    showAlreadyBookedDialog();
-                } else {
-                    // If no appointment exists, set up the screen for booking
-                    setupDateRecyclerView();
-                    setupTimeRecyclerView();
-                }
-            });
-        });
-    }
-
-    private void showAlreadyBookedDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.confirmation_dialogue, null); // Reusing your custom dialog layout
-        builder.setView(dialogView);
-        builder.setCancelable(false); // Prevent dismissing by tapping outside
-
-        final TextView message = dialogView.findViewById(R.id.confirmationMessageTextView);
-        final Button positiveButton = dialogView.findViewById(R.id.positiveButton);
-        final Button negativeButton = dialogView.findViewById(R.id.negativeButton);
-        message.setText(R.string.error_existing_booking);
-        positiveButton.setText(R.string.ok);
-
-        // We only need one button, so hide the "No" button
-        negativeButton.setVisibility(View.GONE);
-
-        final AlertDialog dialog = builder.create();
-        dialog.show();
-
-        // When the user clicks "OK", close the activity
-        positiveButton.setOnClickListener(v -> {
-            dialog.dismiss();
-            finish();
-        });
     }
 
     private void setupDateRecyclerView() {
@@ -115,8 +88,10 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
             selectedTime = null;
             if (date != null) {
                 fetchBookedSlotsForDate(date);
+                setTimeSlotsActive(true);
             } else {
                 timeAdapter.setBookedTimes(new ArrayList<>());
+                setTimeSlotsActive(false);
             }
         });
         dateRecyclerView.setAdapter(dateAdapter);
@@ -127,6 +102,10 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
         List<String> times = generateTimeSlots();
         timeAdapter = new TimeAdapter(this, times, time -> selectedTime = time);
         timeSlotsRecyclerView.setAdapter(timeAdapter);
+    }
+
+    private void setTimeSlotsActive(boolean isActive) {
+        timeSlotsRecyclerView.setAlpha(isActive ? 1.0f : 0.4f);
     }
 
     private void fetchBookedSlotsForDate(Date date) {
@@ -148,8 +127,15 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
         }
 
         final String dateToStore = dbFormat.format(selectedDate);
+        final String todayDate = dbFormat.format(new Date());
 
         databaseExecutor.execute(() -> {
+            Appointment activeAppointment = appDb.appointmentDAO().getActiveAppointmentForStudent(currentStudentId, todayDate);
+            if (activeAppointment != null) {
+                runOnUiThread(() -> Toast.makeText(this, R.string.error_existing_booking, Toast.LENGTH_LONG).show());
+                return;
+            }
+
             Appointment existingSlot = appDb.appointmentDAO().getAppointmentByDateTime(dateToStore, selectedTime);
             if (existingSlot != null) {
                 runOnUiThread(() -> Toast.makeText(this, R.string.slot_unavailable, Toast.LENGTH_SHORT).show());
@@ -161,6 +147,19 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
 
             Appointment newAppointment = new Appointment(currentStudentId, nurseId, foodId, dateToStore, selectedTime);
             appDb.appointmentDAO().insertAppointment(newAppointment);
+
+            // Get the appointment we just created to link its medication
+            Appointment insertedAppointment = appDb.appointmentDAO().getAppointmentByDateTime(dateToStore, selectedTime);
+            if (insertedAppointment != null) {
+                Student student = appDb.studentDAO().getStudentById(currentStudentId);
+                if (student != null && student.getMedReq() != null && !student.getMedReq().isEmpty()) {
+                    Medication requiredMed = appDb.medicationDAO().getMedicationByName("%" + student.getMedReq().trim() + "%");
+                    if (requiredMed != null) {
+                        Appointment_Medication newLink = new Appointment_Medication(insertedAppointment.getAppointmentNum(), requiredMed.getMedID());
+                        appDb.appointmentMedicationDAO().insert(newLink);
+                    }
+                }
+            }
 
             runOnUiThread(() -> {
                 Toast.makeText(this, R.string.appointment_booked_success, Toast.LENGTH_SHORT).show();

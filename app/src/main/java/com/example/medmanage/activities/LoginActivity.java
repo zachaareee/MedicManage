@@ -147,7 +147,7 @@ public class LoginActivity extends AppCompatActivity {
                 loggedInUser = db.nurseDAO().getNurseByUsernameAndPassword(username, password);
             } else if (selectedUserTypeId == R.id.student_radio_btn) {
                 // Try to log in as a Student
-                loggedInUser = db.studentDAO().getNStudentByUsernameAndPassword(username, password);
+                loggedInUser = db.studentDAO().getStudentByUsernameAndPassword(username, password);
             }
 
             final Object finalLoggedInUser = loggedInUser;
