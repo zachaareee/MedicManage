@@ -57,12 +57,7 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
         }
 
 
-        appDb= databaseMedicManage.getDatabase(getApplicationContext(), new databaseMedicManage.DatabaseCallback() {
-            @Override
-            public void onDatabaseReady(databaseMedicManage database) {
-                appDb = database;
-            }
-        });
+        appDb= databaseMedicManage.getDatabase(getApplicationContext());
 
         dateRecyclerView = findViewById(R.id.dateRecyclerView);
         timeSlotsRecyclerView = findViewById(R.id.timeSlotsRecyclerView);

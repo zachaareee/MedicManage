@@ -1,0 +1,351 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "57d45645f22ae97bc43f6bd205de371c",
+    "entities": [
+      {
+        "tableName": "Student",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`stuNum` INTEGER NOT NULL, `stuName` TEXT, `stuSurname` TEXT, `userName` TEXT, `foodReq` TEXT, `medReq` TEXT, `password` TEXT, PRIMARY KEY(`stuNum`))",
+        "fields": [
+          {
+            "fieldPath": "stuNum",
+            "columnName": "stuNum",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "stuName",
+            "columnName": "stuName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "stuSurname",
+            "columnName": "stuSurname",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "userName",
+            "columnName": "userName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "foodReq",
+            "columnName": "foodReq",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "medReq",
+            "columnName": "medReq",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "password",
+            "columnName": "password",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "stuNum"
+          ]
+        }
+      },
+      {
+        "tableName": "Nurse",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`empNum` INTEGER NOT NULL, `empName` TEXT, `empSurname` TEXT, `empUsername` TEXT, `password` TEXT, PRIMARY KEY(`empNum`))",
+        "fields": [
+          {
+            "fieldPath": "empNum",
+            "columnName": "empNum",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "empName",
+            "columnName": "empName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "empSurname",
+            "columnName": "empSurname",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "empUserName",
+            "columnName": "empUsername",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "password",
+            "columnName": "password",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "empNum"
+          ]
+        }
+      },
+      {
+        "tableName": "medication",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`medID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `medName` TEXT, `brand` TEXT, `dosage` TEXT, `quantityOnHand` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "medID",
+            "columnName": "medID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "medName",
+            "columnName": "medName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "brand",
+            "columnName": "brand",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "dosage",
+            "columnName": "dosage",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "quantityOnHand",
+            "columnName": "quantityOnHand",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "medID"
+          ]
+        }
+      },
+      {
+        "tableName": "Food",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`foodID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `Brand` TEXT, `Name` TEXT, `qty` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "foodID",
+            "columnName": "foodID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "foodBrand",
+            "columnName": "Brand",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "foodName",
+            "columnName": "Name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "quantity",
+            "columnName": "qty",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "foodID"
+          ]
+        }
+      },
+      {
+        "tableName": "Appointment",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`appointmentNum` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `stuNum` INTEGER NOT NULL, `empNum` INTEGER NOT NULL, `foodID` INTEGER NOT NULL, `date` TEXT, `time` TEXT, FOREIGN KEY(`stuNum`) REFERENCES `Student`(`stuNum`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`empNum`) REFERENCES `Nurse`(`empNum`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`foodID`) REFERENCES `Food`(`foodID`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "appointmentNum",
+            "columnName": "appointmentNum",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "stuNum",
+            "columnName": "stuNum",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "empNum",
+            "columnName": "empNum",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "foodID",
+            "columnName": "foodID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "date",
+            "columnName": "date",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "time",
+            "columnName": "time",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "appointmentNum"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_Appointment_stuNum",
+            "unique": false,
+            "columnNames": [
+              "stuNum"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Appointment_stuNum` ON `${TABLE_NAME}` (`stuNum`)"
+          },
+          {
+            "name": "index_Appointment_empNum",
+            "unique": false,
+            "columnNames": [
+              "empNum"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Appointment_empNum` ON `${TABLE_NAME}` (`empNum`)"
+          },
+          {
+            "name": "index_Appointment_foodID",
+            "unique": false,
+            "columnNames": [
+              "foodID"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Appointment_foodID` ON `${TABLE_NAME}` (`foodID`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "Student",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "stuNum"
+            ],
+            "referencedColumns": [
+              "stuNum"
+            ]
+          },
+          {
+            "table": "Nurse",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "empNum"
+            ],
+            "referencedColumns": [
+              "empNum"
+            ]
+          },
+          {
+            "table": "Food",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "foodID"
+            ],
+            "referencedColumns": [
+              "foodID"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "appointment_medication",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`appointmentNum` INTEGER NOT NULL, `medID` INTEGER NOT NULL, PRIMARY KEY(`appointmentNum`, `medID`), FOREIGN KEY(`appointmentNum`) REFERENCES `Appointment`(`appointmentNum`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`medID`) REFERENCES `medication`(`medID`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "appointmentNum",
+            "columnName": "appointmentNum",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "medID",
+            "columnName": "medID",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "appointmentNum",
+            "medID"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_appointment_medication_appointmentNum",
+            "unique": false,
+            "columnNames": [
+              "appointmentNum"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_appointment_medication_appointmentNum` ON `${TABLE_NAME}` (`appointmentNum`)"
+          },
+          {
+            "name": "index_appointment_medication_medID",
+            "unique": false,
+            "columnNames": [
+              "medID"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_appointment_medication_medID` ON `${TABLE_NAME}` (`medID`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "Appointment",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "appointmentNum"
+            ],
+            "referencedColumns": [
+              "appointmentNum"
+            ]
+          },
+          {
+            "table": "medication",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "medID"
+            ],
+            "referencedColumns": [
+              "medID"
+            ]
+          }
+        ]
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '57d45645f22ae97bc43f6bd205de371c')"
+    ]
+  }
+}

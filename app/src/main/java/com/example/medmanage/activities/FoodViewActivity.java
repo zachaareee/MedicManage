@@ -41,12 +41,8 @@ public class FoodViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.food_list_view);
-        db = databaseMedicManage.getDatabase(getApplicationContext(), new databaseMedicManage.DatabaseCallback() {
-            @Override
-            public void onDatabaseReady(databaseMedicManage database) {
-                db = database;
-            }
-        });
+        db = databaseMedicManage.getDatabase(getApplicationContext());
+
         customSpinner = findViewById(R.id.customSpinner);
         selectedItemTextView = findViewById(R.id.selectedItemTextView);
         nameTextView = findViewById(R.id.nameTextView);

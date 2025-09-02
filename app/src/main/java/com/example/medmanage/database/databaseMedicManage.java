@@ -45,14 +45,7 @@ public abstract class databaseMedicManage extends RoomDatabase {
     public static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-    public interface DatabaseCallback {
-        void onDatabaseReady(databaseMedicManage db);
-    }
-
-    public static databaseMedicManage getDatabase(
-            final Context context,
-            final DatabaseCallback callback
-    ) {
+    public static databaseMedicManage getDatabase(final Context context) {
         if (INSTANCE == null) {
             synchronized (databaseMedicManage.class) {
                 if (INSTANCE == null) {
@@ -61,56 +54,55 @@ public abstract class databaseMedicManage extends RoomDatabase {
                                     databaseMedicManage.class,
                                     "med_manage_database"
                             )
-                            .addCallback(new RoomDatabase.Callback() {
-                                @Override
-                                public void onCreate(@NonNull SupportSQLiteDatabase db) {
-                                    super.onCreate(db);
-                                    databaseWriteExecutor.execute(() -> {
-                                        StudentDAO studentDao = INSTANCE.studentDAO();
-                                        NurseDAO nurseDao = INSTANCE.nurseDAO();
-                                        FoodDAO foodDao = INSTANCE.foodDAO();
-                                        MedicationDAO medicationDao = INSTANCE.medicationDAO();
-                                        AppointmentDAO appointmentDAO = INSTANCE.appointmentDAO();
-                                        Appointment_MedicationDAO appointmentMedicationDAO =
-                                                INSTANCE.appointmentMedicationDAO();
-
-                                        // Populate with initial data
-                                        nurseDao.addNurse(new Nurse(1001, "Sara", "Langa", "nurse1", "password"));
-                                        nurseDao.addNurse(new Nurse(1002, "John", "Smith", "nurse2", "securepass"));
-                                        studentDao.addStudent(new Student(227050010, "Phumela", "Mdatyulwa", "student1", "Yes", "Blood Pressure ", "pas123"));
-                                        studentDao.addStudent(new Student(225703262, "Zachary", "Jacobs", "student2", "No", "Diabetes ", "lol29"));
-                                        foodDao.addFood(new Food(1, "Bokomo", "WeetBix", 150));
-                                        foodDao.addFood(new Food(2, "Albany", "White Bread", 80));
-                                        foodDao.addFood(new Food(3, "Albany", "Brown Bread", 200));
-                                        foodDao.addFood(new Food(4, "Clover", "Full Cream Milk", 300));
-                                        foodDao.addFood(new Food(5, "Long Life", "Full Cream Milk", 180));
-                                        foodDao.addFood(new Food(6, "Koo", "Baked Beans", 90));
-                                        foodDao.addFood(new Food(7, "Sasko", "White Flour", 150));
-                                        foodDao.addFood(new Food(8, "Sasko", "Brown Flour", 150));
-                                        foodDao.addFood(new Food(9, "Hullets", "Brown Sugar", 150));
-                                        foodDao.addFood(new Food(10, "HUllets", "White Sugar", 150));
-                                        foodDao.addFood(new Food(11, "Tastic", "Long Grain Rice", 150));
-                                        foodDao.addFood(new Food(12, "IMBO", "Samp", 150));
-                                        foodDao.addFood(new Food(13, "Lucky Star", "Plichards in Tomato", 150));
-                                        foodDao.addFood(new Food(14, "IWISA", "Super Maize Meal", 150));
-                                        foodDao.addFood(new Food(15, "Shoprite Rite Brand", "Sunflower Oil", 110));
-                                        medicationDao.insert(new Medication("Paracetamol", "Panado", "500mg", 100));
-                                        medicationDao.insert(new Medication("Ibuprofen", "Advil", "200mg", 50));
-                                        appointmentDAO.insertAppointment(new Appointment(227050010, 1001, 6, "2025-09-15", "10:30"));
-                                        appointmentDAO.insertAppointment(new Appointment(225703262, 1002, 12, "2025-09-15", "10:30"));
-                                    });
-                                }
-
-                                @Override
-                                public void onOpen(@NonNull SupportSQLiteDatabase db) {
-                                    super.onOpen(db);
-                                    callback.onDatabaseReady(INSTANCE);
-                                }
-                            })
+                            .addCallback(sRoomDatabaseCallback)
                             .build();
                 }
             }
         }
         return INSTANCE;
+    }
+
+    private static RoomDatabase.Callback sRoomDatabaseCallback = new RoomDatabase.Callback() {
+        @Override
+        public void onCreate(@NonNull SupportSQLiteDatabase db) {
+            super.onCreate(db);
+            databaseWriteExecutor.execute(() -> {
+                // Populate the database with initial data on creation
+                populateDatabase(INSTANCE);
+            });
+        }
+    };
+
+    private static void populateDatabase(databaseMedicManage db) {
+        StudentDAO studentDao = db.studentDAO();
+        NurseDAO nurseDao = db.nurseDAO();
+        FoodDAO foodDao = db.foodDAO();
+        MedicationDAO medicationDao = db.medicationDAO();
+        AppointmentDAO appointmentDAO = db.appointmentDAO();
+
+        // Populate with initial data
+        nurseDao.addNurse(new Nurse(1001, "Sara", "Langa", "nurse1", "password"));
+        nurseDao.addNurse(new Nurse(1002, "John", "Smith", "nurse2", "securepass"));
+        studentDao.addStudent(new Student(227050010, "Phumela", "Mdatyulwa", "student1", "Yes", "Blood Pressure ", "pas123"));
+        studentDao.addStudent(new Student(225703262, "Zachary", "Jacobs", "student2", "No", "Diabetes ", "lol29"));
+        foodDao.addFood(new Food(1, "Bokomo", "WeetBix", 150));
+        foodDao.addFood(new Food(2, "Albany", "White Bread", 80));
+        foodDao.addFood(new Food(3, "Albany", "Brown Bread", 200));
+        foodDao.addFood(new Food(4, "Clover", "Full Cream Milk", 300));
+        foodDao.addFood(new Food(5, "Long Life", "Full Cream Milk", 180));
+        foodDao.addFood(new Food(6, "Koo", "Baked Beans", 90));
+        foodDao.addFood(new Food(7, "Sasko", "White Flour", 150));
+        foodDao.addFood(new Food(8, "Sasko", "Brown Flour", 150));
+        foodDao.addFood(new Food(9, "Hullets", "Brown Sugar", 150));
+        foodDao.addFood(new Food(10, "HUllets", "White Sugar", 150));
+        foodDao.addFood(new Food(11, "Tastic", "Long Grain Rice", 150));
+        foodDao.addFood(new Food(12, "IMBO", "Samp", 150));
+        foodDao.addFood(new Food(13, "Lucky Star", "Plichards in Tomato", 150));
+        foodDao.addFood(new Food(14, "IWISA", "Super Maize Meal", 150));
+        foodDao.addFood(new Food(15, "Shoprite Rite Brand", "Sunflower Oil", 110));
+        medicationDao.insert(new Medication("Paracetamol", "Panado", "500mg", 100));
+        medicationDao.insert(new Medication("Ibuprofen", "Advil", "200mg", 50));
+        appointmentDAO.insertAppointment(new Appointment(227050010, 1001, 6, "2025-09-15", "10:30"));
+        appointmentDAO.insertAppointment(new Appointment(225703262, 1002, 12, "2025-09-15", "10:30"));
     }
 }

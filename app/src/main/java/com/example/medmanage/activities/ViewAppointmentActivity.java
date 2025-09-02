@@ -54,15 +54,8 @@ public class ViewAppointmentActivity extends AppCompatActivity {
         }
 
         // This is the key change: We use a callback to ensure the DB is ready before we load data.
-        databaseMedicManage.getDatabase(getApplicationContext(), new databaseMedicManage.DatabaseCallback() {
-            @Override
-            public void onDatabaseReady(databaseMedicManage db) {
-                appDb = db;
-                databaseExecutor = databaseMedicManage.databaseWriteExecutor;
-                // Now that the database is guaranteed to be ready, we can load the data
-                loadAppointmentData();
-            }
-        });
+        databaseMedicManage.getDatabase(getApplicationContext());
+
 
         appointmentDetailsContainer = findViewById(R.id.appointmentDetailsContainer);
         noAppointmentText = findViewById(R.id.noAppointmentText);

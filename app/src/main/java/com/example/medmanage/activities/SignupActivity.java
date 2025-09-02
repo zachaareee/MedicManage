@@ -43,14 +43,7 @@ public class SignupActivity extends AppCompatActivity {
 
         // CORRECT WAY to get the database instance
         // This makes sure `db` is not null when you need it.
-        databaseMedicManage.getDatabase(getApplicationContext(), new databaseMedicManage.DatabaseCallback() {
-            @Override
-            public void onDatabaseReady(databaseMedicManage database) {
-                db = database;
-            }
-        });
-
-        initializeViews();
+        databaseMedicManage.getDatabase(getApplicationContext());
         setupListeners();
     }
 

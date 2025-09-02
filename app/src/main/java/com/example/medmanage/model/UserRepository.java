@@ -25,7 +25,7 @@ public class UserRepository {
     private final LiveData<List<Appointment>> allAppointments; // Added for consistency
 
     public UserRepository(Application application) {
-        databaseMedicManage.getDatabase(application, null);
+        databaseMedicManage.getDatabase(application);
         studentDAO = db.studentDAO();
         nurseDAO = db.nurseDAO();
         medicationDAO = db.medicationDAO();

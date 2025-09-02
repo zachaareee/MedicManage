@@ -19,7 +19,7 @@ public class UserViewModel extends AndroidViewModel{
 
     public UserViewModel(@NonNull Application application) {
         super(application);
-        databaseMedicManage db = databaseMedicManage.getDatabase(application,null);
+        databaseMedicManage db = databaseMedicManage.getDatabase(application);
         repository = new UserRepository(application);
         allStudents = repository.getAllStudents();
         allNurses = repository.getAllNurses();
