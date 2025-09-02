@@ -39,8 +39,12 @@ public class ViewMedicationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_medication);
 
-        databaseMedicManage.getDatabase(getApplicationContext(),null);
-        databaseExecutor = databaseMedicManage.databaseWriteExecutor;
+        appDb = databaseMedicManage.getDatabase(getApplicationContext(), new databaseMedicManage.DatabaseCallback() {
+            @Override
+            public void onDatabaseReady(databaseMedicManage database) {
+                appDb = database;
+            }
+        });
 
         medicationSpinner = findViewById(R.id.medicationSpinner);
         brandSpinner = findViewById(R.id.brandSpinner);

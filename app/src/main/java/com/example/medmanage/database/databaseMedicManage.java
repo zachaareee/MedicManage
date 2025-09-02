@@ -21,7 +21,17 @@ import com.example.medmanage.model.Student;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Student.class, Nurse.class, Medication.class, Food.class, Appointment.class, Appointment_Medication.class}, version = 3)
+@Database(
+        entities = {
+                Student.class,
+                Nurse.class,
+                Medication.class,
+                Food.class,
+                Appointment.class,
+                Appointment_Medication.class
+        },
+        version = 1
+)
 public abstract class databaseMedicManage extends RoomDatabase {
     public abstract StudentDAO studentDAO();
     public abstract NurseDAO nurseDAO();
@@ -32,34 +42,37 @@ public abstract class databaseMedicManage extends RoomDatabase {
 
     private static volatile databaseMedicManage INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;
-    public static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
+    public static final ExecutorService databaseWriteExecutor =
+            Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-    /**
-     * Interface for a database ready callback.
-     */
     public interface DatabaseCallback {
         void onDatabaseReady(databaseMedicManage db);
     }
 
-    public static databaseMedicManage getDatabase(final Context context, final DatabaseCallback callback) {
+    public static databaseMedicManage getDatabase(
+            final Context context,
+            final DatabaseCallback callback
+    ) {
         if (INSTANCE == null) {
             synchronized (databaseMedicManage.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                                    databaseMedicManage.class, "med_manage_database")
-                            .fallbackToDestructiveMigration()
+                    INSTANCE = Room.databaseBuilder(
+                                    context.getApplicationContext(),
+                                    databaseMedicManage.class,
+                                    "med_manage_database"
+                            )
                             .addCallback(new RoomDatabase.Callback() {
                                 @Override
                                 public void onCreate(@NonNull SupportSQLiteDatabase db) {
                                     super.onCreate(db);
                                     databaseWriteExecutor.execute(() -> {
-                                        // Get DAO objects and populate data
                                         StudentDAO studentDao = INSTANCE.studentDAO();
                                         NurseDAO nurseDao = INSTANCE.nurseDAO();
                                         FoodDAO foodDao = INSTANCE.foodDAO();
                                         MedicationDAO medicationDao = INSTANCE.medicationDAO();
                                         AppointmentDAO appointmentDAO = INSTANCE.appointmentDAO();
-                                        Appointment_MedicationDAO appointmentMedicationDAO = INSTANCE.appointmentMedicationDAO();
+                                        Appointment_MedicationDAO appointmentMedicationDAO =
+                                                INSTANCE.appointmentMedicationDAO();
 
                                         // Populate with initial data
                                         nurseDao.addNurse(new Nurse(1001, "Sara", "Langa", "nurse1", "password"));
@@ -84,6 +97,7 @@ public abstract class databaseMedicManage extends RoomDatabase {
                                         medicationDao.insert(new Medication("Paracetamol", "Panado", "500mg", 100));
                                         medicationDao.insert(new Medication("Ibuprofen", "Advil", "200mg", 50));
                                         appointmentDAO.insertAppointment(new Appointment(227050010, 1001, 6, "2025-09-15", "10:30"));
+                                        appointmentDAO.insertAppointment(new Appointment(225703262, 1002, 12, "2025-09-15", "10:30"));
                                     });
                                 }
 
@@ -92,7 +106,8 @@ public abstract class databaseMedicManage extends RoomDatabase {
                                     super.onOpen(db);
                                     callback.onDatabaseReady(INSTANCE);
                                 }
-                            }).build();
+                            })
+                            .build();
                 }
             }
         }

@@ -8,6 +8,20 @@
     android:background="@color/blue"
     tools:context=".activities.DashboardActivity">
 
+    <Button
+        android:id="@+id/profiledetails2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="88dp"
+        android:text="@string/view_profile_details"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintTop_toBottomOf="@+id/reviewAppointmentButton"
+        app:layout_constraintVertical_bias="0.493" />
+
     <TextView
         android:id="@+id/welcomeTextView"
         android:layout_width="wrap_content"
@@ -77,16 +91,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/schedule_appointment"
-        app:layout_constraintBottom_toTopOf="@+id/profiledetails"
+        app:layout_constraintBottom_toTopOf="@+id/reviewAppointmentButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appointmentButton" />
 
     <Button
-        android:id="@+id/profiledetails"
+        android:id="@+id/reviewAppointmentButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/view_profile_details"
+        android:text="@string/review"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

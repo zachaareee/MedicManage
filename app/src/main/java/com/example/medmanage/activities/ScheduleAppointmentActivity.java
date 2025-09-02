@@ -1,3 +1,5 @@
+// File: ScheduleAppointmentActivity.java
+
 package com.example.medmanage.activities;
 
 import android.os.Bundle;
@@ -45,23 +47,22 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.schedule_appointment);
-        //FOR TESTING (hi phumi)
-        currentStudentId = 225703262;
 
-/*
-        // Get the logged-in student's ID passed from the previous activity.
+        // REMOVED FOR TESTING, UNCOMMENTED FOR PRODUCTION:
         currentStudentId = getIntent().getIntExtra(STUDENT_ID_EXTRA, -1);
         if (currentStudentId == -1) {
-            // If no ID was passed, show an error and close the activity.
             Toast.makeText(this, "Error: User not identified.", Toast.LENGTH_LONG).show();
             finish();
             return;
         }
-        */
 
 
-        databaseMedicManage.getDatabase(getApplicationContext(),null);
-        databaseExecutor = databaseMedicManage.databaseWriteExecutor;
+        appDb= databaseMedicManage.getDatabase(getApplicationContext(), new databaseMedicManage.DatabaseCallback() {
+            @Override
+            public void onDatabaseReady(databaseMedicManage database) {
+                appDb = database;
+            }
+        });
 
         dateRecyclerView = findViewById(R.id.dateRecyclerView);
         timeSlotsRecyclerView = findViewById(R.id.timeSlotsRecyclerView);
@@ -130,7 +131,7 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
         final String todayDate = dbFormat.format(new Date());
 
         databaseExecutor.execute(() -> {
-            Appointment activeAppointment = appDb.appointmentDAO().getActiveAppointmentForStudent(currentStudentId, todayDate);
+            Appointment activeAppointment = appDb.appointmentDAO().getActiveAppointmentForStudent(currentStudentId);
             if (activeAppointment != null) {
                 runOnUiThread(() -> Toast.makeText(this, R.string.error_existing_booking, Toast.LENGTH_LONG).show());
                 return;

@@ -83,11 +83,12 @@ public class ViewAppointmentActivity extends AppCompatActivity {
         SimpleDateFormat dbFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         String todayDate = dbFormat.format(new Date());
 
+
         databaseExecutor.execute(() -> {
             try {
                 // Ensure appDb is not null before using it
                 if (appDb != null) {
-                    currentAppointment = appDb.appointmentDAO().getActiveAppointmentForStudent(currentStudentId, todayDate);
+                    currentAppointment = appDb.appointmentDAO().getActiveAppointmentForStudent(currentStudentId);
 
                     if (currentAppointment != null) {
                         Student student = appDb.studentDAO().getStudentById(currentAppointment.getStuNum());
@@ -122,6 +123,7 @@ public class ViewAppointmentActivity extends AppCompatActivity {
                             cancelAppointmentButton.setVisibility(View.GONE);
                         });
                     }
+
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -131,6 +133,7 @@ public class ViewAppointmentActivity extends AppCompatActivity {
             }
         });
     }
+
 
     private void showCancelConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
