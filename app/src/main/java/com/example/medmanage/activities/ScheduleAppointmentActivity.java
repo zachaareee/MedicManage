@@ -46,9 +46,9 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.schedule_appointment);
         //FOR TESTING (hi phumi)
+        currentStudentId = 225703262;
 
-
-
+/*
         // Get the logged-in student's ID passed from the previous activity.
         currentStudentId = getIntent().getIntExtra(STUDENT_ID_EXTRA, -1);
         if (currentStudentId == -1) {
@@ -57,7 +57,7 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
             finish();
             return;
         }
-
+        */
 
 
         appDb = databaseMedicManage.getDatabase(getApplicationContext());
@@ -130,10 +130,18 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
         final String todayDate = dbFormat.format(new Date());
 
         databaseExecutor.execute(() -> {
-            Appointment activeAppointment = appDb.appointmentDAO().getActiveAppointmentForStudent(currentStudentId, todayDate);
-            if (activeAppointment != null) {
-                runOnUiThread(() -> Toast.makeText(this, R.string.error_existing_booking, Toast.LENGTH_LONG).show());
-                return;
+            // Get the latest appointment for the student
+            Appointment latestAppointment = appDb.appointmentDAO().getActiveAppointmentForStudent(currentStudentId);
+
+            // Check if the latest appointment is active (date >= today)
+            if (latestAppointment != null) {
+                String appointmentDate = latestAppointment.getDate();
+
+                // Compare dates lexicographically (since they're in yyyy-MM-dd format)
+                if (appointmentDate.compareTo(todayDate) >= 0) {
+                    runOnUiThread(() -> Toast.makeText(this, R.string.error_existing_booking, Toast.LENGTH_LONG).show());
+                    return;
+                }
             }
 
             Appointment existingSlot = appDb.appointmentDAO().getAppointmentByDateTime(dateToStore, selectedTime);

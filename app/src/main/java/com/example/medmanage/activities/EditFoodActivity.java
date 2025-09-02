@@ -30,8 +30,7 @@ public class EditFoodActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_food);
 
-        db = databaseMedicManage.getDatabase(getApplicationContext());
-
+       db =  databaseMedicManage.getDatabase(getApplicationContext());
         foodNameText = findViewById(R.id.foodNameText);
         quantityTextView = findViewById(R.id.quantityTextView);
         decreaseButton = findViewById(R.id.decreaseButton);

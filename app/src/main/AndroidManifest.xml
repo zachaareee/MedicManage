@@ -38,6 +38,13 @@
         <activity
             android:name=".activities.EditFoodActivity"
             android:exported="false" />
+        <activity
+            android:name=".activities.ViewAppointmentActivity"
+            android:exported="false" />
+        <activity android:name=".activities.ReviewAppointmentActivity"
+            android:exported="false"/>
+        <activity android:name=".activities.ScheduleAppointmentActivity"
+            android:exported="false"/>
 
 
 

@@ -6,7 +6,11 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Transaction;
+
 import com.example.medmanage.model.Appointment;
+import com.example.medmanage.model.AppointmentWithStudent;
+
 import java.util.List;
 
 @Dao
@@ -19,10 +23,13 @@ public interface AppointmentDAO {
     LiveData<List<Appointment>> getAllAppointments();
     @Query("SELECT * FROM appointment WHERE date = :date")
     LiveData<List<Appointment>> getAppointmentsByDate(String date);
-    @Query("SELECT * FROM appointment WHERE stuNum = :studentId AND date >= :currentDate LIMIT 1")
-    Appointment getActiveAppointmentForStudent(int studentId, String currentDate);
+    @Query("SELECT * FROM appointment WHERE stuNum = :studentId ORDER BY date  DESC,time DESC LIMIT 1")
+    Appointment getActiveAppointmentForStudent(int studentId);
     @Query("SELECT * FROM appointment WHERE date = :date AND time = :time LIMIT 1")
     Appointment getAppointmentByDateTime(String date, String time);
     @Query("SELECT * FROM Appointment WHERE appointmentNum = :appointmentId LIMIT 1")
     Appointment getAppointmentById(int appointmentId);
+    @Transaction
+    @Query("SELECT * FROM Appointment ORDER BY date, time")
+    LiveData<List<AppointmentWithStudent>> getAllAppointmentsWithStudents();
 }

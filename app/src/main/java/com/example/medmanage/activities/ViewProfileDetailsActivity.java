@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -36,7 +37,7 @@ public class ViewProfileDetailsActivity extends AppCompatActivity {
         initializeViews();
 
         updateButton.setOnClickListener(v -> openUpdateActivity());
-        deleteButton.setOnClickListener(v -> showDeleteConfirmationDialog());
+        deleteButton.setOnClickListener(v -> deleteUser());
     }
 
     @Override
@@ -115,30 +116,37 @@ public class ViewProfileDetailsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void showDeleteConfirmationDialog() {
-        new AlertDialog.Builder(this)
-                .setTitle("Delete Account")
-                .setMessage("Are you sure you want to permanently delete your account?")
-                .setPositiveButton("Yes, Delete", (dialog, which) -> deleteUser())
-                .setNegativeButton("No", null)
-                .show();
-    }
-
     private void deleteUser() {
-        ExecutorService executor = databaseMedicManage.databaseWriteExecutor;
-        executor.execute(() -> {
-            if (currentUser instanceof Student) {
-                db.studentDAO().updateStudent((Student) currentUser);
-            } else if (currentUser instanceof Nurse) {
-                db.nurseDAO().deleteNurse((Nurse) currentUser);
-            }
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_delete_account, null);
+        builder.setView(dialogView);
 
-            runOnUiThread(() -> {
-                Toast.makeText(this, "Account deleted successfully.", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(this, LoginActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                finish();
+        final Button negativeButton = dialogView.findViewById(R.id.negativeButton);
+        final Button positiveButton = dialogView.findViewById(R.id.positiveButton);
+
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+
+        negativeButton.setOnClickListener(v -> dialog.dismiss());
+
+        positiveButton.setOnClickListener(v -> {
+            dialog.dismiss();
+            ExecutorService executor = databaseMedicManage.databaseWriteExecutor;
+            executor.execute(() -> {
+                if (currentUser instanceof Student) {
+                    db.studentDAO().deleteStudent((Student) currentUser);
+                } else if (currentUser instanceof Nurse) {
+                    db.nurseDAO().deleteNurse((Nurse) currentUser);
+                }
+
+                runOnUiThread(() -> {
+                    Toast.makeText(this, "Account deleted successfully.", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(this, LoginActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                });
             });
         });
     }

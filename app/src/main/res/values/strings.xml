@@ -130,6 +130,12 @@
             <string name = "appointment_details">Appointments by Time</string>
         <string name="date_placeholder">Date</string>
         <string name="time_placeholder">Time</string>
+    <string name="not_available">Not Available</string>
+    <string name="student_number_label">Student Number</string>
+    <string name="medication_requirement_label">Medication</string>
+    <string name="appointment_date_label">Appointment Date</string>
+    <string name="review">Review Appointment</string>
+    <string name="no_appointments_found">No Appointments Found</string>
 
         <string name="home_tab">Home</string>
         <string name="schedule_tab">Schedule</string>
@@ -138,7 +144,7 @@
     <string name="student_num">Student Number</string>
     <string name="date">Date</string>
 <string name="appointment_by_time">Appointments by Time</string>
-
+    <string name="delete_account_message">Are you sure you want to permanently delete your account? This action cannot be undone.</string>
     <string name="medication">Medication</string>
     <string name="appointment">Appointment</string>
     <string name="dashboard"> Dashboard</string>

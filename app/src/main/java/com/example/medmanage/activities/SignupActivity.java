@@ -1,3 +1,5 @@
+// File: SignupActivity.java
+
 package com.example.medmanage.activities;
 
 import android.os.Bundle;
@@ -39,8 +41,9 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_profile);
 
-        db = databaseMedicManage.getDatabase(getApplicationContext());
-        initializeViews();
+        // CORRECT WAY to get the database instance
+        // This makes sure `db` is not null when you need it.
+        databaseMedicManage.getDatabase(getApplicationContext());
         setupListeners();
     }
 
@@ -86,10 +89,17 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     private void registerUser() {
+        // ... (rest of the method is unchanged)
         int selectedUserTypeId = userTypeRadioGroup.getCheckedRadioButtonId();
 
         if (selectedUserTypeId == -1) {
             Toast.makeText(this, "Please select a user type", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Ensure db is not null before proceeding
+        if (db == null) {
+            Toast.makeText(this, "Database is not yet ready. Please try again.", Toast.LENGTH_SHORT).show();
             return;
         }
 

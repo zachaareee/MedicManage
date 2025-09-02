@@ -53,6 +53,7 @@ public class ViewAppointmentActivity extends AppCompatActivity {
             return;
         }
 
+        // Initialize database and executor
         appDb = databaseMedicManage.getDatabase(getApplicationContext());
         databaseExecutor = databaseMedicManage.databaseWriteExecutor;
 
@@ -64,8 +65,6 @@ public class ViewAppointmentActivity extends AppCompatActivity {
         timeValue = findViewById(R.id.timeValue);
         cancelAppointmentButton = findViewById(R.id.cancelAppointmentButton);
 
-        loadAppointmentData();
-
         cancelAppointmentButton.setOnClickListener(v -> {
             if (currentAppointment != null) {
                 showCancelConfirmationDialog();
@@ -73,13 +72,17 @@ public class ViewAppointmentActivity extends AppCompatActivity {
         });
     }
 
-    private void loadAppointmentData() {
-        SimpleDateFormat dbFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        String todayDate = dbFormat.format(new Date());
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadAppointmentData();
+    }
 
+    private void loadAppointmentData() {
         databaseExecutor.execute(() -> {
             try {
-                currentAppointment = appDb.appointmentDAO().getActiveAppointmentForStudent(currentStudentId, todayDate);
+                // We no longer need to check if appDb is null here because we initialize it in onCreate.
+                currentAppointment = appDb.appointmentDAO().getActiveAppointmentForStudent(currentStudentId);
 
                 if (currentAppointment != null) {
                     Student student = appDb.studentDAO().getStudentById(currentAppointment.getStuNum());
