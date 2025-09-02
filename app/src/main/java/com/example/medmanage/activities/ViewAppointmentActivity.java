@@ -53,9 +53,9 @@ public class ViewAppointmentActivity extends AppCompatActivity {
             return;
         }
 
-        // This is the key change: We use a callback to ensure the DB is ready before we load data.
-        databaseMedicManage.getDatabase(getApplicationContext());
-
+        // Initialize database and executor
+        appDb = databaseMedicManage.getDatabase(getApplicationContext());
+        databaseExecutor = databaseMedicManage.databaseWriteExecutor;
 
         appointmentDetailsContainer = findViewById(R.id.appointmentDetailsContainer);
         noAppointmentText = findViewById(R.id.noAppointmentText);
@@ -72,51 +72,50 @@ public class ViewAppointmentActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadAppointmentData();
+    }
+
     private void loadAppointmentData() {
-        SimpleDateFormat dbFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        String todayDate = dbFormat.format(new Date());
-
-
         databaseExecutor.execute(() -> {
             try {
-                // Ensure appDb is not null before using it
-                if (appDb != null) {
-                    currentAppointment = appDb.appointmentDAO().getActiveAppointmentForStudent(currentStudentId);
+                // We no longer need to check if appDb is null here because we initialize it in onCreate.
+                currentAppointment = appDb.appointmentDAO().getActiveAppointmentForStudent(currentStudentId);
 
-                    if (currentAppointment != null) {
-                        Student student = appDb.studentDAO().getStudentById(currentAppointment.getStuNum());
-                        String foodRequirement = student != null ? student.getFoodReq() : "N/A";
+                if (currentAppointment != null) {
+                    Student student = appDb.studentDAO().getStudentById(currentAppointment.getStuNum());
+                    String foodRequirement = student != null ? student.getFoodReq() : "N/A";
 
-                        List<Integer> medIds = appDb.appointmentMedicationDAO().getMedicationIdsForAppointment(currentAppointment.getAppointmentNum());
-                        String medicationNames = "None";
-                        if (medIds != null && !medIds.isEmpty()) {
-                            List<Medication> medications = appDb.medicationDAO().getMedicationsByIds(medIds);
-                            if (medications != null) {
-                                medicationNames = medications.stream()
-                                        .map(Medication::getMedName)
-                                        .collect(Collectors.joining(", "));
-                            }
+                    List<Integer> medIds = appDb.appointmentMedicationDAO().getMedicationIdsForAppointment(currentAppointment.getAppointmentNum());
+                    String medicationNames = "None";
+                    if (medIds != null && !medIds.isEmpty()) {
+                        List<Medication> medications = appDb.medicationDAO().getMedicationsByIds(medIds);
+                        if (medications != null) {
+                            medicationNames = medications.stream()
+                                    .map(Medication::getMedName)
+                                    .collect(Collectors.joining(", "));
                         }
-
-                        String finalMedicationNames = medicationNames;
-                        runOnUiThread(() -> {
-                            appointmentDetailsContainer.setVisibility(View.VISIBLE);
-                            noAppointmentText.setVisibility(View.GONE);
-                            cancelAppointmentButton.setVisibility(View.VISIBLE);
-
-                            medicationValue.setText(TextUtils.isEmpty(finalMedicationNames) ? "None" : finalMedicationNames);
-                            foodValue.setText(foodRequirement);
-                            dateValue.setText(currentAppointment.getDate());
-                            timeValue.setText(currentAppointment.getTime());
-                        });
-                    } else {
-                        runOnUiThread(() -> {
-                            appointmentDetailsContainer.setVisibility(View.GONE);
-                            noAppointmentText.setVisibility(View.VISIBLE);
-                            cancelAppointmentButton.setVisibility(View.GONE);
-                        });
                     }
 
+                    String finalMedicationNames = medicationNames;
+                    runOnUiThread(() -> {
+                        appointmentDetailsContainer.setVisibility(View.VISIBLE);
+                        noAppointmentText.setVisibility(View.GONE);
+                        cancelAppointmentButton.setVisibility(View.VISIBLE);
+
+                        medicationValue.setText(TextUtils.isEmpty(finalMedicationNames) ? "None" : finalMedicationNames);
+                        foodValue.setText(foodRequirement);
+                        dateValue.setText(currentAppointment.getDate());
+                        timeValue.setText(currentAppointment.getTime());
+                    });
+                } else {
+                    runOnUiThread(() -> {
+                        appointmentDetailsContainer.setVisibility(View.GONE);
+                        noAppointmentText.setVisibility(View.VISIBLE);
+                        cancelAppointmentButton.setVisibility(View.GONE);
+                    });
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -126,7 +125,6 @@ public class ViewAppointmentActivity extends AppCompatActivity {
             }
         });
     }
-
 
     private void showCancelConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

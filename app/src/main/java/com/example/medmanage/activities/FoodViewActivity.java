@@ -3,7 +3,6 @@ package com.example.medmanage.activities;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.PopupMenu;
@@ -55,13 +54,7 @@ public class FoodViewActivity extends AppCompatActivity {
         detailsCard = findViewById(R.id.detailsCard);
         editButton = findViewById(R.id.editButton);
 
-        String userType = getIntent().getStringExtra("USER_TYPE");
 
-        if ("Administrator".equalsIgnoreCase(userType) || "nurse".equalsIgnoreCase(userType)) {
-            editButton.setVisibility(View.VISIBLE);
-        } else {
-            editButton.setVisibility(View.GONE);
-        }
 
         editButton.setOnClickListener(v -> {
             if (selectedFood != null) {
@@ -72,7 +65,13 @@ public class FoodViewActivity extends AppCompatActivity {
                 Toast.makeText(this, "Please select a food item first", Toast.LENGTH_SHORT).show();
             }
         });
+        String userType = getIntent().getStringExtra("USER_TYPE");
 
+        if ("student".equalsIgnoreCase(userType)) {
+            editButton.setVisibility(View.GONE);
+        } else if ("nurse".equalsIgnoreCase(userType)) {
+           editButton.setVisibility(View.VISIBLE);
+        }
         fetchFoodData();
     }
 

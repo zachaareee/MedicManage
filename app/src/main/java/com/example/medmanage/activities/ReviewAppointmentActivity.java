@@ -1,5 +1,3 @@
-// File: ReviewAppointmentActivity.java
-
 package com.example.medmanage.activities;
 
 import android.annotation.SuppressLint;
@@ -21,9 +19,6 @@ import com.example.medmanage.model.AppointmentWithStudent;
 import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 
 public class ReviewAppointmentActivity extends AppCompatActivity {
 
@@ -42,7 +37,21 @@ public class ReviewAppointmentActivity extends AppCompatActivity {
     private databaseMedicManage appDb;
     private LiveData<List<AppointmentWithStudent>> appointmentsLiveData;
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.review_appointment);
 
+        initializeViews();
+
+        appDb = databaseMedicManage.getDatabase(getApplicationContext());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fetchAppointmentData();
+    }
 
     private void initializeViews() {
         customSpinner = findViewById(R.id.customSpinner);
@@ -122,12 +131,12 @@ public class ReviewAppointmentActivity extends AppCompatActivity {
         });
     }
 
-    @SuppressLint("StringFormatInvalid")
+    // Removed the StringFormatInvalid lint suppression as it's no longer needed
     private void updateDetails(AppointmentWithStudent appointmentWithStudent) {
         if (appointmentWithStudent != null) {
-            nameTextView.setText(getString(R.string.student_number_label, String.valueOf(appointmentWithStudent.student.getStuNum())));
-            typeTextView.setText(getString(R.string.medication_requirement_label, appointmentWithStudent.student.getMedReq()));
-            quantityTextView.setText(getString(R.string.appointment_date_label, appointmentWithStudent.appointment.getDate()));
+            nameTextView.setText("Student Number: " + appointmentWithStudent.student.getStuNum());
+            typeTextView.setText("Medication Requirement: " + appointmentWithStudent.student.getMedReq());
+            quantityTextView.setText("Appointment Date: " + appointmentWithStudent.appointment.getDate());
         } else {
             nameTextView.setText(R.string.not_available);
             typeTextView.setText(R.string.not_available);
