@@ -17,6 +17,8 @@ public class UserViewModel extends AndroidViewModel{
     private final LiveData<List<Nurse>> allNurses;
     private final LiveData<List<Medication>> allMedications;
 
+    private final LiveData<List<Appointment>> allAppointments;
+
     public UserViewModel(@NonNull Application application) {
         super(application);
         databaseMedicManage db = databaseMedicManage.getDatabase(application);
@@ -24,6 +26,7 @@ public class UserViewModel extends AndroidViewModel{
         allStudents = repository.getAllStudents();
         allNurses = repository.getAllNurses();
         allMedications = repository.getAllMedications();
+        allAppointments = repository.getAllAppointments();
     }
     public void insertStudent(Student student){
         repository.insertStudent(student);
@@ -37,13 +40,72 @@ public class UserViewModel extends AndroidViewModel{
         repository.insertMedication(medication);
 
     }
+
+    public void insertFood(Food food) {
+        repository.insertFood(food);
+    }
+
+    public void insertAppointment(Appointment appointment) {
+        repository.insertAppointment(appointment);
+    }
+
+    public void updateMedication(Medication medication) {
+        repository.updateMedication(medication);
+    }
+
+    public void updateStudent(Student student) {
+        repository.updateStudent(student);
+    }
+
+    public void updateNurse(Nurse nurse) {
+        repository.updateNurse(nurse);
+    }
+
+    public void updateFood(Food food) {
+        repository.updateFood(food);
+    }
+
+    public void deleteMedication(Medication medication) {
+        repository.deleteMedication(medication);
+    }
+
+    public void deleteStudent(Student student) {
+        repository.deleteStudent(student);
+    }
+
+    public void deleteNurse(Nurse nurse) {
+        repository.deleteNurse(nurse);
+    }
+
+    public void deleteFood(Food food) {
+        repository.deleteFood(food);
+    }
+
+    public void deleteAppointment(Appointment appointment) {
+        repository.deleteAppointment(appointment);
+    }
+
     public LiveData<List<Student>> getAllStudents(){
         return allStudents;
     }
     public LiveData<List<Nurse>> getallNurses(){
         return allNurses;
     }
+
+
     public LiveData<List<Medication>> getAllMedications(){
         return allMedications;
+    }
+
+    public LiveData<List<Appointment>> getAllAppointments() {
+        return allAppointments;
+    }
+
+    public Medication getMedicationByName(String name) {
+        return repository.getMedicationByName(name);
+    }
+
+    public Student getStudentByUsername(String username) {
+        return repository.getStudentByUsername(username);
     }
 }

@@ -19,13 +19,13 @@ public class UserRepository {
     private final AppointmentDAO appointmentDAO;
 
     private final LiveData<List<Student>> allStudents;
-    databaseMedicManage db;
+
     private final LiveData<List<Nurse>> allNurses;
     private final LiveData<List<Medication>> allMedications;
     private final LiveData<List<Appointment>> allAppointments; // Added for consistency
 
     public UserRepository(Application application) {
-        databaseMedicManage.getDatabase(application);
+        databaseMedicManage db = databaseMedicManage.getDatabase(application);
         studentDAO = db.studentDAO();
         nurseDAO = db.nurseDAO();
         medicationDAO = db.medicationDAO();
@@ -59,9 +59,55 @@ public class UserRepository {
         databaseMedicManage.databaseWriteExecutor.execute(() -> appointmentDAO.insertAppointment(appointment));
     }
 
+    public void updateMedication(Medication medication) {
+        databaseMedicManage.databaseWriteExecutor.execute(() -> medicationDAO.updateMedication(medication));
+    }
+
+    public void updateStudent(Student student) {
+        databaseMedicManage.databaseWriteExecutor.execute(() -> studentDAO.updateStudent(student));
+    }
+
+    public void updateNurse(Nurse nurse) {
+        databaseMedicManage.databaseWriteExecutor.execute(() -> nurseDAO.updateNurse(nurse));
+    }
+
+    public void updateFood(Food food) {
+        databaseMedicManage.databaseWriteExecutor.execute(() -> foodDAO.updateFood(food));
+    }
+
+    public void deleteMedication(Medication medication) {
+        databaseMedicManage.databaseWriteExecutor.execute(() -> medicationDAO.deleteMedication(medication));
+    }
+
+    public void deleteStudent(Student student) {
+        databaseMedicManage.databaseWriteExecutor.execute(() -> studentDAO.deleteStudent(student));
+    }
+
+    public void deleteNurse(Nurse nurse) {
+        databaseMedicManage.databaseWriteExecutor.execute(() -> nurseDAO.deleteNurse(nurse));
+    }
+
+    public void deleteFood(Food food) {
+        databaseMedicManage.databaseWriteExecutor.execute(() -> foodDAO.deleteFood(food));
+    }
+
+    public void deleteAppointment(Appointment appointment) {
+        databaseMedicManage.databaseWriteExecutor.execute(() -> appointmentDAO.deleteAppointment(appointment));
+    }
+
+
+
     // LiveData getters for observable data
     public LiveData<List<Student>> getAllStudents() { return allStudents; }
     public LiveData<List<Nurse>> getAllNurses() { return allNurses; }
     public LiveData<List<Medication>> getAllMedications() { return allMedications; }
     public LiveData<List<Appointment>> getAllAppointments() { return allAppointments; }
+
+    public Medication getMedicationByName(String name) {
+        return medicationDAO.getMedicationByName(name);
+    }
+
+    public Student getStudentByUsername(String username) {
+        return studentDAO.getStudentByUsername(username);
+    }
 }

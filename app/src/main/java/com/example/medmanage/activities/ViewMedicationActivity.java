@@ -14,12 +14,13 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.medmanage.R;
-import com.example.medmanage.database.databaseMedicManage;
 import com.example.medmanage.model.Medication;
+import com.example.medmanage.model.UserViewModel;
 
-import java.util.concurrent.ExecutorService;
+import java.util.List;
 
 public class ViewMedicationActivity extends AppCompatActivity {
 
@@ -28,18 +29,18 @@ public class ViewMedicationActivity extends AppCompatActivity {
     private Button addButton, updateButton, deleteButton;
     private View brandSpinnerContainer, dosageSpinnerContainer;
 
-    private databaseMedicManage appDb;
-    private ExecutorService databaseExecutor;
-
-    private Medication currentlySelectedMedication;
+    private UserViewModel userViewModel;
     private LiveData<Medication> medicationDetailsLiveData;
+    private Medication currentlySelectedMedication;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_medication);
 
-        appDb = databaseMedicManage.getDatabase(getApplicationContext());
+        // Initialize ViewModel
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+
         medicationSpinner = findViewById(R.id.medicationSpinner);
         brandSpinner = findViewById(R.id.brandSpinner);
         dosageSpinner = findViewById(R.id.dosageSpinner);
@@ -54,10 +55,20 @@ public class ViewMedicationActivity extends AppCompatActivity {
         dosageSpinner.setEnabled(false);
 
         // 1. Load distinct medication names into the first spinner
-        appDb.medicationDAO().getDistinctMedNames().observe(this, medNames -> {
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.custom_spinner_item, medNames);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            medicationSpinner.setAdapter(adapter);
+        userViewModel.getAllMedications().observe(this, medications -> {
+            if (medications != null) {
+                // Extract distinct medication names
+                // Note: This is a simplified approach. You might want to create a method in your DAO
+                // to get distinct names directly from the database for better performance
+                List<String> medNames = medications.stream()
+                        .map(Medication::getMedName)
+                        .distinct()
+                        .collect(java.util.stream.Collectors.toList());
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.custom_spinner_item, medNames);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                medicationSpinner.setAdapter(adapter);
+            }
         });
 
         // 2. When a medication name is selected, clear child spinners and load brands
@@ -78,15 +89,24 @@ public class ViewMedicationActivity extends AppCompatActivity {
                 dosageSpinner.setEnabled(false);
                 dosageSpinnerContainer.setAlpha(0.5f);
 
-                appDb.medicationDAO().getBrandsForMedName(selectedName).observe(ViewMedicationActivity.this, brands -> {
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(ViewMedicationActivity.this, R.layout.custom_spinner_item, brands);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    brandSpinner.setAdapter(adapter);
+                // Load brands for the selected medication
+                userViewModel.getAllMedications().observe(ViewMedicationActivity.this, medications -> {
+                    if (medications != null) {
+                        List<String> brands = medications.stream()
+                                .filter(med -> med.getMedName().equals(selectedName))
+                                .map(Medication::getBrand)
+                                .distinct()
+                                .collect(java.util.stream.Collectors.toList());
 
-                    // Enable and brighten the spinner only if there's more than one choice
-                    if (brands != null && brands.size() > 1) {
-                        brandSpinner.setEnabled(true);
-                        brandSpinnerContainer.setAlpha(1.0f);
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(ViewMedicationActivity.this, R.layout.custom_spinner_item, brands);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        brandSpinner.setAdapter(adapter);
+
+                        // Enable and brighten the spinner only if there's more than one choice
+                        if (brands != null && brands.size() > 1) {
+                            brandSpinner.setEnabled(true);
+                            brandSpinnerContainer.setAlpha(1.0f);
+                        }
                     }
                 });
             }
@@ -114,15 +134,24 @@ public class ViewMedicationActivity extends AppCompatActivity {
                 dosageSpinner.setEnabled(false);
                 dosageSpinnerContainer.setAlpha(0.5f);
 
-                appDb.medicationDAO().getDosagesForMedNameAndBrand(selectedName, selectedBrand).observe(ViewMedicationActivity.this, dosages -> {
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(ViewMedicationActivity.this, R.layout.custom_spinner_item, dosages);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    dosageSpinner.setAdapter(adapter);
+                // Load dosages for the selected medication and brand
+                userViewModel.getAllMedications().observe(ViewMedicationActivity.this, medications -> {
+                    if (medications != null) {
+                        List<String> dosages = medications.stream()
+                                .filter(med -> med.getMedName().equals(selectedName) && med.getBrand().equals(selectedBrand))
+                                .map(Medication::getDosage)
+                                .distinct()
+                                .collect(java.util.stream.Collectors.toList());
 
-                    // Enable and brighten the spinner only if there's more than one choice
-                    if (dosages != null && dosages.size() > 1) {
-                        dosageSpinner.setEnabled(true);
-                        dosageSpinnerContainer.setAlpha(1.0f);
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(ViewMedicationActivity.this, R.layout.custom_spinner_item, dosages);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        dosageSpinner.setAdapter(adapter);
+
+                        // Enable and brighten the spinner only if there's more than one choice
+                        if (dosages != null && dosages.size() > 1) {
+                            dosageSpinner.setEnabled(true);
+                            dosageSpinnerContainer.setAlpha(1.0f);
+                        }
                     }
                 });
             }
@@ -142,14 +171,20 @@ public class ViewMedicationActivity extends AppCompatActivity {
 
                 if (selectedName == null || selectedBrand == null || selectedDosage == null) return;
 
-                if (medicationDetailsLiveData != null) {
-                    medicationDetailsLiveData.removeObservers(ViewMedicationActivity.this);
-                }
-                medicationDetailsLiveData = appDb.medicationDAO().getMedicationDetails(selectedName, selectedBrand, selectedDosage);
-                medicationDetailsLiveData.observe(ViewMedicationActivity.this, medication -> {
-                    if (medication != null) {
-                        currentlySelectedMedication = medication;
-                        quantityTextView.setText(getString(R.string.quantity_on_hand_label, medication.getQuantityOnHand()));
+                // Find the medication with the selected details
+                userViewModel.getAllMedications().observe(ViewMedicationActivity.this, medications -> {
+                    if (medications != null) {
+                        Medication foundMedication = medications.stream()
+                                .filter(med -> med.getMedName().equals(selectedName) &&
+                                        med.getBrand().equals(selectedBrand) &&
+                                        med.getDosage().equals(selectedDosage))
+                                .findFirst()
+                                .orElse(null);
+
+                        if (foundMedication != null) {
+                            currentlySelectedMedication = foundMedication;
+                            quantityTextView.setText(getString(R.string.quantity_on_hand_label, foundMedication.getQuantityOnHand()));
+                        }
                     }
                 });
             }
@@ -235,18 +270,20 @@ public class ViewMedicationActivity extends AppCompatActivity {
                 return;
             }
 
-            databaseExecutor.execute(() -> {
-                if (medication != null) {
-                    medication.setMedName(medName);
-                    medication.setBrand(brand);
-                    medication.setDosage(dosage);
-                    medication.setQuantityOnHand(quantity);
-                    appDb.medicationDAO().updateMedication(medication);
-                } else {
-                    Medication newMedication = new Medication(medName, brand, dosage, quantity);
-                    appDb.medicationDAO().insert(newMedication);
-                }
-            });
+            if (medication != null) {
+                // Update existing medication
+                medication.setMedName(medName);
+                medication.setBrand(brand);
+                medication.setDosage(dosage);
+                medication.setQuantityOnHand(quantity);
+                userViewModel.updateMedication(medication);
+                Toast.makeText(this, getString(R.string.med_update_message), Toast.LENGTH_SHORT).show();
+            } else {
+                // Add new medication
+                Medication newMedication = new Medication(medName, brand, dosage, quantity);
+                userViewModel.insertMedication(newMedication);
+                Toast.makeText(this, getString(R.string.med_add_message), Toast.LENGTH_SHORT).show();
+            }
             dialog.dismiss();
         });
 
@@ -270,7 +307,7 @@ public class ViewMedicationActivity extends AppCompatActivity {
         final AlertDialog dialog = builder.create();
 
         positiveButton.setOnClickListener(v -> {
-            databaseExecutor.execute(() -> appDb.medicationDAO().deleteMedication(medication));
+            userViewModel.deleteMedication(medication);
             Toast.makeText(this, getString(R.string.med_deleted_success, medication.getMedName()), Toast.LENGTH_SHORT).show();
             dialog.dismiss();
         });
@@ -279,5 +316,4 @@ public class ViewMedicationActivity extends AppCompatActivity {
 
         dialog.show();
     }
-
 }
