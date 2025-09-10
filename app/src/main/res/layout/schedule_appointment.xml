@@ -81,7 +81,8 @@
             android:text="@string/quit"
             android:textColor="@color/yellow"
             android:textSize="18sp"
-            app:strokeColor="@color/yellow" />
+            app:strokeColor="@color/yellow"
+            app:cornerRadius = "24dp"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/bookButton"
@@ -92,9 +93,10 @@
             android:backgroundTint="@color/yellow"
             android:padding="12dp"
             android:text="@string/book"
-            android:textColor="@color/blue"
+            android:textColor="@color/white"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:cornerRadius = "24dp"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

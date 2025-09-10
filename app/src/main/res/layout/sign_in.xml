@@ -164,7 +164,7 @@
         android:layout_marginEnd="32dp"
         android:backgroundTint="@color/yellow"
         android:padding="16dp"
-        android:text="Sign in"
+        android:text="@string/sign_in"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -173,7 +173,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/remember_me_checkbox"
-        tools:ignore="HardcodedText" />
+         />
 
     <!-- "Forgot password" and "Cancel" links at the bottom. -->
     <TextView

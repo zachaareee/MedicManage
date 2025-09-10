@@ -48,7 +48,8 @@
             android:layout_weight="1"
             android:text="@string/no"
             android:textColor="@color/yellow"
-            app:strokeColor="@color/yellow" />
+            app:strokeColor="@color/yellow"
+            app:cornerRadius = "24dp"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/positiveButton"
@@ -58,7 +59,8 @@
             android:layout_weight="1"
             android:backgroundTint="@color/yellow"
             android:text="@string/yes"
-            android:textColor="@color/blue" />
+            android:textColor="@color/blue"
+            app:cornerRadius = "24dp"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
