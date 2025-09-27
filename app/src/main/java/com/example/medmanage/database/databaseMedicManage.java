@@ -121,16 +121,16 @@ public abstract class databaseMedicManage extends RoomDatabase {
             mFoodDao.addFood(new Food(15, "Shoprite Rite Brand", "Sunflower Oil", 110));
 
             // MEDICATIONS
-            mMedicationDao.insert(new Medication("Metformin", "Glucophage", "500mg", 200));     // Diabetes
-            mMedicationDao.insert(new Medication("Insulin Glargine", "Lantus", "100 units/ml", 80));  // Diabetes
-            mMedicationDao.insert(new Medication("Lisinopril", "Zestril", "10mg", 150));       // Hypertension
-            mMedicationDao.insert(new Medication("Amlodipine", "Norvasc", "5mg", 120));        // Hypertension
-            mMedicationDao.insert(new Medication("Atorvastatin", "Lipitor", "20mg", 100));     // High cholesterol
-            mMedicationDao.insert(new Medication("Simvastatin", "Zocor", "40mg", 90));         // High cholesterol
-            mMedicationDao.insert(new Medication("Salbutamol", "Ventolin", "100mcg", 60));     // Asthma
-            mMedicationDao.insert(new Medication("Fluticasone", "Flixotide", "250mcg", 70));   // Asthma / COPD
-            mMedicationDao.insert(new Medication("Levothyroxine", "Eltroxin", "50mcg", 110));  // Hypothyroidism
-            mMedicationDao.insert(new Medication("Sertraline", "Zoloft", "50mg", 75));         // Depression / Anxiety
+            mMedicationDao.insert(new Medication(5001,"Metformin", "Glucophage", "500mg", 200));     // Diabetes
+            mMedicationDao.insert(new Medication(5002,"Insulin Glargine", "Lantus", "100mg", 80));  // Diabetes
+            mMedicationDao.insert(new Medication(5003,"Lisinopril", "Zestril", "10mg", 150));       // Hypertension
+            mMedicationDao.insert(new Medication(5004,"Amlodipine", "Norvasc", "5mg", 120));        // Hypertension
+            mMedicationDao.insert(new Medication(5005,"Atorvastatin", "Lipitor", "20mg", 100));     // High cholesterol
+            mMedicationDao.insert(new Medication(5006,"Simvastatin", "Zocor", "40mg", 90));         // High cholesterol
+            mMedicationDao.insert(new Medication(5007,"Salbutamol", "Ventolin", "100mg", 60));     // Asthma
+            mMedicationDao.insert(new Medication(5008,"Fluticasone", "Flixotide", "250mg", 70));   // Asthma / COPD
+            mMedicationDao.insert(new Medication(5009,"Levothyroxine", "Eltroxin", "50mg", 110));  // Hypothyroidism
+            mMedicationDao.insert(new Medication(5010,"Sertraline", "Zoloft", "50mg", 75));         // Depression / Anxiety
 
 
             // APPOINTMENTS

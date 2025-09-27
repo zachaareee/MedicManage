@@ -16,7 +16,8 @@ public class Medication {
     private int quantityOnHand;
 
     // Constructor updated
-    public Medication(String medName, String brand, String dosage, int quantityOnHand) {
+    public Medication(Integer medID, String medName, String brand, String dosage, int quantityOnHand) {
+        this.medID = medID;
         this.medName = medName;
         this.brand = brand;
         this.dosage = dosage;
