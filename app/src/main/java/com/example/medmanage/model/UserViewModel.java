@@ -1,111 +1,77 @@
 package com.example.medmanage.model;
 
 import android.app.Application;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-
-import com.example.medmanage.database.databaseMedicManage;
-
 import java.util.List;
 
-
-public class UserViewModel extends AndroidViewModel{
+public class UserViewModel extends AndroidViewModel {
     private final UserRepository repository;
     private final LiveData<List<Student>> allStudents;
     private final LiveData<List<Nurse>> allNurses;
     private final LiveData<List<Medication>> allMedications;
-
     private final LiveData<List<Appointment>> allAppointments;
 
     public UserViewModel(@NonNull Application application) {
         super(application);
-        databaseMedicManage db = databaseMedicManage.getDatabase(application);
+        // The ViewModel has one dependency: the Repository.
         repository = new UserRepository(application);
         allStudents = repository.getAllStudents();
         allNurses = repository.getAllNurses();
         allMedications = repository.getAllMedications();
         allAppointments = repository.getAllAppointments();
     }
-    public void insertStudent(Student student){
+
+    // --- Data Modification Methods ---
+    // These methods simply pass the request along to the repository.
+    public void insertStudent(Student student) {
         repository.insertStudent(student);
-
     }
-    public void insertNurse(Nurse nurse){
+    public void insertNurse(Nurse nurse) {
         repository.insertNurse(nurse);
-
     }
-    public void insertMedication(Medication medication){
+    public void insertMedication(Medication medication) {
         repository.insertMedication(medication);
-
     }
-
-    public void insertFood(Food food) {
-        repository.insertFood(food);
-    }
-
     public void insertAppointment(Appointment appointment) {
         repository.insertAppointment(appointment);
     }
-
-    public void updateMedication(Medication medication) {
-        repository.updateMedication(medication);
-    }
-
-    public void updateStudent(Student student) {
-        repository.updateStudent(student);
-    }
-
-    public void updateNurse(Nurse nurse) {
-        repository.updateNurse(nurse);
-    }
-
-    public void updateFood(Food food) {
-        repository.updateFood(food);
-    }
-
-    public void deleteMedication(Medication medication) {
-        repository.deleteMedication(medication);
-    }
-
-    public void deleteStudent(Student student) {
-        repository.deleteStudent(student);
-    }
-
-    public void deleteNurse(Nurse nurse) {
-        repository.deleteNurse(nurse);
-    }
-
-    public void deleteFood(Food food) {
-        repository.deleteFood(food);
-    }
-
     public void deleteAppointment(Appointment appointment) {
         repository.deleteAppointment(appointment);
     }
 
-    public LiveData<List<Student>> getAllStudents(){
+    // --- Data Retrieval Methods ---
+    public LiveData<List<Student>> getAllStudents() {
         return allStudents;
     }
-    public LiveData<List<Nurse>> getallNurses(){
+    public LiveData<List<Nurse>> getAllNurses() {
         return allNurses;
     }
-
-
-    public LiveData<List<Medication>> getAllMedications(){
+    public LiveData<List<Medication>> getAllMedications() {
         return allMedications;
     }
+    public void updateMedication(Medication medication) {
+        repository.updateMedication(medication);
 
+    }
+    public void deleteMedication(Medication medication) {
+        repository.deleteMedication(medication);
+    }
     public LiveData<List<Appointment>> getAllAppointments() {
         return allAppointments;
     }
 
-    public Medication getMedicationByName(String name) {
-        return repository.getMedicationByName(name);
+    public LiveData<AppointmentDetails> getActiveAppointmentDetails(int studentId) {
+        return repository.getActiveAppointmentDetails(studentId);
     }
 
-    public Student getStudentByUsername(String username) {
-        return repository.getStudentByUsername(username);
+    public void cancelAppointment(Appointment appointment) {
+        repository.cancelAppointment(appointment);
     }
+
+
+
+
+
 }

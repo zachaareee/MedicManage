@@ -2,67 +2,99 @@ package com.example.medmanage.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.medmanage.R;
 import com.example.medmanage.database.databaseMedicManage;
 import com.example.medmanage.model.Nurse;
 import com.example.medmanage.model.Student;
 
-import java.io.Serializable;
-import java.util.concurrent.ExecutorService;
-
 public class ViewProfileDetailsActivity extends AppCompatActivity {
 
-    // ✅ 1. Updated the view variables to match the new XML
     private TextView profileName, profileSurname, profileNumber, profileUsername,
             medicationRequirement, foodRequirement, profilePassword;
     private Button updateButton, deleteButton;
     private databaseMedicManage db;
     private Object currentUser;
 
+    private String username;
+    private String userType;
+
+    // Modern Activity Result API (recommended approach)
+    private ActivityResultLauncher<Intent> updateProfileLauncher;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_profile);
+
         db = databaseMedicManage.getDatabase(getApplicationContext());
         initializeViews();
 
+        // Initialize the Activity Result Launcher
+        updateProfileLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK) {
+                        // Check if username was updated
+                        Intent data = result.getData();
+                        if (data != null && data.hasExtra("USERNAME")) {
+                            username = data.getStringExtra("USERNAME");
+                        }
+                        // Refresh user info after update
+                        fetchUserData(username, userType);
+                        Toast.makeText(this, "Profile updated successfully!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
+
+        // Get username and type from intent
+        username = getIntent().getStringExtra("USERNAME");
+        userType = getIntent().getStringExtra("USER_TYPE");
+
         updateButton.setOnClickListener(v -> openUpdateActivity());
         deleteButton.setOnClickListener(v -> deleteUser());
+
+        // Load initial data
+        if (username != null && userType != null) {
+            fetchUserData(username, userType);
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        String username = getIntent().getStringExtra("USERNAME");
-        String userType = getIntent().getStringExtra("USER_TYPE");
+        // Refresh data when returning to this activity
         if (username != null && userType != null) {
             fetchUserData(username, userType);
         }
     }
 
     private void fetchUserData(String username, String userType) {
-        ExecutorService executor = databaseMedicManage.databaseWriteExecutor;
-        executor.execute(() -> {
-            if ("student".equalsIgnoreCase(userType)) {
-                currentUser = db.studentDAO().getStudentByUsername(username);
-            } else if ("nurse".equalsIgnoreCase(userType)) {
-                currentUser = db.nurseDAO().getNurseByUsername(username);
-            }
-
-            if (currentUser != null) {
-                new Handler(Looper.getMainLooper()).post(this::populateUI);
-            }
-        });
+        if ("student".equalsIgnoreCase(userType)) {
+            db.studentDAO().getStudentByUsernameLive(username).observe(this, student -> {
+                if (student != null) {
+                    currentUser = student;
+                    populateUI();
+                }
+            });
+        } else if ("nurse".equalsIgnoreCase(userType)) {
+            db.nurseDAO().getNurseByUsernameLive(username).observe(this, nurse -> {
+                if (nurse != null) {
+                    currentUser = nurse;
+                    populateUI();
+                }
+            });
+        }
     }
 
     private void initializeViews() {
@@ -100,8 +132,6 @@ public class ViewProfileDetailsActivity extends AppCompatActivity {
             profileNumber.setText("Staff Number\n" + nurse.getEmpNum());
             profilePassword.setText("Password\n********");
 
-            // Hide fields that are only for students
-            profileNumber.setVisibility(View.VISIBLE); // Still show this, but with staff number
             medicationRequirement.setVisibility(View.GONE);
             foodRequirement.setVisibility(View.GONE);
         }
@@ -109,45 +139,39 @@ public class ViewProfileDetailsActivity extends AppCompatActivity {
 
     private void openUpdateActivity() {
         if (currentUser == null) return;
-        Intent intent = new Intent(this, UpdateProfileActivity.class);
 
-        // This is the key line: it packages the current user's data...
-        intent.putExtra("USER_TO_EDIT", (Serializable) currentUser);
-        startActivity(intent);
+        Intent intent = new Intent(this, UpdateProfileActivity.class);
+        intent.putExtra("USERNAME", username);
+        intent.putExtra("USER_TYPE", userType);
+        updateProfileLauncher.launch(intent);
     }
 
     private void deleteUser() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_delete_account, null);
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_delete_account, null);
         builder.setView(dialogView);
 
-        final Button negativeButton = dialogView.findViewById(R.id.negativeButton);
-        final Button positiveButton = dialogView.findViewById(R.id.positiveButton);
+        Button negativeButton = dialogView.findViewById(R.id.negativeButton);
+        Button positiveButton = dialogView.findViewById(R.id.positiveButton);
 
-        final AlertDialog dialog = builder.create();
+        AlertDialog dialog = builder.create();
         dialog.show();
 
         negativeButton.setOnClickListener(v -> dialog.dismiss());
 
         positiveButton.setOnClickListener(v -> {
             dialog.dismiss();
-            ExecutorService executor = databaseMedicManage.databaseWriteExecutor;
-            executor.execute(() -> {
-                if (currentUser instanceof Student) {
-                    db.studentDAO().deleteStudent((Student) currentUser);
-                } else if (currentUser instanceof Nurse) {
-                    db.nurseDAO().deleteNurse((Nurse) currentUser);
-                }
+            if (currentUser instanceof Student) {
+                db.studentDAO().deleteStudent((Student) currentUser);
+            } else if (currentUser instanceof Nurse) {
+                db.nurseDAO().deleteNurse((Nurse) currentUser);
+            }
 
-                runOnUiThread(() -> {
-                    Toast.makeText(this, "Account deleted successfully.", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(this, LoginActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                    finish();
-                });
-            });
+            Toast.makeText(this, "Account deleted successfully.", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
         });
     }
 }
