@@ -9,7 +9,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.medmanage.R;
-import com.example.medmanage.dao.FoodDAO;
 import com.example.medmanage.database.databaseMedicManage;
 import com.example.medmanage.model.Food;
 
@@ -28,7 +27,7 @@ public class EditFoodActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.edit_food);
+        setContentView(R.layout.food_edit);
 
        db =  databaseMedicManage.getDatabase(getApplicationContext());
         foodNameText = findViewById(R.id.foodNameText);

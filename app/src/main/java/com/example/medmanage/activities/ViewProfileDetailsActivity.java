@@ -32,13 +32,15 @@ public class ViewProfileDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.view_profile);
+        setContentView(R.layout.profile_view);
         db = databaseMedicManage.getDatabase(getApplicationContext());
         initializeViews();
 
         updateButton.setOnClickListener(v -> openUpdateActivity());
         deleteButton.setOnClickListener(v -> deleteUser());
     }
+
+
 
     @Override
     protected void onResume() {
@@ -65,6 +67,7 @@ public class ViewProfileDetailsActivity extends AppCompatActivity {
         });
     }
 
+
     private void initializeViews() {
         profileName = findViewById(R.id.textView_profileName);
         profileSurname = findViewById(R.id.textView_profileSurname);
@@ -76,6 +79,7 @@ public class ViewProfileDetailsActivity extends AppCompatActivity {
         updateButton = findViewById(R.id.button_update);
         deleteButton = findViewById(R.id.button_delete);
     }
+
 
     private void populateUI() {
         if (currentUser instanceof Student) {
@@ -119,7 +123,7 @@ public class ViewProfileDetailsActivity extends AppCompatActivity {
     private void deleteUser() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_delete_account, null);
+        View dialogView = inflater.inflate(R.layout.profile_delete_dialog, null);
         builder.setView(dialogView);
 
         final Button negativeButton = dialogView.findViewById(R.id.negativeButton);
@@ -150,4 +154,6 @@ public class ViewProfileDetailsActivity extends AppCompatActivity {
             });
         });
     }
+
+
 }

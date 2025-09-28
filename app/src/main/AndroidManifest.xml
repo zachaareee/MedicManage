@@ -46,11 +46,6 @@
         <activity android:name=".activities.ScheduleAppointmentActivity"
             android:exported="false"/>
 
-
-
-
-
-
         <activity android:name=".activities.MainScreenActivity"
             android:exported="true">
             <intent-filter>

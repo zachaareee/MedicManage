@@ -27,7 +27,7 @@ public class DashboardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dashboard);
+        setContentView(R.layout.dashboard_current);
 
         welcomeTextView = findViewById(R.id.welcomeTextView);
         logoutButton = findViewById(R.id.logoutButton);

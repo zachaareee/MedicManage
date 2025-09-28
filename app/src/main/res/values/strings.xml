@@ -1,11 +1,13 @@
 <resources>
-    <string name="app_name">MedManage</string>
+    //sign up page strings:
+    <string name="app_name">MedicManage</string>
     <string name="image_description">MedManage app logo</string>
     <string name="welcome_text">Welcome to MedicManage</string>
-    <string name="login_button_text">LOGIN</string>
+    <string name="login_button_text">LOG IN</string>
     <string name="new_user_prompt">New user? Sign up below</string>
-    <string name="signup_button_text">Sign Up</string>
     <string name="signup">Sign Up</string>
+
+    //logging into profile strings:
     <string name="profile_details">Profile Details</string>
     <string name="user_type">User Type (Student/Nurse)</string>
     <string name="id_num">ID Number</string>
@@ -26,7 +28,7 @@
     <string name="new_to_medicmanage">New to Medic Manage?</string>
 
     <string name="application_name">MedicManage</string>
-    <string name="hello_administrator">"Hello Administrator👋"</string>
+    <string name="hello_nurse">"Hello Nurse👋"</string>
     <string name="add">Add</string>
     <string name="update">Update</string>
     <string name="delete">Delete</string>
@@ -157,4 +159,6 @@
     <string name="appointment_cancelled_success">Your appointment has been successfully canceled.</string>
     <string name="no_appointment_scheduled">No Appointment Scheduled</string>
     <string name="cancel_appointment_button_text">Cancel Appointment</string>
+    <string name="administrator">Administrator</string>
+    <string name="toggle_password_visibility">togglePassWordVisibility</string>
 </resources>

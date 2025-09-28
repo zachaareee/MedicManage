@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blue"
+    android:fillViewport="true"
+    tools:context=".activities.ViewProfileDetailsActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <View
+            android:id="@+id/topHeaderLine"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/yellow"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <ImageView
+            android:id="@+id/logoImageView"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:contentDescription="@string/app_name"
+            android:scaleType="fitCenter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/topHeaderLine"
+            android:src="@drawable/icon_logo" />
+
+        <TextView
+            android:id="@+id/headerTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/profile"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="@id/logoImageView"
+            app:layout_constraintEnd_toStartOf="@id/profileIconImageView"
+            app:layout_constraintStart_toEndOf="@id/logoImageView"
+            app:layout_constraintTop_toTopOf="@id/logoImageView" />
+
+        <ImageView
+            android:id="@+id/profileIconImageView"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/profile_icon_desc"
+            app:tint="@color/yellow"
+            app:layout_constraintBottom_toBottomOf="@id/logoImageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/logoImageView"
+            android:src="@drawable/icon_logo" />
+
+        <View
+            android:id="@+id/bottomHeaderLine"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/yellow"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/logoImageView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+        <TextView
+            android:id="@+id/textView_profileName"
+            style="@style/ProfileInfoBox"
+            android:layout_marginTop="32dp"
+            tools:text="Name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bottomHeaderLine" />
+
+        <TextView
+            android:id="@+id/textView_profileSurname"
+            style="@style/ProfileInfoBox"
+            android:layout_marginTop="12dp"
+            tools:text="Surname"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView_profileName" />
+
+        <TextView
+            android:id="@+id/textView_profileNumber"
+            style="@style/ProfileInfoBox"
+            android:layout_marginTop="12dp"
+            tools:text="Student Number"
+            android:visibility="gone"
+            tools:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView_profileSurname" />
+
+        <TextView
+            android:id="@+id/textView_profileUsername"
+            style="@style/ProfileInfoBox"
+            android:layout_marginTop="12dp"
+            tools:text="Username"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView_profileNumber" />
+
+        <TextView
+            android:id="@+id/textView_medicationRequirement"
+            style="@style/ProfileInfoBox"
+            android:layout_marginTop="12dp"
+            android:text="@string/medication_requirement"
+            android:visibility="gone"
+            tools:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView_profileUsername" />
+
+        <TextView
+            android:id="@+id/textView_foodRequirement"
+            style="@style/ProfileInfoBox"
+            android:layout_marginTop="12dp"
+            android:text="@string/food_requirement"
+            android:visibility="gone"
+            tools:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView_medicationRequirement" />
+
+        <TextView
+            android:id="@+id/textView_profilePassword"
+            style="@style/ProfileInfoBox"
+            android:layout_marginTop="12dp"
+            android:text="@string/password_asterisks"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView_foodRequirement" />
+
+        <Button
+            android:id="@+id/button_update"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="48dp"
+            android:backgroundTint="#FFC107"
+            android:paddingStart="60dp"
+            android:paddingTop="12dp"
+            android:paddingEnd="60dp"
+            android:paddingBottom="12dp"
+            android:text="@string/update"
+            android:textColor="@color/black"
+            app:cornerRadius="24dp"
+            app:layout_constraintEnd_toStartOf="@id/button_delete"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView_profilePassword" />
+
+        <Button
+            android:id="@+id/button_delete"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="48dp"
+            android:backgroundTint="#FFC107"
+            android:paddingStart="60dp"
+            android:paddingTop="12dp"
+            android:paddingEnd="60dp"
+            android:paddingBottom="12dp"
+            android:text="@string/delete"
+            android:textColor="@color/black"
+            app:cornerRadius="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/button_update"
+            app:layout_constraintTop_toBottomOf="@+id/textView_profilePassword" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

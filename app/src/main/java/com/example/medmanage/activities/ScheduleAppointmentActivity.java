@@ -44,12 +44,10 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.schedule_appointment);
+        setContentView(R.layout.appnt_schedule);
         //FOR TESTING (hi phumi)
         currentStudentId = 225703262;
 
-/*
-        // Get the logged-in student's ID passed from the previous activity.
         currentStudentId = getIntent().getIntExtra(STUDENT_ID_EXTRA, -1);
         if (currentStudentId == -1) {
             // If no ID was passed, show an error and close the activity.
@@ -57,7 +55,7 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
             finish();
             return;
         }
-        */
+
 
 
         appDb = databaseMedicManage.getDatabase(getApplicationContext());
@@ -179,7 +177,7 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
     private void showQuitConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_quit_schedule, null);
+        View dialogView = inflater.inflate(R.layout.appnt_quit_dialog, null);
         builder.setView(dialogView);
 
         final Button yesButton = dialogView.findViewById(R.id.positiveButton);
