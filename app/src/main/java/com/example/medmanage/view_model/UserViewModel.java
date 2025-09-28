@@ -1,4 +1,4 @@
-package com.example.medmanage.model;
+package com.example.medmanage.view_model;
 
 import android.app.Application;
 
@@ -7,6 +7,12 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.example.medmanage.database.databaseMedicManage;
+import com.example.medmanage.model.Appointment;
+import com.example.medmanage.model.Food;
+import com.example.medmanage.model.Medication;
+import com.example.medmanage.model.Nurse;
+import com.example.medmanage.model.Student;
+import com.example.medmanage.user_repo.UserRepository;
 
 import java.util.List;
 

@@ -21,7 +21,7 @@ public class DashboardActivity extends AppCompatActivity {
     private Button reviewAppointmentButton;
     private Button viewProfile;
     private Button scheduleAppointmentButton;
-    private int loggedInStudentId = -1;
+    private int loggedInStudentId;
 
     @SuppressLint("SetTextII18n")
     @Override
@@ -42,6 +42,7 @@ public class DashboardActivity extends AppCompatActivity {
         String username = intent.getStringExtra("USERNAME");
         String userType = intent.getStringExtra("USER_TYPE");
         loggedInStudentId = intent.getIntExtra("STUDENT_ID", -1);
+
 
         if (username != null) {
             String welcomeMessage = getString(R.string.welcome_text) + " " + username + "!";

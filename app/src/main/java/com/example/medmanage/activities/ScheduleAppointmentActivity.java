@@ -46,10 +46,7 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.schedule_appointment);
         //FOR TESTING (hi phumi)
-        currentStudentId = 225703262;
 
-/*
-        // Get the logged-in student's ID passed from the previous activity.
         currentStudentId = getIntent().getIntExtra(STUDENT_ID_EXTRA, -1);
         if (currentStudentId == -1) {
             // If no ID was passed, show an error and close the activity.
@@ -57,7 +54,7 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
             finish();
             return;
         }
-        */
+
 
 
         appDb = databaseMedicManage.getDatabase(getApplicationContext());

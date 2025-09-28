@@ -40,9 +40,6 @@ public class SignupActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_profile);
-
-        // CORRECT WAY to get the database instance
-        // This makes sure `db` is not null when you need it.
         databaseMedicManage.getDatabase(getApplicationContext());
         setupListeners();
     }

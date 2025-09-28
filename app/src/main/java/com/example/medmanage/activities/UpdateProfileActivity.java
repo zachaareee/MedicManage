@@ -40,12 +40,14 @@ public class UpdateProfileActivity extends AppCompatActivity {
         setContentView(R.layout.update_profile);
 
 
-        db =databaseMedicManage.getDatabase(getApplicationContext());
+        db = databaseMedicManage.getDatabase(getApplicationContext());
 
         currentUser = getIntent().getSerializableExtra("USER_TO_EDIT");
 
         if (currentUser != null) {
+
             populateFields();
+
         }
 
         setupButtonClickListeners();
@@ -110,14 +112,15 @@ private void updateUser() {
     final String lastName = lastNameEditText.getText().toString().trim();
     final String username = usernameEditText.getText().toString().trim();
     final String password = passwordEditText.getText().toString().trim();
-    final int selectedFoodReqId = foodReqRadioGroup.getCheckedRadioButtonId();
-    final String medication = medicationReqEditText.getText().toString().trim();
+
 
     // Now execute the database operation on a background thread
     ExecutorService executor = databaseMedicManage.databaseWriteExecutor;
     executor.execute(() -> {
         if (currentUser instanceof Student) {
             // Pass the collected data to the student update method
+            final int selectedFoodReqId = foodReqRadioGroup.getCheckedRadioButtonId();
+            final String medication = medicationReqEditText.getText().toString().trim();
             final String foodReq = (selectedFoodReqId == R.id.radioButton_foodYes) ? "Yes" : "No";
             updateStudent(firstName, lastName, username, password, medication, foodReq);
 

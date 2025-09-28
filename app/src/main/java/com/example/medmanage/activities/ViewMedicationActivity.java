@@ -18,7 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.medmanage.R;
 import com.example.medmanage.model.Medication;
-import com.example.medmanage.model.UserViewModel;
+import com.example.medmanage.view_model.UserViewModel;
 
 import java.util.List;
 
