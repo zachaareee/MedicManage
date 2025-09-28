@@ -38,5 +38,7 @@ public interface StudentDAO {
 
         @Delete
         void deleteStudent(Student student);
+        @Query("SELECT * FROM student WHERE userName = :username LIMIT 1")
+        LiveData<Student> getStudentByUsernameLive(String username);
 
 }

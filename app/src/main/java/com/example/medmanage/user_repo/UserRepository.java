@@ -116,4 +116,18 @@ public class UserRepository {
     public Student getStudentByUsername(String username) {
         return studentDAO.getStudentByUsername(username);
     }
+    public LiveData<AppointmentDetails> getActiveAppointmentDetails(int studentId) {
+        return appointmentDAO.getActiveAppointmentDetails(studentId);
+    }
+
+    public void cancelAppointment(Appointment appointment) {
+        databaseMedicManage.databaseWriteExecutor.execute(() ->
+                appointmentDAO.cancelAppointment(appointment));
+    }
+
+
+
+
+
+
 }

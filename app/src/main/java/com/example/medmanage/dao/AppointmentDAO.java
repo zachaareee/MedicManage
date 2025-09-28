@@ -9,6 +9,7 @@ import androidx.room.Query;
 import androidx.room.Transaction;
 
 import com.example.medmanage.model.Appointment;
+import com.example.medmanage.model.AppointmentDetails;
 import com.example.medmanage.model.AppointmentWithStudent;
 
 import java.util.List;
@@ -32,4 +33,13 @@ public interface AppointmentDAO {
     @Transaction
     @Query("SELECT * FROM Appointment ORDER BY date, time")
     LiveData<List<AppointmentWithStudent>> getAllAppointmentsWithStudents();
+
+    @Transaction
+    @Query("SELECT * FROM Appointment WHERE stuNum = :studentId ORDER BY date DESC, time DESC LIMIT 1")
+    LiveData<AppointmentDetails> getActiveAppointmentDetailsForStudent(int studentId);
+    @Transaction
+    @Query("SELECT * FROM Appointment WHERE stuNum = :studentId LIMIT 1")
+    LiveData<AppointmentDetails> getActiveAppointmentDetails(int studentId);
+    @Delete
+    void cancelAppointment(Appointment appointment);
 }

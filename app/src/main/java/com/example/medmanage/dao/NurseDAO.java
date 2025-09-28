@@ -26,5 +26,9 @@ public interface NurseDAO {
 
     @Query("SELECT * FROM nurse WHERE empUsername = :empUsername LIMIT 1")
     Nurse getNurseByUsername(String empUsername);
+    @Query("SELECT * FROM nurse WHERE empUserName = :username LIMIT 1")
+    LiveData<Nurse> getNurseByUsernameLive(String username);
+
+
 
 }
