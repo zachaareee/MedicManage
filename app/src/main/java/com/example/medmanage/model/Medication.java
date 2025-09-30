@@ -1,6 +1,7 @@
 package com.example.medmanage.model;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "medication")
@@ -15,15 +16,27 @@ public class Medication {
 
     private int quantityOnHand;
 
-    // Constructor updated
+    // Construtor that is used by room to create objects from database data
+    //This constructor includes medId
+    public Medication(Integer medID, String medName, String brand, String dosage, int quantityOnHand) {
+        this.medID = medID;
+        this.medName = medName;
+        this.brand = brand;
+        this.dosage = dosage;
+        this.quantityOnHand = quantityOnHand;
+    }
+    //This is the constructor that will be used by the application when creating new data
+    @Ignore
     public Medication(String medName, String brand, String dosage, int quantityOnHand) {
+
         this.medName = medName;
         this.brand = brand;
         this.dosage = dosage;
         this.quantityOnHand = quantityOnHand;
     }
 
-    // --- Getters and Setters ---
+
+    //Getters and Setters
 
     public int getMedID() {
         return medID;
@@ -69,4 +82,6 @@ public class Medication {
     public String toString() {
         return this.medName;
     }
+
+
 }
