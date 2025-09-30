@@ -271,6 +271,7 @@ public class ViewMedicationActivity extends AppCompatActivity {
 
             if (medication != null) {
                 // Update existing medication
+
                 medication.setMedName(medName);
                 medication.setBrand(brand);
                 medication.setDosage(dosage);
