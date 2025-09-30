@@ -3,8 +3,10 @@ package com.example.medmanage.model;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity(tableName = "Student")
-public class Student {
+public class Student implements Serializable {
     @PrimaryKey
     private int stuNum;
     private String stuName;

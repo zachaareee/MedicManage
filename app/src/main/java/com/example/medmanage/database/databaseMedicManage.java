@@ -80,12 +80,28 @@ public abstract class databaseMedicManage extends RoomDatabase {
         @Override
         protected Void doInBackground(final Void... params) {
             // NURSES
-            mNurseDao.addNurse(new Nurse(1001, "Sara", "Langa", "nurse1", "password"));
-            mNurseDao.addNurse(new Nurse(1002, "John", "Smith", "nurse2", "securepass"));
-
+            mNurseDao.addNurse(new Nurse(1001, "Sarah", "Miller", "sarahM", "pass123"));
+            mNurseDao.addNurse(new Nurse(1002, "David", "Smith", "dsmith", "secure1"));
+            mNurseDao.addNurse(new Nurse(1003, "Linda", "Johnson", "lindaj", "hello123"));
+            mNurseDao.addNurse(new Nurse(1004, "James", "Brown", "jbrown", "nurse456"));
+            mNurseDao.addNurse(new Nurse(1005, "Emily", "Davis", "edavis", "safe789"));
+            mNurseDao.addNurse(new Nurse(1006, "Michael", "Wilson", "mwilson", "qwerty1"));
+            mNurseDao.addNurse(new Nurse(1007, "Sophia", "Taylor", "staylor", "alpha22"));
+            mNurseDao.addNurse(new Nurse(1008, "Robert", "Anderson", "randerson", "bravo33"));
+            mNurseDao.addNurse(new Nurse(1009, "Olivia", "Thomas", "othomas", "charlie44"));
+            mNurseDao.addNurse(new Nurse(1010, "Daniel", "Moore", "dmoore", "delta55"));
             // STUDENTS
-            mStudentDao.addStudent(new Student(227050010, "Phumela", "Mdatyulwa", "student1", "Yes", "Blood Pressure ", "pas123"));
-            mStudentDao.addStudent(new Student(225703262, "Zachary", "Jacobs", "student2", "No", "Diabetes ", "lol29"));
+            mStudentDao.addStudent(new Student(227050010, "Phumela", "Mdatyulwa", "student1", "Yes", "Hypertension", "pas123"));  // Lisinopril, Amlodipine
+            mStudentDao.addStudent(new Student(227050011, "Emily", "Mokoena", "student2", "Yes", "Asthma", "emily2025"));      // Salbutamol, Fluticasone
+            mStudentDao.addStudent(new Student(227050012, "Michael", "Van der Merwe", "student3", "Yes", "Diabetes", "mikeD50")); // Metformin
+            mStudentDao.addStudent(new Student(227050013, "Chloe", "Dlamini", "student4", "No", "Hypertension", "chloeBP"));   // Lisinopril, Amlodipine
+            mStudentDao.addStudent(new Student(227050014, "Liam", "Peters", "student5", "Yes", "Hypothyroidism", "meriy@")); // Levothyroxine
+            mStudentDao.addStudent(new Student(225703262, "Zachary", "Jacobs", "student6", "No", "Diabetes", "lol29"));        // Metformin, Insulin Glargine
+            mStudentDao.addStudent(new Student(225703263, "Priya", "Khan", "student7", "Yes", "Depression", "priyaMind"));     // Sertraline
+            mStudentDao.addStudent(new Student(225703264, "David", "Naidoo", "student8", "No", "High Cholesterol", "davidH20")); // Atorvastatin, Simvastatin
+            mStudentDao.addStudent(new Student(225703265, "Thabo", "Mabena", "student9", "Yes", "Asthma", "TbhMabena"));     // Salbutamol
+            mStudentDao.addStudent(new Student(225703266, "Grace", "Nkosi", "student10", "No", "High Cholesterol", "graceMondlana")); // Simvastatin
+
 
             // FOOD
             mFoodDao.addFood(new Food(1, "Bokomo", "WeetBix", 150));
@@ -105,11 +121,29 @@ public abstract class databaseMedicManage extends RoomDatabase {
             mFoodDao.addFood(new Food(15, "Shoprite Rite Brand", "Sunflower Oil", 110));
 
             // MEDICATIONS
-            mMedicationDao.insert(new Medication("Paracetamol", "Panado", "500mg", 100));
-            mMedicationDao.insert(new Medication("Ibuprofen", "Advil", "200mg", 50));
+            mMedicationDao.insert(new Medication(5001,"Metformin", "Glucophage", "500mg", 200));     // Diabetes
+            mMedicationDao.insert(new Medication(5002,"Insulin Glargine", "Lantus", "100mg", 80));  // Diabetes
+            mMedicationDao.insert(new Medication(5003,"Lisinopril", "Zestril", "10mg", 150));       // Hypertension
+            mMedicationDao.insert(new Medication(5004,"Amlodipine", "Norvasc", "5mg", 120));        // Hypertension
+            mMedicationDao.insert(new Medication(5005,"Atorvastatin", "Lipitor", "20mg", 100));     // High cholesterol
+            mMedicationDao.insert(new Medication(5006,"Simvastatin", "Zocor", "40mg", 90));         // High cholesterol
+            mMedicationDao.insert(new Medication(5007,"Salbutamol", "Ventolin", "100mg", 60));     // Asthma
+            mMedicationDao.insert(new Medication(5008,"Fluticasone", "Flixotide", "250mg", 70));   // Asthma / COPD
+            mMedicationDao.insert(new Medication(5009,"Levothyroxine", "Eltroxin", "50mg", 110));  // Hypothyroidism
+            mMedicationDao.insert(new Medication(5010,"Sertraline", "Zoloft", "50mg", 75));         // Depression / Anxiety
+
 
             // APPOINTMENTS
-            mAppointmentDAO.insertAppointment(new Appointment(227050010, 1001, 6, "2025-09-15", "10:30"));
+            mAppointmentDAO.insertAppointment(new Appointment(227050010, 1001, 1, "2025-8-15", "09:00")); // Phumela
+            mAppointmentDAO.insertAppointment(new Appointment(225703262, 1002, 2, "2025-08-06", "10:00")); // Zachary
+            mAppointmentDAO.insertAppointment(new Appointment(227050011, 1003, 3, "2025-01-07", "11:00")); // Emily
+            mAppointmentDAO.insertAppointment(new Appointment(225703263, 1007, 4, "2025-01-08", "12:00")); // Priya
+            mAppointmentDAO.insertAppointment(new Appointment(227050012, 1004, 5, "2025-01-09", "13:05")); // Michael
+            mAppointmentDAO.insertAppointment(new Appointment(227050013, 1005, 6, "2025-01-10", "12:30")); // Chloe
+            mAppointmentDAO.insertAppointment(new Appointment(227050014, 1002, 7, "2025-01-11", "15:00")); // Liam
+            mAppointmentDAO.insertAppointment(new Appointment(225703264, 1006, 8, "2025-01-12", "13:30")); // David
+            mAppointmentDAO.insertAppointment(new Appointment(225703270, 1003, 9, "2025-01-13", "11:30")); // Thabo
+            mAppointmentDAO.insertAppointment(new Appointment(225703266, 1005, 10, "2025-01-14", "10:00")); // Grace
 
             return null;
         }

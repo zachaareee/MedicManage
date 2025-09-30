@@ -71,7 +71,6 @@ public class ViewMedicationActivity extends AppCompatActivity {
             }
         });
 
-        // 2. When a medication name is selected, clear child spinners and load brands
         medicationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -272,6 +271,7 @@ public class ViewMedicationActivity extends AppCompatActivity {
 
             if (medication != null) {
                 // Update existing medication
+
                 medication.setMedName(medName);
                 medication.setBrand(brand);
                 medication.setDosage(dosage);
