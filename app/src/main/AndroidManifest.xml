@@ -46,13 +46,19 @@
         <activity android:name=".activities.ScheduleAppointmentActivity"
             android:exported="false"/>
 
-        <activity android:name=".activities.MainScreenActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+
+
+
+
+
+<!--        <activity android:name=".activities.DashboardActivity"-->
+<!--            android:exported="true"-->
+<!--            android:theme="@style/Theme.MedManage.NoActionBar">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
 
     </application>
 

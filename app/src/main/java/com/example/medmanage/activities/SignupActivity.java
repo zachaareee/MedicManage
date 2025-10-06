@@ -39,18 +39,22 @@ public class SignupActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.profile_create);
+        setContentView(R.layout.create_profile);
+        initializeViews();
 
-        // CORRECT WAY to get the database instance
-        // This makes sure `db` is not null when you need it.
-        databaseMedicManage.getDatabase(getApplicationContext());
+
+        // This makes sure `db` is not null when you needed.
+        db =databaseMedicManage.getDatabase(getApplicationContext());
         setupListeners();
+        if(savedInstanceState==null){
+            studentRadioButton.setChecked(true);
+        }
     }
 
     private void initializeViews() {
-        userTypeRadioGroup = findViewById(R.id.user_type_group);
-        studentRadioButton = findViewById(R.id.student_radio_btn);
-        nurseRadioButton = findViewById(R.id.nurse_radio_btn);
+        userTypeRadioGroup = findViewById(R.id.radioGroup_userType);
+        studentRadioButton = findViewById(R.id.radioButton_student);
+        nurseRadioButton = findViewById(R.id.radioButton_nurse);
         firstNameEditText = findViewById(R.id.editText_firstName);
         lastNameEditText = findViewById(R.id.editText_lastName);
         usernameEditText = findViewById(R.id.editText_username);
@@ -79,10 +83,10 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     private void updateUiForUserType(int checkedId) {
-        if (checkedId == R.id.student_radio_btn) {
+        if (checkedId == R.id.radioButton_student) {
             studentFieldsLayout.setVisibility(View.VISIBLE);
             staffNoEditText.setVisibility(View.GONE);
-        } else if (checkedId == R.id.nurse_radio_btn) {
+        } else if (checkedId == R.id.radioButton_nurse) {
             studentFieldsLayout.setVisibility(View.GONE);
             staffNoEditText.setVisibility(View.VISIBLE);
         }
@@ -103,7 +107,7 @@ public class SignupActivity extends AppCompatActivity {
             return;
         }
 
-        if (selectedUserTypeId == R.id.student_radio_btn) {
+        if (selectedUserTypeId == R.id.radioButton_student) {
             registerNewStudent();
         } else {
             registerNewNurse();
