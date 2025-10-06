@@ -40,8 +40,15 @@ public class SignupActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_profile);
-        databaseMedicManage.getDatabase(getApplicationContext());
+        initializeViews();
+
+
+        // This makes sure `db` is not null when you needed.
+        db =databaseMedicManage.getDatabase(getApplicationContext());
         setupListeners();
+        if(savedInstanceState==null){
+            studentRadioButton.setChecked(true);
+        }
     }
 
     private void initializeViews() {
