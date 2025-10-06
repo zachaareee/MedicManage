@@ -1,0 +1,32 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24"
+    android:tint="?attr/colorControlNormal">
+
+    <!-- The main outer circle -->
+    <path
+        android:strokeColor="@android:color/white"
+        android:strokeWidth="2"
+        android:pathData="M12,12m-10,0a10,10 0,1 1,20 0a10,10 0,1 1,-20 0"/>
+
+
+    <group android:translateY="-2.0">
+
+        <!-- Head -->
+        <path
+            android:strokeColor="@android:color/white"
+            android:strokeWidth="2"
+            android:pathData="M12,12m-4,0a4,4 0,1 1,8 0a4,4 0,1 1,-8 0"/>
+
+        <!-- Body/Shoulders -->
+        <path
+            android:strokeColor="@android:color/white"
+            android:strokeWidth="2"
+            android:pathData="M12,16 C14.66,16 17,18.34 17,21 L7,21 C7,18.34 9.34,16 12,16 Z"/>
+
+    </group>
+
+</vector>
+

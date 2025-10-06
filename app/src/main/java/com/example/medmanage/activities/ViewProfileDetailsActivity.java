@@ -47,11 +47,11 @@ public class ViewProfileDetailsActivity extends AppCompatActivity {
                     if (result.getResultCode() == RESULT_OK) {
                         // Check if username was updated
                         Intent data = result.getData();
-                        if (data != null && data.hasExtra("USERNAME")) {
-                            username = data.getStringExtra("USERNAME");
+                        if (data != null && data.hasExtra("UPDATED_USERNAME")) {
+                            username = data.getStringExtra("UPDATED_USERNAME");
                         }
                         // Refresh user info after update
-                        fetchUserData(username, userType);
+                        fetchUserData(this.username, this.userType);
                         Toast.makeText(this, "Profile updated successfully!", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -70,14 +70,7 @@ public class ViewProfileDetailsActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        // Refresh data when returning to this activity
-        if (username != null && userType != null) {
-            fetchUserData(username, userType);
-        }
-    }
+
 
     private void fetchUserData(String username, String userType) {
         if ("student".equalsIgnoreCase(userType)) {

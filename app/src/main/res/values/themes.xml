@@ -1,24 +1,30 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+
     <!-- Base application theme. -->
-    <style name="Theme.MedManage" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Primary brand color -->
+    <style name="Theme.MedManage" parent="Theme.MaterialComponents.DayNight">
+        <!-- Primary brand color. -->
         <item name="colorPrimary">@color/blue</item>
         <item name="colorPrimaryVariant">@color/blue</item>
         <item name="colorOnPrimary">@color/white</item>
-
-        <!-- Secondary brand color -->
+        <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/yellow</item>
         <item name="colorSecondaryVariant">@color/yellow</item>
         <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-
-
         <!-- Customize your theme here. -->
-        <item name ="android:fontFamily">@font/font_family</item>
-
-
+        <item name="android:fontFamily">@font/font_family</item>
     </style>
 
+    <style name="Theme.MedManage.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/blue</item>
+        <item name="colorPrimaryVariant">@color/blue</item>
+        <item name="colorOnPrimary">@color/white</item>
+    </style>
+
+    <style name="Widget.App.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
+        <item name="itemIconSize">32dp</item>
+    </style>
 
     <style name="ProfileInfoBox">
         <item name="android:layout_width">0dp</item>
@@ -29,4 +35,6 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">16sp</item>
     </style>
+
 </resources>
+
