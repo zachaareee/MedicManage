@@ -16,10 +16,8 @@ import com.example.medmanage.database.databaseMedicManage;
 import com.example.medmanage.model.Appointment;
 import com.example.medmanage.model.Medication;
 import com.example.medmanage.model.Student;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
 import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.stream.Collectors;
 
@@ -38,7 +36,7 @@ public class ViewAppointmentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.view_appointment);
+        setContentView(R.layout.appnt_view);
 
         // Get the student ID from the intent
         Intent intent = getIntent();
@@ -129,7 +127,7 @@ public class ViewAppointmentActivity extends AppCompatActivity {
     private void showCancelConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_cancel_appointment, null);
+        View dialogView = inflater.inflate(R.layout.appnt_cancel_dialog, null);
         builder.setView(dialogView);
 
         final Button yesButton = dialogView.findViewById(R.id.positiveButton);

@@ -1,0 +1,13 @@
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/timeSlotTextView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="50dp"
+    android:background="@drawable/bg_timeslot"
+    android:gravity="center"
+    android:padding="12dp"
+    android:layout_margin="4dp"
+    android:textColor="@color/appointment_text_color_selector"
+    android:textSize="16sp"
+    tools:text="9:00" />

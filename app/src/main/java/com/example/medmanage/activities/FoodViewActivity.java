@@ -39,7 +39,7 @@ public class FoodViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.food_list_view);
+        setContentView(R.layout.food_view);
         db = databaseMedicManage.getDatabase(getApplicationContext());
 
         customSpinner = findViewById(R.id.customSpinner);

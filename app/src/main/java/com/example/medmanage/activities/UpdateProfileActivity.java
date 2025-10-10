@@ -39,7 +39,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.update_profile);
+        setContentView(R.layout.profile_update);
 
         db = databaseMedicManage.getDatabase(getApplicationContext());
         staffNoEditText = findViewById(R.id.editText_staffNo);

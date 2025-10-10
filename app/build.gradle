@@ -1,7 +1,6 @@
 plugins {
     id 'com.android.application'
 }
-
 android {
     namespace 'com.example.medmanage'
     compileSdk 36
@@ -44,6 +43,8 @@ configurations.all {
         exclude group: 'com.intellij', module: 'annotations'
     }
 }
+
+
 
 dependencies {
     //For Rooms DB

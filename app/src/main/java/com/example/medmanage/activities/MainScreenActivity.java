@@ -17,7 +17,7 @@ public class MainScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Link this activity to your mainscreen.xml layout file
-        setContentView(R.layout.login_screen);
+        setContentView(R.layout.mainscreen);
 
         // Initialize the buttons by finding them in the layout by their ID
         loginButton = findViewById(R.id.loginButton);

@@ -44,7 +44,7 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.schedule_appointment);
+        setContentView(R.layout.appnt_schedule);
         //FOR TESTING (hi phumi)
 
         currentStudentId = getIntent().getIntExtra(STUDENT_ID_EXTRA, -1);
@@ -176,7 +176,7 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
     private void showQuitConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_quit_schedule, null);
+        View dialogView = inflater.inflate(R.layout.appnt_quit_dialog, null);
         builder.setView(dialogView);
 
         final Button yesButton = dialogView.findViewById(R.id.positiveButton);

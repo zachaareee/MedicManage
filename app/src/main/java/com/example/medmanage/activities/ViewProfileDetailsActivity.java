@@ -35,7 +35,7 @@ public class ViewProfileDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.view_profile);
+        setContentView(R.layout.profile_view);
 
         db = databaseMedicManage.getDatabase(getApplicationContext());
         initializeViews();
@@ -141,7 +141,7 @@ public class ViewProfileDetailsActivity extends AppCompatActivity {
 
     private void deleteUser() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_delete_account, null);
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.profile_delete_dialog, null);
         builder.setView(dialogView);
 
         Button negativeButton = dialogView.findViewById(R.id.negativeButton);

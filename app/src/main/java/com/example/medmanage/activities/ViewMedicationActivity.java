@@ -36,7 +36,7 @@ public class ViewMedicationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.view_medication);
+        setContentView(R.layout.med_view);
 
         // Initialize ViewModel
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
@@ -215,7 +215,7 @@ public class ViewMedicationActivity extends AppCompatActivity {
     private void showAddUpdateDialog(final Medication medication) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_add_update_medication, null);
+        View dialogView = inflater.inflate(R.layout.med_add_update_dialog, null);
         builder.setView(dialogView);
 
         final EditText medNameEditText = dialogView.findViewById(R.id.medicationNameEditText);
@@ -295,7 +295,7 @@ public class ViewMedicationActivity extends AppCompatActivity {
     private void showDeleteConfirmationDialog(final Medication medication) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_confirmation_medication, null);
+        View dialogView = inflater.inflate(R.layout.med_confirmation_dialog, null);
         builder.setView(dialogView);
 
         final TextView messageTextView = dialogView.findViewById(R.id.confirmationMessageTextView);
