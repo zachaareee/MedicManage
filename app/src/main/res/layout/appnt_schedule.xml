@@ -71,7 +71,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/negativeButton"
+            android:id="@+id/quitButton"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -86,7 +86,7 @@
             app:strokeWidth="2dp" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/positiveButton"
+            android:id="@+id/bookButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
