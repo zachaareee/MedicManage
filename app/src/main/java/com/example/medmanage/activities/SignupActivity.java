@@ -1,12 +1,13 @@
-// File: SignupActivity.java
 
 package com.example.medmanage.activities;
 
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -21,7 +22,6 @@ import com.example.medmanage.model.Nurse;
 import com.example.medmanage.model.Student;
 
 import java.util.concurrent.ExecutorService;
-
 public class SignupActivity extends AppCompatActivity {
 
     // UI Elements
@@ -32,6 +32,8 @@ public class SignupActivity extends AppCompatActivity {
     private LinearLayout studentFieldsLayout;
     private RadioGroup foodReqRadioGroup;
     private Button confirmButton, cancelButton;
+    private ImageView passwordToggle;
+    private boolean isPasswordVisible = false;
 
     // Database
     private databaseMedicManage db;
@@ -39,11 +41,10 @@ public class SignupActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.create_profile);
+        setContentView(R.layout.profile_create);
         initializeViews();
 
 
-        // This makes sure `db` is not null when you needed.
         db =databaseMedicManage.getDatabase(getApplicationContext());
         setupListeners();
         if(savedInstanceState==null){
@@ -52,9 +53,9 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
-        userTypeRadioGroup = findViewById(R.id.radioGroup_userType);
-        studentRadioButton = findViewById(R.id.radioButton_student);
-        nurseRadioButton = findViewById(R.id.radioButton_nurse);
+        userTypeRadioGroup = findViewById(R.id.user_type_group);
+        studentRadioButton = findViewById(R.id.student_radio_btn);
+        nurseRadioButton = findViewById(R.id.admin_radio_btn);
         firstNameEditText = findViewById(R.id.editText_firstName);
         lastNameEditText = findViewById(R.id.editText_lastName);
         usernameEditText = findViewById(R.id.editText_username);
@@ -66,6 +67,7 @@ public class SignupActivity extends AppCompatActivity {
         foodReqRadioGroup = findViewById(R.id.radioGroup_foodReq);
         confirmButton = findViewById(R.id.button_confirm);
         cancelButton = findViewById(R.id.button_cancel);
+        passwordToggle = findViewById(R.id.password_toggle);
     }
 
     private void setupListeners() {
@@ -78,15 +80,51 @@ public class SignupActivity extends AppCompatActivity {
         });
 
         cancelButton.setOnClickListener(v -> {
-            finish();
+            clearForm();
+        });
+
+        passwordToggle.setOnClickListener(v -> {
+            togglePasswordVisibility();
         });
     }
 
+    private void togglePasswordVisibility() {
+        isPasswordVisible = !isPasswordVisible;
+        if (isPasswordVisible) {
+            // Show password
+            passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            passwordToggle.setImageResource(R.drawable.icon_password_visible);
+        } else {
+            // Hide password
+            passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            passwordToggle.setImageResource(R.drawable.icon_password_hidden);
+        }
+        // Move cursor to the end of the text
+        passwordEditText.setSelection(passwordEditText.length());
+    }
+
+    private void clearForm() {
+        firstNameEditText.setText("");
+        lastNameEditText.setText("");
+        usernameEditText.setText("");
+        passwordEditText.setText("");
+        staffNoEditText.setText("");
+        studentNoEditText.setText("");
+        medicationReqEditText.setText("");
+
+        // Reset radio groups to default state
+        userTypeRadioGroup.check(R.id.student_radio_btn);
+        foodReqRadioGroup.clearCheck();
+
+        Toast.makeText(this, "Form cleared", Toast.LENGTH_SHORT).show();
+    }
+
+
     private void updateUiForUserType(int checkedId) {
-        if (checkedId == R.id.radioButton_student) {
+        if (checkedId == R.id.student_radio_btn) {
             studentFieldsLayout.setVisibility(View.VISIBLE);
             staffNoEditText.setVisibility(View.GONE);
-        } else if (checkedId == R.id.radioButton_nurse) {
+        } else if (checkedId == R.id.admin_radio_btn) {
             studentFieldsLayout.setVisibility(View.GONE);
             staffNoEditText.setVisibility(View.VISIBLE);
         }
@@ -107,7 +145,7 @@ public class SignupActivity extends AppCompatActivity {
             return;
         }
 
-        if (selectedUserTypeId == R.id.radioButton_student) {
+        if (selectedUserTypeId == R.id.student_radio_btn) {
             registerNewStudent();
         } else {
             registerNewNurse();

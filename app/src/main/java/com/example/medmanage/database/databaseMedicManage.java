@@ -1,12 +1,10 @@
 package com.example.medmanage.database;
-
 import android.content.Context;
 import  android.os.AsyncTask;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.annotation.NonNull;
-
 import com.example.medmanage.dao.AppointmentDAO;
 import com.example.medmanage.dao.Appointment_MedicationDAO;
 import com.example.medmanage.dao.FoodDAO;
@@ -102,7 +100,6 @@ public abstract class databaseMedicManage extends RoomDatabase {
             mStudentDao.addStudent(new Student(225703265, "Thabo", "Mabena", "student9", "Yes", "Asthma", "TbhMabena"));     // Salbutamol
             mStudentDao.addStudent(new Student(225703266, "Grace", "Nkosi", "student10", "No", "High Cholesterol", "graceMondlana")); // Simvastatin
 
-
             // FOOD
             mFoodDao.addFood(new Food(1, "Bokomo", "WeetBix", 150));
             mFoodDao.addFood(new Food(2, "Albany", "White Bread", 80));
@@ -131,7 +128,6 @@ public abstract class databaseMedicManage extends RoomDatabase {
             mMedicationDao.insert(new Medication(5008,"Fluticasone", "Flixotide", "250mg", 70));   // Asthma / COPD
             mMedicationDao.insert(new Medication(5009,"Levothyroxine", "Eltroxin", "50mg", 110));  // Hypothyroidism
             mMedicationDao.insert(new Medication(5010,"Sertraline", "Zoloft", "50mg", 75));         // Depression / Anxiety
-
 
             // APPOINTMENTS
             mAppointmentDAO.insertAppointment(new Appointment(227050010, 1001, 1, "2025-8-15", "09:00")); // Phumela

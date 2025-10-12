@@ -13,6 +13,7 @@ public class MainScreenActivity extends AppCompatActivity {
     private Button loginButton;
     private Button signUpButton;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +23,7 @@ public class MainScreenActivity extends AppCompatActivity {
 
         loginButton = findViewById(R.id.loginButton);
         signUpButton = findViewById(R.id.signUpButton);
+
 
 
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -37,8 +39,7 @@ public class MainScreenActivity extends AppCompatActivity {
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Create an Intent to open the SignUpActivity
-                // Note: You will need to create a SignUpActivity for this to work
+
                 Intent intent = new Intent(MainScreenActivity.this, SignupActivity.class);
                 startActivity(intent);
             }

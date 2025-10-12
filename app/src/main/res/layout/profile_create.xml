@@ -197,7 +197,7 @@
                 android:padding="12dp" />
         </LinearLayout>
 
-        <!-- Username and Password -->
+        <!-- Username -->
         <EditText
             android:id="@+id/editText_username"
             android:layout_width="0dp"
@@ -211,18 +211,38 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layout_studentFields" />
 
-        <EditText
-            android:id="@+id/editText_password"
+        <!-- Password with Toggle -->
+        <RelativeLayout
+            android:id="@+id/password_layout"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:background="@drawable/btn_white_rounded"
-            android:hint="@string/Password"
-            android:inputType="textPassword"
-            android:padding="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText_username" />
+            app:layout_constraintTop_toBottomOf="@+id/editText_username">
+
+            <EditText
+                android:id="@+id/editText_password"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/btn_white_rounded"
+                android:hint="@string/Password"
+                android:inputType="textPassword"
+                android:paddingStart="12dp"
+                android:paddingEnd="50dp"
+                android:padding="12dp" />
+
+            <ImageView
+                android:id="@+id/password_toggle"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/icon_password_hidden"
+                android:contentDescription="@string/toggle_password_visibility" />
+        </RelativeLayout>
+
 
         <!-- Buttons -->
         <Button
@@ -238,7 +258,7 @@
             app:cornerRadius="20dp"
             app:layout_constraintEnd_toStartOf="@+id/guideline_buttons"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText_password" />
+            app:layout_constraintTop_toBottomOf="@+id/password_layout" />
 
         <Button
             android:id="@+id/button_cancel"
@@ -253,7 +273,7 @@
             app:cornerRadius="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/guideline_buttons"
-            app:layout_constraintTop_toBottomOf="@+id/editText_password" />
+            app:layout_constraintTop_toBottomOf="@+id/password_layout" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_buttons"
@@ -264,3 +284,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
+
