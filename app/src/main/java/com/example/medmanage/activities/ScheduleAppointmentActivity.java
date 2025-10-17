@@ -45,7 +45,7 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.appnt_schedule);
-
+        //FOR TESTING (hi phumi)
 
         currentStudentId = getIntent().getIntExtra(STUDENT_ID_EXTRA, -1);
         if (currentStudentId == -1) {
@@ -62,8 +62,8 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
 
         dateRecyclerView = findViewById(R.id.dateRecyclerView);
         timeSlotsRecyclerView = findViewById(R.id.timeSlotsRecyclerView);
-        bookButton = findViewById(R.id.positiveButton);
-        quitButton = findViewById(R.id.negativeButton);
+        bookButton = findViewById(R.id.bookButton);
+        quitButton = findViewById(R.id.quitButton);
         TextView monthTextView = findViewById(R.id.monthTextView);
 
         SimpleDateFormat monthFormat = new SimpleDateFormat("MMMM yyyy", Locale.getDefault());

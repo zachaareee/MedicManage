@@ -1,4 +1,4 @@
-package com.example.medmanage.model;
+package com.example.medmanage.user_repo;
 
 import android.app.Application;
 import androidx.lifecycle.LiveData;
@@ -8,6 +8,12 @@ import com.example.medmanage.dao.MedicationDAO;
 import com.example.medmanage.dao.NurseDAO;
 import com.example.medmanage.dao.StudentDAO;
 import com.example.medmanage.database.databaseMedicManage;
+import com.example.medmanage.model.Appointment;
+import com.example.medmanage.model.Food;
+import com.example.medmanage.model.Medication;
+import com.example.medmanage.model.Nurse;
+import com.example.medmanage.model.Student;
+
 import java.util.List;
 
 public class UserRepository {
