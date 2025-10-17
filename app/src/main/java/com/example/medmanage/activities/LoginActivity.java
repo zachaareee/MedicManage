@@ -27,7 +27,6 @@ import com.example.medmanage.model.Nurse;
 
 public class LoginActivity extends AppCompatActivity {
 
-    // --- UI Views ---
     private EditText usernameEditText;
     private EditText passwordEditText;
     private Button loginButton;
@@ -36,14 +35,12 @@ public class LoginActivity extends AppCompatActivity {
     private TextView forgotPasswordText;
     private TextView cancelText;
 
-    // --- State & Database ---
     private boolean isPasswordVisible = false;
     private databaseMedicManage db;
     private StudentDAO studentDAO;
     private NurseDAO nurseDAO;
 
-    // --- SharedPreferences for "Remember Me" ---
-    private SharedPreferences sharedPreferences;
+    private SharedPreferences sharedPreferences; // for remember me
     private static final String PREFS_NAME = "MedManagePrefs";
     private static final String KEY_USERNAME = "username";
     private static final String KEY_PASSWORD = "password";
