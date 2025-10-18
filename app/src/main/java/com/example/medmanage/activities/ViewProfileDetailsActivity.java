@@ -161,7 +161,7 @@ public class ViewProfileDetailsActivity extends AppCompatActivity {
             }
 
             Toast.makeText(this, "Account deleted successfully.", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, LoginActivity.class);
+            Intent intent = new Intent(this, SigninActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();

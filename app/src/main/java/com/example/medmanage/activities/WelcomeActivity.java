@@ -7,7 +7,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.medmanage.R;
 
-public class MainScreenActivity extends AppCompatActivity {
+public class WelcomeActivity extends AppCompatActivity {
 
     // Declare the UI elements from your XML file
     private Button loginButton;
@@ -17,7 +17,7 @@ public class MainScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Link this activity to your mainscreen.xml layout file
-        setContentView(R.layout.mainscreen);
+        setContentView(R.layout.dashboard_login);
 
         // Initialize the buttons by finding them in the layout by their ID
         loginButton = findViewById(R.id.loginButton);
@@ -28,7 +28,7 @@ public class MainScreenActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Create an Intent to open the LoginActivity
-                Intent intent = new Intent(MainScreenActivity.this, LoginActivity.class);
+                Intent intent = new Intent(WelcomeActivity.this, SigninActivity.class);
                 startActivity(intent);
             }
         });
@@ -39,7 +39,7 @@ public class MainScreenActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Create an Intent to open the SignUpActivity
                 // Note: You will need to create a SignUpActivity for this to work
-                Intent intent = new Intent(MainScreenActivity.this, SignupActivity.class);
+                Intent intent = new Intent(WelcomeActivity.this, SignupActivity.class);
                 startActivity(intent);
             }
         });

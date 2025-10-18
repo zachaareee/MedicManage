@@ -25,7 +25,7 @@ import com.example.medmanage.database.databaseMedicManage;
 import com.example.medmanage.model.Student;
 import com.example.medmanage.model.Nurse;
 
-public class LoginActivity extends AppCompatActivity {
+public class SigninActivity extends AppCompatActivity {
 
     private EditText usernameEditText;
     private EditText passwordEditText;
@@ -113,9 +113,9 @@ public class LoginActivity extends AppCompatActivity {
         positiveButton.setOnClickListener(v -> {
             String username = usernameResetEditText.getText().toString().trim();
             if (username.isEmpty()) {
-                Toast.makeText(LoginActivity.this, "Please enter your username", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SigninActivity.this, "Please enter your username", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(LoginActivity.this, "Password reset link sent to the associated email.", Toast.LENGTH_LONG).show();
+                Toast.makeText(SigninActivity.this, "Password reset link sent to the associated email.", Toast.LENGTH_LONG).show();
                 dialog.dismiss();
             }
         });
@@ -152,7 +152,7 @@ public class LoginActivity extends AppCompatActivity {
                 saveCredentials();
                 runOnUiThread(() -> {
                     Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
+                    Intent intent = new Intent(SigninActivity.this, DashboardActivity.class);
                     intent.putExtra("USERNAME", student.getUserName());
                     intent.putExtra("USER_TYPE", "student");
                     intent.putExtra("STUDENT_ID", student.getStuNum());
@@ -167,7 +167,7 @@ public class LoginActivity extends AppCompatActivity {
                 saveCredentials();
                 runOnUiThread(() -> {
                     Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
+                    Intent intent = new Intent(SigninActivity.this, DashboardActivity.class);
                     intent.putExtra("USERNAME", nurse.getEmpUserName());
                     intent.putExtra("USER_TYPE", "nurse");
                     intent.putExtra("NURSE_ID", nurse.getEmpName());
