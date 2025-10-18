@@ -18,7 +18,6 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // 3. CHANGE: Inflate the correct binding class
         binding = DashboardBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 

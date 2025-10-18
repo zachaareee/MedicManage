@@ -1,4 +1,3 @@
-// File: SignupActivity.java
 
 package com.example.medmanage.activities;
 
