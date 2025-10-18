@@ -9,6 +9,7 @@ import com.example.medmanage.dao.NurseDAO;
 import com.example.medmanage.dao.StudentDAO;
 import com.example.medmanage.database.databaseMedicManage;
 import com.example.medmanage.model.Appointment;
+import com.example.medmanage.model.AppointmentDetails;
 import com.example.medmanage.model.Food;
 import com.example.medmanage.model.Medication;
 import com.example.medmanage.model.Nurse;
