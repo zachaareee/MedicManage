@@ -97,7 +97,7 @@ public abstract class databaseMedicManage extends RoomDatabase {
             mStudentDao.addStudent(new Student(225703262, "Zachary", "Jacobs", "student6", "No", "Diabetes", "lol29"));        // Metformin, Insulin Glargine
             mStudentDao.addStudent(new Student(225703263, "Priya", "Khan", "student7", "Yes", "Depression", "priyaMind"));     // Sertraline
             mStudentDao.addStudent(new Student(225703264, "David", "Naidoo", "student8", "No", "High Cholesterol", "davidH20")); // Atorvastatin, Simvastatin
-            mStudentDao.addStudent(new Student(225703265, "Thabo", "Mabena", "student9", "Yes", "Asthma", "TbhMabena"));     // Salbutamol
+            mStudentDao.addStudent(new Student(225703265, "Thabo", "Mabena", "student9.", "Yes", "Asthma", "TbhMabena"));     // Salbutamol
             mStudentDao.addStudent(new Student(225703266, "Grace", "Nkosi", "student10", "No", "High Cholesterol", "graceMondlana")); // Simvastatin
 
             // FOOD

@@ -1,5 +1,8 @@
 package com.example.medmanage.activities;
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.navigation.NavController;
@@ -28,6 +31,30 @@ public class DashboardActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
+        TextView greetingTextView = binding.topBar.greetingText;
+
+        Intent intent = getIntent();
+        String userType = intent.getStringExtra("USER_TYPE");
+
+        String greetingMessage = "Hi there 👋"; // Set a default greeting
+
+        if (userType != null) {
+            if (userType.equals("student")) {
+                String name = intent.getStringExtra("NAME");
+                if (name != null && !name.isEmpty()) {
+
+                    greetingMessage = "Hi " + name + " 👋";
+                }
+            } else if (userType.equals("nurse")) {
+                String surname = intent.getStringExtra("SURNAME");
+                if (surname != null && !surname.isEmpty()) {
+                    greetingMessage = "Hi Nurse " + surname + " 👋";
+                }
+            }
+        }
+
+// 4. Set the final text
+        greetingTextView.setText(greetingMessage);
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.nav_host_fragment_activity_main);

@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
 public class ViewAppointmentActivity extends AppCompatActivity {
 
     public static final String STUDENT_ID_EXTRA = "student_id_extra";
+    public static final String SHOW_CANCEL_BUTTON_EXTRA = "show_cancel_button";
     private TextView medicationValue, foodValue, dateValue, timeValue, noAppointmentText;
     private LinearLayout appointmentDetailsContainer;
     private Button cancelAppointmentButton;
@@ -32,16 +33,17 @@ public class ViewAppointmentActivity extends AppCompatActivity {
     private ExecutorService databaseExecutor;
     private int currentStudentId;
     private Appointment currentAppointment;
-
+    private boolean shouldShowCancelButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.appnt_view);
 
-        // Get the student ID from the intent
+
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra(STUDENT_ID_EXTRA)) {
             currentStudentId = intent.getIntExtra(STUDENT_ID_EXTRA, -1);
+            shouldShowCancelButton = intent.getBooleanExtra(SHOW_CANCEL_BUTTON_EXTRA, false);
         }
 
         // If no valid student ID found, show error and finish
@@ -101,7 +103,11 @@ public class ViewAppointmentActivity extends AppCompatActivity {
                     runOnUiThread(() -> {
                         appointmentDetailsContainer.setVisibility(View.VISIBLE);
                         noAppointmentText.setVisibility(View.GONE);
-                        cancelAppointmentButton.setVisibility(View.VISIBLE);
+                        if (shouldShowCancelButton) {
+                            cancelAppointmentButton.setVisibility(View.VISIBLE);
+                        } else {
+                            cancelAppointmentButton.setVisibility(View.GONE);
+                        }
 
                         medicationValue.setText(TextUtils.isEmpty(finalMedicationNames) ? "None" : finalMedicationNames);
                         foodValue.setText(foodRequirement);

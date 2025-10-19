@@ -51,6 +51,12 @@ public class ViewMedicationActivity extends AppCompatActivity {
         brandSpinnerContainer = findViewById(R.id.brandSpinnerContainer);
         dosageSpinnerContainer = findViewById(R.id.dosageSpinnerContainer);
 
+        String userType= getIntent().getStringExtra("USER_TYPE");
+        if(userType!=null && userType.equals("student")){
+            addButton.setVisibility(View.GONE);
+            updateButton.setVisibility(View.GONE);
+            deleteButton.setVisibility(View.GONE);
+        }
         brandSpinner.setEnabled(false);
         dosageSpinner.setEnabled(false);
 

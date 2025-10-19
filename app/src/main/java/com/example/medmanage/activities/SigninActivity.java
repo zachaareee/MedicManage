@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +36,7 @@ public class SigninActivity extends AppCompatActivity {
     private CheckBox rememberMeCheckBox;
     private TextView forgotPasswordText;
     private TextView cancelText;
+    private RadioGroup userTypeRadioGroup;
 
     private boolean isPasswordVisible = false;
     private databaseMedicManage db;
@@ -68,6 +71,7 @@ public class SigninActivity extends AppCompatActivity {
         rememberMeCheckBox = findViewById(R.id.remember_me_checkbox);
         forgotPasswordText = findViewById(R.id.forgot_password_text);
         cancelText = findViewById(R.id.cancel_text);
+        userTypeRadioGroup = findViewById(R.id.user_type_group);
     }
 
     private void setupListeners() {
@@ -145,41 +149,54 @@ public class SigninActivity extends AppCompatActivity {
     private void attemptLogin() {
         String username = usernameEditText.getText().toString();
         String password = passwordEditText.getText().toString();
+        int selectedId = userTypeRadioGroup.getCheckedRadioButtonId();
+
+        if (selectedId == -1) {
+            Toast.makeText(this, "Please select a user type (Student or Nurse)", Toast.LENGTH_SHORT).show();
+            return; // Stop the login process
+        }
 
         databaseMedicManage.databaseWriteExecutor.execute(() -> {
-            Student student = studentDAO.getStudentByUsername(username);
-            if (student != null && student.getPassword().equals(password)) {
-                saveCredentials();
-                runOnUiThread(() -> {
-                    Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(SigninActivity.this, DashboardActivity.class);
-                    intent.putExtra("USERNAME", student.getUserName());
-                    intent.putExtra("USER_TYPE", "student");
-                    intent.putExtra("STUDENT_ID", student.getStuNum());
-                    startActivity(intent);
-                    finish();
-                });
-                return;
-            }
+            if (selectedId == R.id.student_radio_btn) {
+                Student student = studentDAO.getStudentByUsername(username);
+                if (student != null && student.getPassword().equals(password)) {
+                    saveCredentials();
+                    runOnUiThread(() -> {
+                        Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(SigninActivity.this, DashboardActivity.class);
+                        intent.putExtra("NAME", student.getStuName());
+                        intent.putExtra("USER_TYPE", "student");
+                        intent.putExtra("STUDENT_ID", student.getStuNum());
+                        startActivity(intent);
+                        finish();
+                    });
+                } else {
+                    runOnUiThread(() -> {
+                        Toast.makeText(this, "Invalid student username or password", Toast.LENGTH_SHORT).show();
+                    });
+                }
+            } else if (selectedId == R.id.nurse_radio_btn) {
 
-            Nurse nurse = nurseDAO.getNurseByUsername(username);
-            if (nurse != null && nurse.getPassword().equals(password)) {
-                saveCredentials();
-                runOnUiThread(() -> {
-                    Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(SigninActivity.this, DashboardActivity.class);
-                    intent.putExtra("USERNAME", nurse.getEmpUserName());
-                    intent.putExtra("USER_TYPE", "nurse");
-                    intent.putExtra("NURSE_ID", nurse.getEmpName());
-                    startActivity(intent);
-                    finish();
-                });
-                return;
-            }
+                Nurse nurse = nurseDAO.getNurseByUsername(username);
+                if (nurse != null && nurse.getPassword().equals(password)) {
+                    saveCredentials();
+                    runOnUiThread(() -> {
+                        Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(SigninActivity.this, DashboardActivity.class);
+                        intent.putExtra("SURNAME", nurse.getEmpSurname());
+                        intent.putExtra("USER_TYPE", "nurse");
+                        intent.putExtra("NURSE_ID", nurse.getEmpName());
+                        startActivity(intent);
+                        finish();
+                    });
+                    return;
+                } else {
 
-            runOnUiThread(() -> {
-                Toast.makeText(this, "Invalid username or password", Toast.LENGTH_SHORT).show();
-            });
+                    runOnUiThread(() -> {
+                        Toast.makeText(this, "Invalid username or password", Toast.LENGTH_SHORT).show();
+                    });
+                }
+            }
         });
     }
 }

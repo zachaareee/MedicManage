@@ -1,14 +1,20 @@
 
 package com.example.medmanage.activities;
 
+import android.app.AlertDialog;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -26,11 +32,16 @@ public class SignupActivity extends AppCompatActivity {
     // UI Elements
     private RadioGroup userTypeRadioGroup;
     private RadioButton studentRadioButton, nurseRadioButton;
+
     private EditText firstNameEditText, lastNameEditText, usernameEditText, passwordEditText;
+    private TextView FoodReq;
     private EditText staffNoEditText, studentNoEditText, medicationReqEditText;
     private LinearLayout studentFieldsLayout;
     private RadioGroup foodReqRadioGroup;
     private Button confirmButton, cancelButton;
+    private boolean isPasswordVisible = false;
+    private ImageView passwordToggle;
+
 
     // Database
     private databaseMedicManage db;
@@ -42,7 +53,7 @@ public class SignupActivity extends AppCompatActivity {
         initializeViews();
 
 
-        // This makes sure `db` is not null when you needed.
+        // This makes sure `db` is not null when needed.
         db =databaseMedicManage.getDatabase(getApplicationContext());
         setupListeners();
         if(savedInstanceState==null){
@@ -65,6 +76,8 @@ public class SignupActivity extends AppCompatActivity {
         foodReqRadioGroup = findViewById(R.id.radioGroup_foodReq);
         confirmButton = findViewById(R.id.button_confirm);
         cancelButton = findViewById(R.id.button_cancel);
+        passwordToggle = findViewById(R.id.password_toggle);
+        FoodReq = findViewById(R.id.textView_foodReq);
     }
 
     private void setupListeners() {
@@ -77,17 +90,41 @@ public class SignupActivity extends AppCompatActivity {
         });
 
         cancelButton.setOnClickListener(v -> {
-            finish();
+
+           showCancelConfirmationDialog();
         });
+        passwordToggle.setOnClickListener(v -> togglePasswordVisibility());
+    }
+
+    private void togglePasswordVisibility() {
+        isPasswordVisible = !isPasswordVisible;
+        if (isPasswordVisible) {
+            passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            passwordToggle.setImageResource(R.drawable.icon_password_visible);
+            passwordEditText.setTypeface(Typeface.DEFAULT);
+        } else {
+            passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            passwordToggle.setImageResource(R.drawable.icon_password_hidden);
+            passwordEditText.setTypeface(Typeface.MONOSPACE);
+        }
+        passwordEditText.setSelection(passwordEditText.length());
     }
 
     private void updateUiForUserType(int checkedId) {
         if (checkedId == R.id.student_radio_btn) {
             studentFieldsLayout.setVisibility(View.VISIBLE);
+            medicationReqEditText.setVisibility(View.VISIBLE);
+            foodReqRadioGroup.setVisibility(View.VISIBLE);
             staffNoEditText.setVisibility(View.GONE);
+            FoodReq.setVisibility(View.VISIBLE);
+
         } else if (checkedId == R.id.nurse_radio_btn) {
             studentFieldsLayout.setVisibility(View.GONE);
+            medicationReqEditText.setVisibility(View.GONE);
+            foodReqRadioGroup.setVisibility(View.GONE);
+            studentFieldsLayout.setVisibility(View.GONE);
             staffNoEditText.setVisibility(View.VISIBLE);
+            FoodReq.setVisibility(View.GONE);
         }
     }
 
@@ -175,5 +212,40 @@ public class SignupActivity extends AppCompatActivity {
                 finish();
             });
         });
+    }
+    // Add this entire method to your SignupActivity.java file
+
+    private void showCancelConfirmationDialog() {
+        // 1. Create a builder for the dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        // 2. Get the layout inflater to use your custom XML
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.sign_up_cancel_dialog, null);
+
+        // 3. Set the custom view for the dialog
+        builder.setView(dialogView);
+
+        // Find the buttons inside your custom dialog layout
+        Button positiveButton = dialogView.findViewById(R.id.positiveButton);
+        Button negativeButton = dialogView.findViewById(R.id.negativeButton);
+
+        // Create the dialog object so you can show and dismiss it
+        final AlertDialog dialog = builder.create();
+
+        // 4. Set click listeners for the dialog buttons
+        // "OK" button will close the activity
+        positiveButton.setOnClickListener(v -> {
+            dialog.dismiss(); // Close the dialog
+            finish();         // Close the SignupActivity
+        });
+
+        // "No" button will just close the dialog
+        negativeButton.setOnClickListener(v -> {
+            dialog.dismiss(); // Close the dialog
+        });
+
+        // 5. Show the dialog
+        dialog.show();
     }
 }

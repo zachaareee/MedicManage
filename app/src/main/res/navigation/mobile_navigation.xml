@@ -21,13 +21,13 @@
 
     <fragment
         android:id="@+id/navigation_schedule"
-        android:name="com.example.medmanage.ui.schedule.ScheduleFragment"
+        android:name="com.example.medmanage.ui.schedule.schedule_fragment"
         android:label="@string/Schedule"
-        tools:layout="@layout/fragment_schedule" />
+        tools:layout="@layout/fragment_schedule_student" />
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.example.medmanage.ui.profile.ProfileFragment"
+        android:name="com.example.medmanage.ui.profile.profile_fragment"
         android:label="@string/profile"
         tools:layout="@layout/fragment_profile" />
 </navigation>

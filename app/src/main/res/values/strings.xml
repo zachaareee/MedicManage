@@ -164,4 +164,12 @@
     <string name="view_food_list">View Food List</string>
     <string name="toggle_password_visibility">passwordvisibility</string>
     <string name="hello_nurse">Hello Nurse</string>
+
+
+    <string name="cancel_appointment">Cancel Appointment</string>
+    <string name="view_appointment">View Appointment</string>
+    <string name="view_appointments">View Appointments</string>
+    <string name="review_appointment">Review Appointment</string>
+    <string name="cancel_sign_up">Are you sure you want to go back to the main screen?</string>
+
 </resources>
