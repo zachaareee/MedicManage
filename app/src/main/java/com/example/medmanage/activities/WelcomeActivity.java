@@ -16,7 +16,6 @@ public class WelcomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Link this activity to your mainscreen.xml layout file
         setContentView(R.layout.dashboard_login);
 
         // Initialize the buttons by finding them in the layout by their ID
