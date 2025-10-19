@@ -7,39 +7,17 @@
     android:background="@color/blue">
 
     <TextView
-        android:id="@+id/greetingTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="@string/first_name"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <View
-        android:id="@+id/headerDivider"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="16dp"
-        android:background="@color/yellow"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/greetingTextView" />
-
-    <TextView
         android:id="@+id/medicationsTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="40dp"
         android:text="@string/med_med"
         android:textColor="@color/yellow"
         android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/headerDivider" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/medicationLabel"
@@ -50,7 +28,7 @@
         android:focusable="false"
         android:text="@string/med_selection"
         android:textColor="@color/yellow"
-        android:textSize="14sp"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@+id/medicationSpinnerContainer"
         app:layout_constraintTop_toBottomOf="@id/medicationsTitle" />
 
@@ -97,12 +75,12 @@
         android:id="@+id/brandLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:clickable="false"
         android:focusable="false"
         android:text="@string/med_brand"
         android:textColor="@color/yellow"
-        android:textSize="14sp"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@+id/brandSpinnerContainer"
         app:layout_constraintTop_toBottomOf="@id/medicationSpinnerContainer" />
 
@@ -149,12 +127,12 @@
         android:id="@+id/dosageLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:clickable="false"
         android:focusable="false"
         android:text="@string/med_dose"
         android:textColor="@color/yellow"
-        android:textSize="14sp"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@+id/dosageSpinnerContainer"
         app:layout_constraintTop_toBottomOf="@id/brandSpinnerContainer" />
 
@@ -216,52 +194,49 @@
         android:id="@+id/addButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginEnd="60dp"
-        android:layout_weight="1"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="8dp"
         android:backgroundTint="@color/yellow"
-        android:text="@string/med_add"
-        android:textColor="#0A2342"
-        app:layout_constraintBottom_toTopOf="@+id/updateButton"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="8dp"
+        android:text="@string/add"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:cornerRadius="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/updateButton"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/quantityTextView"
-        app:layout_constraintVertical_chainStyle="packed"
-        app:cornerRadius = "24dp"/>
+        app:layout_constraintVertical_bias="0.3" />
 
     <Button
         android:id="@+id/updateButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="60dp"
-        android:layout_weight="1"
+        android:layout_marginEnd="8dp"
         android:backgroundTint="@color/yellow"
-        android:text="@string/med_update"
-        android:textColor="#0A2342"
-        app:layout_constraintBottom_toTopOf="@+id/deleteButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addButton"
-        app:cornerRadius = "24dp"/>
+        android:padding="8dp"
+        android:text="@string/update"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:cornerRadius="24dp"
+        app:layout_constraintEnd_toStartOf="@+id/deleteButton"
+        app:layout_constraintStart_toEndOf="@+id/addButton"
+        app:layout_constraintTop_toTopOf="@+id/addButton" />
 
     <Button
         android:id="@+id/deleteButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="60dp"
-        android:layout_marginBottom="32dp"
-        android:layout_weight="1"
+        android:layout_marginEnd="32dp"
         android:backgroundTint="@color/yellow"
-        android:text="@string/med_delete"
-        android:textColor="#0A2342"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:padding="8dp"
+        android:text="@string/delete"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:cornerRadius="24dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/updateButton"
-        app:cornerRadius = "24dp"/>
+        app:layout_constraintStart_toEndOf="@+id/updateButton"
+        app:layout_constraintTop_toTopOf="@+id/addButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
