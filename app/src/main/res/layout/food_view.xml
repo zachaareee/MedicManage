@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="180dp"
         android:text="@string/food"
-        android:textColor="@android:color/white"
+        android:textColor="@color/yellow"
         android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -82,34 +82,34 @@
             <TextView
                 android:id="@+id/nameTextView"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="68dp"
                 android:layout_marginBottom="12dp"
                 android:background="@drawable/border_white_rounded"
                 android:gravity="center"
                 android:textColor="@color/yellow"
                 android:textSize="16sp"
-                tools:text="Item Name" />
+                android:text="@string/food_name" />
 
             <TextView
                 android:id="@+id/typeTextView"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="68dp"
                 android:layout_marginBottom="12dp"
                 android:background="@drawable/border_white_rounded"
                 android:gravity="center"
                 android:textColor="@color/yellow"
                 android:textSize="16sp"
-                tools:text="Item Type" />
+                android:text="@string/food_type"  />
 
             <TextView
                 android:id="@+id/quantityTextView"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="68dp"
                 android:background="@drawable/border_white_rounded"
                 android:gravity="center"
                 android:textColor="@color/yellow"
                 android:textSize="16sp"
-                tools:text="Item Quantity" />
+                android:text="@string/med_qoh" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
