@@ -69,7 +69,6 @@ public class SigninActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.sign_in_button);
         passwordToggle = findViewById(R.id.password_toggle);
         rememberMeCheckBox = findViewById(R.id.remember_me_checkbox);
-        forgotPasswordText = findViewById(R.id.forgot_password_text);
         cancelText = findViewById(R.id.cancel_text);
         userTypeRadioGroup = findViewById(R.id.user_type_group);
     }
@@ -77,7 +76,6 @@ public class SigninActivity extends AppCompatActivity {
     private void setupListeners() {
         loginButton.setOnClickListener(v -> attemptLogin());
         passwordToggle.setOnClickListener(v -> togglePasswordVisibility());
-        forgotPasswordText.setOnClickListener(v -> showForgotPasswordDialog());
         cancelText.setOnClickListener(v -> finish());
     }
 
@@ -100,35 +98,6 @@ public class SigninActivity extends AppCompatActivity {
             editor.clear();
         }
         editor.apply();
-    }
-
-    private void showForgotPasswordDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.forgot_password_dialog, null);
-        builder.setView(dialogView);
-
-        final AlertDialog dialog = builder.create();
-
-        final EditText usernameResetEditText = dialogView.findViewById(R.id.username_reset_edit_text);
-        Button positiveButton = dialogView.findViewById(R.id.positiveButton);
-        Button negativeButton = dialogView.findViewById(R.id.negativeButton);
-
-        positiveButton.setOnClickListener(v -> {
-            String username = usernameResetEditText.getText().toString().trim();
-            if (username.isEmpty()) {
-                Toast.makeText(SigninActivity.this, "Please enter your username", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(SigninActivity.this, "Password reset link sent to the associated email.", Toast.LENGTH_LONG).show();
-                dialog.dismiss();
-            }
-        });
-
-        negativeButton.setOnClickListener(v -> {
-            dialog.dismiss();
-        });
-
-        dialog.show();
     }
 
 
@@ -164,6 +133,7 @@ public class SigninActivity extends AppCompatActivity {
                     runOnUiThread(() -> {
                         Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(SigninActivity.this, DashboardActivity.class);
+                        intent.putExtra("USERNAME", username);
                         intent.putExtra("NAME", student.getStuName());
                         intent.putExtra("USER_TYPE", "student");
                         intent.putExtra("STUDENT_ID", student.getStuNum());
@@ -183,12 +153,13 @@ public class SigninActivity extends AppCompatActivity {
                     runOnUiThread(() -> {
                         Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(SigninActivity.this, DashboardActivity.class);
+                        intent.putExtra("USERNAME", username);
                         intent.putExtra("SURNAME", nurse.getEmpSurname());
                         intent.putExtra("USER_TYPE", "nurse");
                         intent.putExtra("NURSE_ID", nurse.getEmpName());
                         startActivity(intent);
                         finish();
-                    });
+               });
                     return;
                 } else {
 

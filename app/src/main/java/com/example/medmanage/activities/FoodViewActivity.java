@@ -33,7 +33,7 @@ public class FoodViewActivity extends AppCompatActivity {
     private Food selectedFood;
     private TextView header;
     private MaterialCardView detailsCard;
-    private Button editButton;
+    private Button updateButton;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -52,11 +52,12 @@ public class FoodViewActivity extends AppCompatActivity {
         errorText = findViewById(R.id.errorText);
         header = findViewById(R.id.header);
         detailsCard = findViewById(R.id.detailsCard);
-        editButton = findViewById(R.id.editButton);
+        updateButton = findViewById(R.id.updateButton);
 
+        Button backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(v -> finish()); // Closes the activity
 
-
-        editButton.setOnClickListener(v -> {
+        updateButton.setOnClickListener(v -> {
             if (selectedFood != null) {
                 Intent intent = new Intent(FoodViewActivity.this, EditFoodActivity.class);
                 intent.putExtra("FOOD_ITEM", selectedFood);
@@ -68,9 +69,9 @@ public class FoodViewActivity extends AppCompatActivity {
         String userType = getIntent().getStringExtra("USER_TYPE");
 
         if ("student".equalsIgnoreCase(userType)) {
-            editButton.setVisibility(View.GONE);
+            updateButton.setVisibility(View.GONE);
         } else if ("nurse".equalsIgnoreCase(userType)) {
-           editButton.setVisibility(View.VISIBLE);
+           updateButton.setVisibility(View.VISIBLE);
         }
         fetchFoodData();
     }
@@ -146,17 +147,19 @@ public class FoodViewActivity extends AppCompatActivity {
             quantityTextView.setText("");
         }
     }
-
     private void showLoading(boolean isLoading) {
         int contentVisibility = isLoading ? View.GONE : View.VISIBLE;
         int loadingVisibility = isLoading ? View.VISIBLE : View.GONE;
 
         progressBar.setVisibility(loadingVisibility);
         loadingText.setVisibility(loadingVisibility);
+
+        // Toggle visibility of all content, including the button's parent container
         header.setVisibility(contentVisibility);
         customSpinner.setVisibility(contentVisibility);
         detailsCard.setVisibility(contentVisibility);
-        editButton.setVisibility(contentVisibility);
+        findViewById(R.id.buttonContainer).setVisibility(contentVisibility); // Use the container ID
+
         errorText.setVisibility(View.GONE);
     }
 
@@ -166,7 +169,9 @@ public class FoodViewActivity extends AppCompatActivity {
         header.setVisibility(View.GONE);
         customSpinner.setVisibility(View.GONE);
         detailsCard.setVisibility(View.GONE);
-        editButton.setVisibility(View.GONE);
+        findViewById(R.id.buttonContainer).setVisibility(View.GONE); // Use the container ID
         errorText.setVisibility(View.VISIBLE);
     }
+
+
 }

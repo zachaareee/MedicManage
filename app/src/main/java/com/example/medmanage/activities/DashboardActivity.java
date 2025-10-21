@@ -68,16 +68,25 @@ public class DashboardActivity extends AppCompatActivity {
 
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
+
+
         binding.navView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.navigation_profile) {
-                if (username != null && userType != null) {
-                    Fragment profileFragment = profile_fragment.newInstance(username, userType);
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.nav_host_fragment_activity_main, profileFragment)
-                            .commit();
+
+                Bundle bundle = new Bundle();
+                bundle.putString("USERNAME", username);
+                bundle.putString("USER_TYPE", userType);
+
+
+                try {
+                    navController.navigate(R.id.navigation_profile, bundle);
                     return true;
+                } catch (Exception e) {
+                    return false;
                 }
             }
+
+
             return NavigationUI.onNavDestinationSelected(item, navController);
         });
     }

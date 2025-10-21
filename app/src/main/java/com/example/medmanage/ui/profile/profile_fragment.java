@@ -32,7 +32,7 @@ public class profile_fragment extends Fragment {
     private static final String ARG_USERNAME = "USERNAME";
     private static final String ARG_USER_TYPE = "USER_TYPE";
 
-    private TextView profileName, profileSurname, profileNumber, profileUsername,
+    private TextView profileName, profileNumber,profileSurname, profileUsername,
             medicationRequirement, foodRequirement, profilePassword;
     private Button updateButton, deleteButton;
     private databaseMedicManage db;
@@ -130,13 +130,13 @@ public class profile_fragment extends Fragment {
 
     private void initializeViews(View view) {
         // Use the passed-in view to find the UI elements
-        profileName = view.findViewById(R.id.textView_profileName);
-        profileSurname = view.findViewById(R.id.textView_profileSurname);
-        profileNumber = view.findViewById(R.id.textView_profileNumber);
-        profileUsername = view.findViewById(R.id.textView_profileUsername);
-        medicationRequirement = view.findViewById(R.id.textView_medicationRequirement);
-        foodRequirement = view.findViewById(R.id.textView_foodRequirement);
-        profilePassword = view.findViewById(R.id.textView_profilePassword);
+        profileName = view.findViewById(R.id.textView_firstName);
+        profileSurname = view.findViewById(R.id.textView_lastName);
+        profileNumber = view.findViewById(R.id.textView_studentNo);
+        profileUsername = view.findViewById(R.id.textView_username);
+        medicationRequirement = view.findViewById(R.id.textView_medicationReq);
+        foodRequirement = view.findViewById(R.id.textView_foodReq);
+        profilePassword = view.findViewById(R.id.textView_password);
         updateButton = view.findViewById(R.id.button_update);
         deleteButton = view.findViewById(R.id.button_delete);
     }

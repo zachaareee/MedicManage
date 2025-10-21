@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.medmanage.R;
+import com.example.medmanage.activities.FoodViewActivity;
 import com.example.medmanage.activities.ViewMedicationActivity;
 
 public class home_fragment extends Fragment {
@@ -31,9 +32,22 @@ public class home_fragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         CardView viewMedicationCard = view.findViewById(R.id.view_medication);
+        CardView viewFoodCard = view.findViewById(R.id.view_food_list);
+
         viewMedicationCard.setOnClickListener(v -> {
 
             Intent intent = new Intent(getActivity(), ViewMedicationActivity.class);
+            if (getActivity() != null && getActivity().getIntent() != null) {
+                String userType = getActivity().getIntent().getStringExtra("USER_TYPE");
+
+                // Pass it along to the next activity
+                intent.putExtra("USER_TYPE", userType);
+            }
+
+            startActivity(intent);
+        });
+        viewFoodCard.setOnClickListener(v->{
+            Intent intent = new Intent(getActivity(), FoodViewActivity.class);
             if (getActivity() != null && getActivity().getIntent() != null) {
                 String userType = getActivity().getIntent().getStringExtra("USER_TYPE");
 

@@ -117,7 +117,7 @@
             android:layout_height="wrap_content"
             android:visibility="gone"
             app:constraint_referenced_ids="label_staffNo, textView_staffNo"
-            tools:visibility="gone" />
+            tools:visibility="visible" />
 
         <TextView
             android:id="@+id/label_studentNo"
@@ -128,7 +128,7 @@
             android:textColor="@color/yellow"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textView_lastName" />
+            app:layout_constraintTop_toBottomOf="@id/textView_staffNo" />
 
         <TextView
             android:id="@+id/textView_studentNo"
@@ -199,7 +199,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:constraint_referenced_ids="label_studentNo, textView_studentNo, label_medicationReq, textView_medicationReq, label_foodReq, textView_foodReq" />
+            app:constraint_referenced_ids="label_studentNo, textView_studentNo, label_medicationReq, textView_medicationReq, label_foodReq, textView_foodReq"
+            tools:visibility="visible"/>
 
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/barrier"

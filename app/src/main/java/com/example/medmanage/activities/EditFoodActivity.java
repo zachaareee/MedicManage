@@ -1,7 +1,9 @@
 package com.example.medmanage.activities;
 
 import android.os.Bundle;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,7 +20,8 @@ public class EditFoodActivity extends AppCompatActivity {
 
     private TextView foodNameText;
     private TextView quantityTextView;
-    private Button decreaseButton, increaseButton, saveButton;
+    private ImageButton decreaseButton, increaseButton;
+    private Button saveButton, cancelButton;
 
     private databaseMedicManage db;
     private Food currentFood;
@@ -28,15 +31,17 @@ public class EditFoodActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.food_edit_dialog);
+        getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        setFinishOnTouchOutside(false);
 
-       db =  databaseMedicManage.getDatabase(getApplicationContext());
-        foodNameText = findViewById(R.id.food_list_text);
+        db = databaseMedicManage.getDatabase(getApplicationContext());
+        foodNameText = findViewById(R.id.dialogTitleTextView);
         quantityTextView = findViewById(R.id.quantityTextView);
-        decreaseButton = findViewById(R.id.decreaseButton);
-        increaseButton = findViewById(R.id.increaseButton);
+        decreaseButton = findViewById(R.id.minusButton);
+        increaseButton = findViewById(R.id.plusButton);
         saveButton = findViewById(R.id.saveButton);
+        cancelButton = findViewById(R.id.cancelButton); // <-- ADDED THIS LINE
 
-        // Get the Food object that was passed from the list screen
         currentFood = (Food) getIntent().getSerializableExtra("FOOD_ITEM");
 
         if (currentFood != null) {
@@ -64,6 +69,10 @@ public class EditFoodActivity extends AppCompatActivity {
         saveButton.setOnClickListener(v -> {
             saveChangesToDatabase();
         });
+
+        cancelButton.setOnClickListener(v -> {
+            finish(); // Closes the current screen
+        });
     }
 
     private void updateQuantityText() {
@@ -71,18 +80,17 @@ public class EditFoodActivity extends AppCompatActivity {
     }
 
     private void saveChangesToDatabase() {
-        // Update the food object with the new quantity
+        if (currentFood == null) return;
+
         currentFood.setQuantity(currentQuantity);
 
         ExecutorService executor = databaseMedicManage.databaseWriteExecutor;
         executor.execute(() -> {
-            // Save the updated object to the database
             db.foodDAO().updateFood(currentFood);
 
-            // Show a confirmation message and close the screen
             runOnUiThread(() -> {
                 Toast.makeText(this, "Quantity updated!", Toast.LENGTH_SHORT).show();
-                finish(); // This closes the EditFoodActivity and returns to the list
+                finish();
             });
         });
     }
