@@ -8,9 +8,8 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="98dp"
-        android:layout_height="84dp"
-        android:contentDescription="@string/logo"
+        android:layout_width="92dp"
+        android:layout_height="79dp"
         android:src="@drawable/icon_logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -18,48 +17,50 @@
 
     <TextView
         android:id="@+id/confirmationMessageTextView"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:gravity="center"
-        android:text="@string/delete_account_message"
+        android:text="@string/med_add_message"
         android:textColor="@color/white"
-        android:textSize="18sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imageView" />
 
-    <com.google.android.material.button.MaterialButton
+    <Button
         android:id="@+id/negativeButton"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        app:strokeWidth="2dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:text="@string/Cancel"
         android:textColor="@color/yellow"
-        android:padding="12dp"
-        app:cornerRadius="24dp"
         android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/positiveButton"
+        app:cornerRadius="24dp"
+        android:padding="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/positiveButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/confirmationMessageTextView"
-        app:strokeWidth="2dp"
+        app:layout_constraintTop_toBottomOf="@id/confirmationMessageTextView"
         app:strokeColor="@color/yellow" />
 
-    <com.google.android.material.button.MaterialButton
+    <Button
         android:id="@+id/positiveButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:backgroundTint="@color/yellow"
-        android:textSize="20sp"
+        android:padding="12dp"
         android:text="@string/yes"
         android:textColor="@color/white"
+        android:textSize="20sp"
         app:cornerRadius="24dp"
-        android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/negativeButton"
-        app:layout_constraintTop_toTopOf="@+id/negativeButton" />
+        app:layout_constraintStart_toEndOf="@id/negativeButton"
+        app:layout_constraintTop_toTopOf="@id/negativeButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

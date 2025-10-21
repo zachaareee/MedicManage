@@ -13,17 +13,15 @@
         android:layout_height="wrap_content"
         android:padding="24dp">
 
-        <!-- Header -->
         <ImageView
             android:id="@+id/imageView_logo"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:contentDescription="@string/app_name"
-            android:scaleType="centerInside"
+            android:contentDescription="@string/logo"
+            android:src="@drawable/icon_logo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/icon_logo" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView_updateTitle"
@@ -32,12 +30,12 @@
             android:layout_marginTop="16dp"
             android:text="@string/update_profile"
             android:textColor="@color/yellow"
-            android:textSize="25sp"
+            android:textSize="28sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView_logo" />
 
-        <!-- Form Fields -->
         <TextView
             android:id="@+id/label_firstName"
             android:layout_width="wrap_content"
@@ -45,6 +43,7 @@
             android:layout_marginTop="24dp"
             android:text="@string/name"
             android:textColor="@color/yellow"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textView_updateTitle" />
 
@@ -52,10 +51,12 @@
             android:id="@+id/editText_firstName"
             android:layout_width="0dp"
             android:layout_height="48dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/btn_white_rounded"
-            android:inputType="text"
+            android:inputType="textPersonName"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/label_firstName" />
@@ -67,6 +68,7 @@
             android:layout_marginTop="16dp"
             android:text="@string/surname"
             android:textColor="@color/yellow"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editText_firstName" />
 
@@ -74,15 +76,16 @@
             android:id="@+id/editText_lastName"
             android:layout_width="0dp"
             android:layout_height="48dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/btn_white_rounded"
             android:inputType="textPersonName"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/label_lastName" />
 
-        <!-- Nurse Specific Field -->
         <TextView
             android:id="@+id/label_staffNo"
             android:layout_width="wrap_content"
@@ -90,93 +93,138 @@
             android:layout_marginTop="16dp"
             android:text="@string/employee_no"
             android:textColor="@color/yellow"
-            android:visibility="gone"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/editText_lastName"
-            tools:visibility="visible"/>
+            app:layout_constraintTop_toBottomOf="@id/editText_lastName" />
 
         <EditText
             android:id="@+id/editText_staffNo"
             android:layout_width="0dp"
             android:layout_height="48dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/btn_white_rounded"
             android:inputType="number"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:visibility="gone"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/label_staffNo"
-            tools:visibility="visible" />
+            app:layout_constraintTop_toBottomOf="@id/label_staffNo" />
 
-        <!-- Student Specific Fields -->
-        <LinearLayout
-            android:id="@+id/layout_studentFields"
-            android:layout_width="0dp"
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group_nurse_fields"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:visibility="gone"
+            app:constraint_referenced_ids="label_staffNo, editText_staffNo"
+            tools:visibility="gone" />
+
+        <TextView
+            android:id="@+id/label_studentNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/studentno"
+            android:textColor="@color/yellow"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editText_lastName" />
+
+        <EditText
+            android:id="@+id/editText_studentNo"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/btn_white_rounded"
+            android:inputType="text"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/editText_staffNo"
-            tools:visibility="visible">
+            app:layout_constraintTop_toBottomOf="@id/label_studentNo" />
 
-            <TextView
+        <TextView
+            android:id="@+id/label_medicationReq"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/medicationReq"
+            android:textColor="@color/yellow"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editText_studentNo" />
+
+        <LinearLayout
+            android:id="@+id/layout_medicationCheckboxes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@id/label_medicationReq"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/label_medicationReq">
+            <CheckBox
+                android:id="@+id/checkbox_medicationYes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/studentno"
-                android:textColor="@color/yellow"/>
-            <EditText
-                android:id="@+id/editText_studentNo"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:background="@drawable/btn_white_rounded"
-                android:inputType="number"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp" />
-
-            <TextView
+                android:text="@string/yes"
+                android:textColor="@color/white" />
+            <CheckBox
+                android:id="@+id/checkbox_medicationNo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/medicationReq"
-                android:textColor="@color/yellow"/>
-            <EditText
-                android:id="@+id/editText_medicationReq"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:background="@drawable/btn_white_rounded"
-                android:inputType="text"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/foodReq"
-                android:textColor="@color/yellow" />
-            <RadioGroup
-                android:id="@+id/radioGroup_foodReq"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <RadioButton
-                    android:id="@+id/radioButton_foodYes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/yes"
-                    android:textColor="@color/white" />
-                <RadioButton
-                    android:id="@+id/radioButton_foodNo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/no"
-                    android:textColor="@color/white" />
-            </RadioGroup>
+                android:text="@string/no"
+                android:textColor="@color/white" />
         </LinearLayout>
 
-        <!-- Common Fields Continued -->
+        <TextView
+            android:id="@+id/label_foodReq"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/foodReq"
+            android:textColor="@color/yellow"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_medicationReq" />
+
+        <LinearLayout
+            android:id="@+id/layout_foodCheckboxes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@id/label_foodReq"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/label_foodReq">
+            <CheckBox
+                android:id="@+id/checkbox_foodYes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/yes"
+                android:textColor="@color/white" />
+            <CheckBox
+                android:id="@+id/checkbox_foodNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group_student_fields"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="label_studentNo, editText_studentNo, label_medicationReq, layout_medicationCheckboxes, label_foodReq, layout_foodCheckboxes"
+            tools:visibility="gone" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier_role_specific_fields"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="editText_staffNo, layout_foodCheckboxes" />
+
         <TextView
             android:id="@+id/label_username"
             android:layout_width="wrap_content"
@@ -184,17 +232,20 @@
             android:layout_marginTop="16dp"
             android:text="@string/username"
             android:textColor="@color/yellow"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_studentFields" />
+            app:layout_constraintTop_toBottomOf="@id/barrier_role_specific_fields" />
 
         <EditText
             android:id="@+id/editText_username"
             android:layout_width="0dp"
             android:layout_height="48dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/btn_white_rounded"
-            android:inputType="textPersonName"
+            android:inputType="text"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/label_username" />
@@ -204,8 +255,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Password"
+            android:text="@string/password"
             android:textColor="@color/yellow"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editText_username" />
 
@@ -213,50 +265,50 @@
             android:id="@+id/editText_password"
             android:layout_width="0dp"
             android:layout_height="48dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/btn_white_rounded"
             android:inputType="textPassword"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/label_password" />
 
-        <!-- Buttons -->
-        <Button
-            android:id="@+id/button_confirm"
-            android:layout_width="0dp"
-            android:layout_height="57dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="8dp"
-            android:backgroundTint="@color/yellow"
-            android:text="@string/CONFIRM"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            app:cornerRadius="20dp"
-            app:layout_constraintEnd_toStartOf="@+id/guideline_buttons"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText_password" />
-
         <Button
             android:id="@+id/button_cancel"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="0dp"
-            android:layout_height="57dp"
-            android:layout_marginStart="8dp"
-            android:backgroundTint="@color/blue"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
+            android:padding="12dp"
             android:text="@string/Cancel"
             android:textColor="@color/yellow"
             android:textSize="20sp"
-            app:cornerRadius="20dp"
-            app:layout_constraintBaseline_toBaselineOf="@id/button_confirm"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/guideline_buttons" />
+            app:cornerRadius="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/button_confirm"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editText_password"
+            app:strokeColor="@color/yellow"
+            app:strokeWidth="2dp" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_buttons"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/button_confirm"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5" />
+            android:layout_marginStart="8dp"
+            android:backgroundTint="@color/yellow"
+            android:padding="12dp"
+            android:text="@string/CONFIRM"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:cornerRadius="24dp"
+            app:layout_constraintBaseline_toBaselineOf="@id/button_cancel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/button_cancel" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

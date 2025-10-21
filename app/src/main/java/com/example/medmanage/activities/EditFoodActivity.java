@@ -27,10 +27,10 @@ public class EditFoodActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.food_edit);
+        setContentView(R.layout.food_edit_dialog);
 
        db =  databaseMedicManage.getDatabase(getApplicationContext());
-        foodNameText = findViewById(R.id.foodNameText);
+        foodNameText = findViewById(R.id.food_list_text);
         quantityTextView = findViewById(R.id.quantityTextView);
         decreaseButton = findViewById(R.id.decreaseButton);
         increaseButton = findViewById(R.id.increaseButton);

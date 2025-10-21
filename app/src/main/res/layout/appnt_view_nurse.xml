@@ -163,4 +163,23 @@
         app:layout_constraintTop_toBottomOf="@id/titleTextView"
         tools:visibility="visible" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/negativeButton"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="343dp"
+        android:layout_height="59dp"
+        android:layout_weight="1"
+        android:padding="12dp"
+        android:text="@string/Cancel"
+        android:textColor="@color/yellow"
+        android:textSize="20sp"
+        app:cornerRadius="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/noAppointmentText"
+        app:layout_constraintVertical_bias="0.116"
+        app:strokeColor="@color/yellow"
+        app:strokeWidth="2dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,12 +10,13 @@
         android:id="@+id/medicationsTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="80dp"
         android:text="@string/med_med"
         android:textColor="@color/yellow"
-        android:textSize="28sp"
+        android:textSize="32sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.46"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -53,8 +54,10 @@
             android:paddingEnd="40dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
 
         <ImageView
             android:id="@+id/medicationDropdownArrow"
@@ -68,14 +71,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:tint="@color/yellow" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/brandLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="32dp"
         android:clickable="false"
         android:focusable="false"
         android:text="@string/med_brand"
@@ -94,7 +96,6 @@
         app:layout_constraintEnd_toEndOf="@id/medicationSpinnerContainer"
         app:layout_constraintStart_toStartOf="@id/medicationSpinnerContainer"
         app:layout_constraintTop_toBottomOf="@id/brandLabel">
-
         <Spinner
             android:id="@+id/brandSpinner"
             android:layout_width="0dp"
@@ -107,7 +108,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
         <ImageView
             android:id="@+id/brandDropdownArrow"
             android:layout_width="20dp"
@@ -120,14 +120,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:tint="@color/yellow" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/dosageLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="32dp"
         android:clickable="false"
         android:focusable="false"
         android:text="@string/med_dose"
@@ -146,7 +145,6 @@
         app:layout_constraintEnd_toEndOf="@id/brandSpinnerContainer"
         app:layout_constraintStart_toStartOf="@id/brandSpinnerContainer"
         app:layout_constraintTop_toBottomOf="@id/dosageLabel">
-
         <Spinner
             android:id="@+id/dosageSpinner"
             android:layout_width="0dp"
@@ -159,7 +157,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
         <ImageView
             android:id="@+id/dosageDropdownArrow"
             android:layout_width="20dp"
@@ -172,19 +169,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:tint="@color/yellow" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/quantityTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/border_white_rounded"
         android:gravity="center_vertical"
-        android:padding="16dp"
+        android:padding="24dp"
         android:textColor="@color/yellow"
-        android:textSize="16sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@id/dosageSpinnerContainer"
         app:layout_constraintStart_toStartOf="@id/dosageSpinnerContainer"
         app:layout_constraintTop_toBottomOf="@id/dosageSpinnerContainer"
@@ -197,17 +193,17 @@
         android:layout_marginStart="32dp"
         android:layout_marginEnd="8dp"
         android:backgroundTint="@color/yellow"
-        android:padding="8dp"
+        android:padding="12dp"
         android:text="@string/add"
         android:textColor="@color/white"
         android:textSize="20sp"
         app:cornerRadius="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/quitButton"
         app:layout_constraintEnd_toStartOf="@+id/updateButton"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/quantityTextView"
-        app:layout_constraintVertical_bias="0.3" />
+        app:layout_constraintVertical_bias="0.5" />
 
     <Button
         android:id="@+id/updateButton"
@@ -215,7 +211,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:backgroundTint="@color/yellow"
-        android:padding="8dp"
+        android:padding="12dp"
         android:text="@string/update"
         android:textColor="@color/white"
         android:textSize="20sp"
@@ -230,7 +226,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:backgroundTint="@color/yellow"
-        android:padding="8dp"
+        android:padding="12dp"
         android:text="@string/delete"
         android:textColor="@color/white"
         android:textSize="20sp"
@@ -238,5 +234,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/updateButton"
         app:layout_constraintTop_toTopOf="@+id/addButton" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/quitButton"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="168dp"
+        android:padding="12dp"
+        android:text="@string/Cancel"
+        android:textColor="@color/yellow"
+        android:textSize="20sp"
+        app:cornerRadius="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:strokeColor="@color/yellow"
+        app:strokeWidth="2dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

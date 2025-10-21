@@ -13,7 +13,6 @@
         android:layout_height="wrap_content"
         android:padding="24dp">
 
-        <!-- Header -->
         <ImageView
             android:id="@+id/imageView_logo"
             android:layout_width="100dp"
@@ -25,15 +24,14 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/icon_logo" />
 
-        <!-- Signup Title -->
         <TextView
             android:id="@+id/textView_signupTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="24dp"
             android:text="@string/signup"
             android:textColor="@color/yellow"
-            android:textSize="25sp"
+            android:textSize="28sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView_logo" />
@@ -79,7 +77,6 @@
 
         </RadioGroup>
 
-        <!-- Common Fields -->
         <EditText
             android:id="@+id/editText_firstName"
             android:layout_width="0dp"
@@ -106,7 +103,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editText_firstName" />
 
-        <!-- Food Requirement Section -->
         <TextView
             android:id="@+id/textView_foodReq"
             android:layout_width="wrap_content"
@@ -114,7 +110,7 @@
             android:layout_marginTop="24dp"
             android:text="@string/foodReq"
             android:textColor="@color/yellow"
-            android:textSize="18sp"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editText_lastName" />
 
@@ -132,7 +128,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/yes"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:textSize="20sp" />
 
             <RadioButton
                 android:id="@+id/radioButton_foodNo"
@@ -140,10 +137,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="@string/no"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:textSize="20sp" />
         </RadioGroup>
 
-        <!-- Medication Requirement -->
         <EditText
             android:id="@+id/editText_medicationReq"
             android:layout_width="0dp"
@@ -157,7 +154,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/radioGroup_foodReq" />
 
-        <!-- Nurse Specific Field -->
         <EditText
             android:id="@+id/editText_staffNo"
             android:layout_width="0dp"
@@ -172,7 +168,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editText_medicationReq" />
 
-        <!-- Student Specific Fields -->
         <LinearLayout
             android:id="@+id/layout_studentFields"
             android:layout_width="0dp"
@@ -194,7 +189,6 @@
                 android:padding="12dp" />
         </LinearLayout>
 
-        <!-- Username -->
         <EditText
             android:id="@+id/editText_username"
             android:layout_width="0dp"
@@ -208,7 +202,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layout_studentFields" />
 
-        <!-- Password with Toggle -->
         <RelativeLayout
             android:id="@+id/password_layout"
             android:layout_width="0dp"
@@ -225,9 +218,9 @@
                 android:background="@drawable/btn_white_rounded"
                 android:hint="@string/Password"
                 android:inputType="textPassword"
+                android:padding="12dp"
                 android:paddingStart="12dp"
-                android:paddingEnd="50dp"
-                android:padding="12dp" />
+                android:paddingEnd="50dp" />
 
             <ImageView
                 android:id="@+id/password_toggle"
@@ -236,49 +229,44 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="10dp"
-                android:src="@drawable/icon_password_hidden"
-                android:contentDescription="@string/toggle_password_visibility" />
+                android:contentDescription="@string/toggle_password_visibility"
+                android:src="@drawable/icon_password_hidden" />
         </RelativeLayout>
 
 
-        <!-- Buttons -->
-        <Button
-            android:id="@+id/button_confirm"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/negativeButton"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="0dp"
-            android:layout_height="57dp"
-            android:layout_marginTop="32dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:layout_marginEnd="8dp"
-            android:backgroundTint="@color/yellow"
-            android:text="@string/CONFIRM"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            app:cornerRadius="20dp"
-            app:layout_constraintEnd_toStartOf="@+id/guideline_buttons"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/password_layout" />
-
-        <Button
-            android:id="@+id/button_cancel"
-            android:layout_width="0dp"
-            android:layout_height="57dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginStart="8dp"
-            android:backgroundTint="@color/blue"
+            android:padding="12dp"
             android:text="@string/Cancel"
             android:textColor="@color/yellow"
             android:textSize="20sp"
-            app:cornerRadius="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/guideline_buttons"
-            app:layout_constraintTop_toBottomOf="@+id/password_layout" />
+            app:cornerRadius="24dp"
+            app:layout_constraintEnd_toStartOf="@+id/button_confirm"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/password_layout"
+            app:strokeColor="@color/yellow"
+            app:strokeWidth="2dp" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_buttons"
-            android:layout_width="wrap_content"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_confirm"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5" />
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/yellow"
+            android:padding="12dp"
+            android:text="@string/CONFIRM"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:cornerRadius="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/negativeButton"
+            app:layout_constraintTop_toBottomOf="@+id/password_layout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
-

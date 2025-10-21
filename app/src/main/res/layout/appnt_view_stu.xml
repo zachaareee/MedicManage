@@ -12,7 +12,7 @@
         android:id="@+id/titleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="104dp"
         android:text="@string/appointment_details_label"
         android:textColor="@color/yellow"
         android:textSize="28sp"
@@ -38,12 +38,13 @@
             android:layout_height="wrap_content"
             android:text="@string/medication_requirement"
             android:textColor="@color/yellow"
-            android:textSize="16sp" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/medicationValue"
             style="@style/ProfileInfoBox"
             android:layout_width="match_parent"
+            android:textSize="20sp"
             tools:text="ARVs" />
 
         <TextView
@@ -52,12 +53,13 @@
             android:layout_marginTop="16dp"
             android:text="@string/food_requirement"
             android:textColor="@color/yellow"
-            android:textSize="16sp" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/foodValue"
             style="@style/ProfileInfoBox"
             android:layout_width="match_parent"
+            android:textSize="20sp"
             tools:text="High protein" />
 
         <LinearLayout
@@ -78,12 +80,13 @@
                     android:layout_height="wrap_content"
                     android:text="@string/date"
                     android:textColor="@color/yellow"
-                    android:textSize="16sp" />
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/dateValue"
                     style="@style/ProfileInfoBox"
                     android:layout_width="match_parent"
+                    android:textSize="20sp"
                     tools:text="2025-05-15" />
             </LinearLayout>
 
@@ -99,12 +102,13 @@
                     android:layout_height="wrap_content"
                     android:text="@string/time_placeholder"
                     android:textColor="@color/yellow"
-                    android:textSize="16sp" />
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/timeValue"
                     style="@style/ProfileInfoBox"
                     android:layout_width="match_parent"
+                    android:textSize="20sp"
                     tools:text="10:30 AM" />
             </LinearLayout>
         </LinearLayout>
@@ -116,32 +120,54 @@
         android:layout_height="wrap_content"
         android:text="@string/no_appointment_scheduled"
         android:textColor="@color/white"
-        android:textSize="18sp"
+        android:textSize="20sp"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/cancelAppointmentButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/titleTextView"
+        app:layout_constraintVertical_bias="0.894"
         tools:visibility="visible" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/cancelAppointmentButton"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="63dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="280dp"
         android:backgroundTint="@color/yellow"
         android:padding="12dp"
         android:text="@string/cancel_appointment_button_text"
-        android:textColor="@color/blue"
+        android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
         android:visibility="gone"
+        app:cornerRadius="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:visibility="visible"
-        app:cornerRadius = "24dp"/>
+        tools:visibility="visible" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/negativeButton"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="330dp"
+        android:layout_height="63dp"
+        android:layout_weight="1"
+        android:padding="12dp"
+        android:text="@string/Cancel"
+        android:textColor="@color/yellow"
+        android:textSize="20sp"
+        app:cornerRadius="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cancelAppointmentButton"
+        app:layout_constraintVertical_bias="0.143"
+        app:strokeColor="@color/yellow"
+        app:strokeWidth="2dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

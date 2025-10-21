@@ -113,7 +113,7 @@ public class ReviewAppointmentActivity extends AppCompatActivity {
             spinnerItems.add(displayText);
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.custom_spinner_item, spinnerItems);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.appnt_spinner_item, spinnerItems);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         appointmentSpinner.setAdapter(adapter);
 

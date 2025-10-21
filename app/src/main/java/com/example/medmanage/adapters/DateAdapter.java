@@ -35,7 +35,7 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateViewHolder
     @NonNull
     @Override
     public DateViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.custom_date_item, parent, false);
+        View view = inflater.inflate(R.layout.appnt_date_item, parent, false);
         return new DateViewHolder(view);
     }
 

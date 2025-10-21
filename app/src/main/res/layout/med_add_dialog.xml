@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="24dp"
-    android:background="@color/blue">
+    android:background="@drawable/bg_dialog_rounded">
 
     <TextView
         android:id="@+id/dialogTitleTextView"
@@ -14,7 +14,7 @@
         android:layout_gravity="center"
         android:text="@string/med_add"
         android:textColor="@color/yellow"
-        android:textSize="22sp"
+        android:textSize="28sp"
         android:textStyle="bold"
         android:layout_marginBottom="24dp" />
 
@@ -24,6 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/med_med"
+        android:textSize="20sp"
         app:boxStrokeColor="@color/yellow"
         app:hintTextColor="@color/yellow"
         android:textColorHint="@color/yellow">
@@ -32,6 +33,7 @@
             android:id="@+id/medicationNameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="20sp"
             android:textColor="@color/white" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -42,6 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:hint="@string/med_brand"
+        android:textSize="20sp"
         app:boxStrokeColor="@color/yellow"
         app:hintTextColor="@color/yellow"
         android:textColorHint="@color/yellow">
@@ -50,6 +53,7 @@
             android:id="@+id/brandEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="20sp"
             android:textColor="@color/white"/>
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -60,6 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:hint="@string/dosage_example"
+        android:textSize="20sp"
         app:boxStrokeColor="@color/yellow"
         app:hintTextColor="@color/yellow"
         android:textColorHint="@color/yellow">
@@ -68,6 +73,7 @@
             android:id="@+id/dosageEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="20sp"
             android:textColor="@color/white"/>
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -78,6 +84,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:hint="@string/med_qoh"
+        android:textSize="20sp"
         app:boxStrokeColor="@color/yellow"
         app:hintTextColor="@color/yellow"
         android:textColorHint="@color/yellow">
@@ -87,6 +94,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="number"
+            android:textSize="20sp"
             android:textColor="@color/white"/>
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -101,26 +109,28 @@
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
             android:layout_weight="1"
+            android:padding="12dp"
             android:text="@string/Cancel"
             android:textColor="@color/yellow"
-            app:strokeColor="@color/yellow"
-            android:layout_marginEnd="8dp"
-            android:padding = "16dp"
-            app:cornerRadius = "24dp"
-            />
+            android:textSize="20sp"
+            app:cornerRadius="24dp"
+            app:strokeWidth="2dp"
+            app:strokeColor="@color/yellow" />
 
         <Button
             android:id="@+id/saveButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/save"
-            android:backgroundTint="@color/yellow"
-            android:textColor="#0A2342"
             android:layout_marginStart="8dp"
-            android:padding = "16dp"
-            app:cornerRadius="24dp"/>
+            android:layout_weight="1"
+            android:backgroundTint="@color/yellow"
+            android:padding="12dp"
+            android:text="@string/save"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:cornerRadius="24dp" />
     </LinearLayout>
 
 </LinearLayout>

@@ -180,20 +180,6 @@
         app:layout_constraintTop_toBottomOf="@id/remember_me_checkbox" />
 
     <TextView
-        android:id="@+id/forgot_password_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="32dp"
-        android:text="@string/forgot_password"
-        android:textColor="@color/yellow"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sign_in_button" />
-
-    <TextView
         android:id="@+id/cancel_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -203,7 +189,6 @@
         android:textColor="@color/yellow"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/forgot_password_text" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

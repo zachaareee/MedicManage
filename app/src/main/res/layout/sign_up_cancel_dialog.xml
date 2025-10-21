@@ -6,12 +6,12 @@
     android:orientation="vertical"
     android:padding="24dp"
     app:cornerRadius="24dp"
-    android:background="@color/blue"
+    android:background="@drawable/bg_dialog_rounded"
     android:gravity="center">
 
     <ImageView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="81dp"
+        android:layout_height="84dp"
         android:layout_marginBottom="16dp"
         android:contentDescription="@string/logo"
         android:src="@drawable/icon_logo" />
@@ -39,7 +39,7 @@
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
             android:padding="12dp"
-            android:text="@string/no"
+            android:text="@string/Cancel"
             android:textColor="@color/yellow"
             android:textSize="20sp"
             app:cornerRadius="24dp"
@@ -54,7 +54,7 @@
             android:layout_weight="1"
             android:backgroundTint="@color/yellow"
             android:padding="12dp"
-            android:text="@string/ok"
+            android:text="@string/yes"
             android:textColor="@color/white"
             android:textSize="20sp"
             app:cornerRadius="24dp" />

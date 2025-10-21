@@ -71,7 +71,7 @@ public class ViewMedicationActivity extends AppCompatActivity {
                         .distinct()
                         .collect(java.util.stream.Collectors.toList());
 
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.custom_spinner_item, medNames);
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.appnt_spinner_item, medNames);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 medicationSpinner.setAdapter(adapter);
             }
@@ -103,7 +103,7 @@ public class ViewMedicationActivity extends AppCompatActivity {
                                 .distinct()
                                 .collect(java.util.stream.Collectors.toList());
 
-                        ArrayAdapter<String> adapter = new ArrayAdapter<>(ViewMedicationActivity.this, R.layout.custom_spinner_item, brands);
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(ViewMedicationActivity.this, R.layout.appnt_spinner_item, brands);
                         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         brandSpinner.setAdapter(adapter);
 
@@ -148,7 +148,7 @@ public class ViewMedicationActivity extends AppCompatActivity {
                                 .distinct()
                                 .collect(java.util.stream.Collectors.toList());
 
-                        ArrayAdapter<String> adapter = new ArrayAdapter<>(ViewMedicationActivity.this, R.layout.custom_spinner_item, dosages);
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(ViewMedicationActivity.this, R.layout.appnt_spinner_item, dosages);
                         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         dosageSpinner.setAdapter(adapter);
 
@@ -221,7 +221,7 @@ public class ViewMedicationActivity extends AppCompatActivity {
     private void showAddUpdateDialog(final Medication medication) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.med_add_update_dialog, null);
+        View dialogView = inflater.inflate(R.layout.med_add_dialog, null);
         builder.setView(dialogView);
 
         final EditText medNameEditText = dialogView.findViewById(R.id.medicationNameEditText);
@@ -301,7 +301,7 @@ public class ViewMedicationActivity extends AppCompatActivity {
     private void showDeleteConfirmationDialog(final Medication medication) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.med_confirmation_dialog, null);
+        View dialogView = inflater.inflate(R.layout.med_add_confirmation_dialog, null);
         builder.setView(dialogView);
 
         final TextView messageTextView = dialogView.findViewById(R.id.confirmationMessageTextView);

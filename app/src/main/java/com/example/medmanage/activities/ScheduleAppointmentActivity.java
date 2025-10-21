@@ -176,7 +176,7 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
     private void showQuitConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.appnt_quit_dialog, null);
+        View dialogView = inflater.inflate(R.layout.general_confirm_dialog, null);
         builder.setView(dialogView);
 
         final Button yesButton = dialogView.findViewById(R.id.positiveButton);

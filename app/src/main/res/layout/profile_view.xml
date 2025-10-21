@@ -11,124 +11,287 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:padding="24dp">
 
-        <TextView
-            android:id="@+id/headerTitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/profile"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/textView_profileName"
+        <ImageView
+            android:id="@+id/imageView_logo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:contentDescription="@string/app_logo"
+            android:src="@drawable/icon_logo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView_profileName"
-            style="@style/ProfileInfoBox"
+            android:id="@+id/textView_profileTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/profile_details"
+            android:textColor="@color/yellow"
+            android:textSize="28sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="148dp"
-            tools:text="Name" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView_logo" />
 
         <TextView
-            android:id="@+id/textView_profileSurname"
-            style="@style/ProfileInfoBox"
-            android:layout_marginTop="12dp"
-            tools:text="Surname"
+            android:id="@+id/label_firstName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/name"
+            android:textColor="@color/yellow"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textView_profileName" />
+            app:layout_constraintTop_toBottomOf="@id/textView_profileTitle" />
 
         <TextView
-            android:id="@+id/textView_profileNumber"
-            style="@style/ProfileInfoBox"
-            android:layout_marginTop="12dp"
-            tools:text="Student Number"
+            android:id="@+id/textView_firstName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/btn_white_rounded"
+            android:padding="12dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_firstName"
+            tools:text="John" />
+
+        <TextView
+            android:id="@+id/label_lastName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/surname"
+            android:textColor="@color/yellow"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView_firstName" />
+
+        <TextView
+            android:id="@+id/textView_lastName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/btn_white_rounded"
+            android:padding="12dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_lastName"
+            tools:text="Doe" />
+
+        <TextView
+            android:id="@+id/label_staffNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/employee_no"
+            android:textColor="@color/yellow"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView_lastName" />
+
+        <TextView
+            android:id="@+id/textView_staffNo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/btn_white_rounded"
+            android:padding="12dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_staffNo"
+            tools:text="12345" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group_nurse_fields"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:visibility="gone"
-            tools:visibility="visible"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textView_profileSurname" />
+            app:constraint_referenced_ids="label_staffNo, textView_staffNo"
+            tools:visibility="gone" />
 
         <TextView
-            android:id="@+id/textView_profileUsername"
-            style="@style/ProfileInfoBox"
-            android:layout_marginTop="12dp"
-            tools:text="Username"
+            android:id="@+id/label_studentNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/studentno"
+            android:textColor="@color/yellow"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textView_profileNumber" />
+            app:layout_constraintTop_toBottomOf="@id/textView_lastName" />
 
         <TextView
-            android:id="@+id/textView_medicationRequirement"
-            style="@style/ProfileInfoBox"
-            android:layout_marginTop="12dp"
-            android:text="@string/medication_requirement"
+            android:id="@+id/textView_studentNo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/btn_white_rounded"
+            android:padding="12dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_studentNo"
+            tools:text="ST12345" />
+
+        <TextView
+            android:id="@+id/label_medicationReq"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/medicationReq"
+            android:textColor="@color/yellow"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView_studentNo" />
+
+        <TextView
+            android:id="@+id/textView_medicationReq"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/btn_white_rounded"
+            android:padding="12dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_medicationReq"
+            tools:text="Yes" />
+
+        <TextView
+            android:id="@+id/label_foodReq"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/foodReq"
+            android:textColor="@color/yellow"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView_medicationReq" />
+
+        <TextView
+            android:id="@+id/textView_foodReq"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/btn_white_rounded"
+            android:padding="12dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_foodReq"
+            tools:text="No" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group_student_fields"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:visibility="gone"
-            tools:visibility="visible"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textView_profileUsername" />
+            app:constraint_referenced_ids="label_studentNo, textView_studentNo, label_medicationReq, textView_medicationReq, label_foodReq, textView_foodReq" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="textView_staffNo, textView_foodReq" />
 
         <TextView
-            android:id="@+id/textView_foodRequirement"
-            style="@style/ProfileInfoBox"
-            android:layout_marginTop="12dp"
-            android:text="@string/food_requirement"
-            android:visibility="gone"
-            tools:visibility="visible"
+            android:id="@+id/label_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/username"
+            android:textColor="@color/yellow"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textView_medicationRequirement" />
+            app:layout_constraintTop_toBottomOf="@id/barrier" />
 
         <TextView
-            android:id="@+id/textView_profilePassword"
-            style="@style/ProfileInfoBox"
-            android:layout_marginTop="12dp"
+            android:id="@+id/textView_username"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/btn_white_rounded"
+            android:padding="12dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_username"
+            tools:text="johndoe" />
+
+        <TextView
+            android:id="@+id/label_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/password"
+            android:textColor="@color/yellow"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView_username" />
+
+        <TextView
+            android:id="@+id/textView_password"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/btn_white_rounded"
+            android:padding="12dp"
             android:text="@string/password_asterisks"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textColor="@color/black"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textView_foodRequirement" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_password" />
+
+        <Button
+            android:id="@+id/button_delete"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
+            android:padding="12dp"
+            android:text="@string/delete"
+            android:textColor="@color/yellow"
+            android:textSize="20sp"
+            app:cornerRadius="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/button_update"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_password"
+            app:strokeColor="@color/yellow"
+            app:strokeWidth="2dp" />
 
         <Button
             android:id="@+id/button_update"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="48dp"
-            android:backgroundTint="#FFC107"
-            android:paddingStart="60dp"
-            android:paddingTop="12dp"
-            android:paddingEnd="60dp"
-            android:paddingBottom="12dp"
+            android:backgroundTint="@color/yellow"
+            android:padding="12dp"
             android:text="@string/update"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
+            android:textSize="20sp"
             app:cornerRadius="24dp"
-            app:layout_constraintEnd_toStartOf="@id/button_delete"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textView_profilePassword" />
-
-        <Button
-            android:id="@+id/button_delete"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="48dp"
-            android:backgroundTint="#FFC107"
-            android:paddingStart="60dp"
-            android:paddingTop="12dp"
-            android:paddingEnd="60dp"
-            android:paddingBottom="12dp"
-            android:text="@string/delete"
-            android:textColor="@color/black"
-            app:cornerRadius="24dp"
+            app:layout_constraintBaseline_toBaselineOf="@id/button_delete"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/button_update"
-            app:layout_constraintTop_toBottomOf="@+id/textView_profilePassword" />
+            app:layout_constraintStart_toEndOf="@id/button_delete" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
