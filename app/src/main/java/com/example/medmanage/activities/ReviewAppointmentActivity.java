@@ -1,171 +1,233 @@
 package com.example.medmanage.activities;
 
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.PopupMenu;
-import android.widget.ProgressBar;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.LiveData;
 
 import com.example.medmanage.R;
 import com.example.medmanage.database.databaseMedicManage;
+import com.example.medmanage.model.Appointment;
 import com.example.medmanage.model.AppointmentWithStudent;
-import com.google.android.material.card.MaterialCardView;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class ReviewAppointmentActivity extends AppCompatActivity {
 
-    private ConstraintLayout customSpinner;
-    private TextView selectedItemTextView;
-    private TextView nameTextView;
-    private TextView typeTextView;
-    private TextView quantityTextView;
-    private ProgressBar progressBar;
-    private TextView loadingText;
-    private TextView errorText;
-    private TextView header;
-    private MaterialCardView detailsCard;
-    private Button editButton;
+    // UI Components
+    private Spinner appointmentSpinner;
+    private ConstraintLayout appointmentSpinnerContainer;
+    private LinearLayout appointmentDetailsContainer;
+    private TextView studentNumberValue, medicationValue, foodValue, dateValue, timeValue;
+    private TextView noAppointmentText;
+    private Button editButton, deleteButton;
 
+    // Database and Data
     private databaseMedicManage appDb;
-    private LiveData<List<AppointmentWithStudent>> appointmentsLiveData;
+    private ExecutorService databaseExecutor;
+    private List<AppointmentWithStudent> appointmentList;
+    private AppointmentWithStudent selectedAppointment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.appnt_review);
 
-        initializeViews();
-
         appDb = databaseMedicManage.getDatabase(getApplicationContext());
+        databaseExecutor = Executors.newSingleThreadExecutor();
+
+        initializeViews();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        fetchAppointmentData();
+        loadAllAppointments();
     }
 
     private void initializeViews() {
-        customSpinner = findViewById(R.id.customSpinner);
-        selectedItemTextView = findViewById(R.id.selectedItemTextView);
-        nameTextView = findViewById(R.id.nameTextView);
-        typeTextView = findViewById(R.id.typeTextView);
-        quantityTextView = findViewById(R.id.quantityTextView);
-        progressBar = findViewById(R.id.progressBar);
-        loadingText = findViewById(R.id.loadingText);
-        errorText = findViewById(R.id.errorText);
-        header = findViewById(R.id.header);
-        detailsCard = findViewById(R.id.detailsCard);
+        appointmentSpinner = findViewById(R.id.appointmentSpinner);
+        appointmentSpinnerContainer = findViewById(R.id.appointmentSpinnerContainer);
+        appointmentDetailsContainer = findViewById(R.id.appointmentDetailsContainer);
+        studentNumberValue = findViewById(R.id.studentNumberValue);
+        medicationValue = findViewById(R.id.medicationValue);
+        foodValue = findViewById(R.id.foodValue);
+        dateValue = findViewById(R.id.dateValue);
+        timeValue = findViewById(R.id.timeValue);
+        noAppointmentText = findViewById(R.id.noAppointmentText);
         editButton = findViewById(R.id.editButton);
+        deleteButton = findViewById(R.id.deleteButton);
 
-        editButton.setVisibility(View.GONE);
-    }
-
-    private void fetchAppointmentData() {
-        showLoading(true);
-        if (appDb == null) {
-            showError();
-            return;
-        }
-
-        appointmentsLiveData = appDb.appointmentDAO().getAllAppointmentsWithStudents();
-        appointmentsLiveData.observe(this, appointmentsWithStudents -> {
-            if (appointmentsWithStudents == null || appointmentsWithStudents.isEmpty()) {
-                selectedItemTextView.setText(R.string.no_appointments_found);
-                showLoading(false);
-                updateDetails(null);
+        editButton.setOnClickListener(v -> {
+            if (selectedAppointment != null) {
+                showEditDialog(selectedAppointment.appointment);
             } else {
-                setupCustomSpinner(appointmentsWithStudents);
-                showLoading(false);
+                Toast.makeText(this, "Please select an appointment to edit", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        deleteButton.setOnClickListener(v -> {
+            if (selectedAppointment != null) {
+                showDeleteConfirmationDialog(selectedAppointment.appointment);
+            } else {
+                Toast.makeText(this, "Please select an appointment to delete", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void setupCustomSpinner(List<AppointmentWithStudent> appointmentList) {
-        if (isFinishing() || isDestroyed() || appointmentList == null || appointmentList.isEmpty()) {
-            return;
+    private void loadAllAppointments() {
+        LiveData<List<AppointmentWithStudent>> liveData = appDb.appointmentDAO().getAllAppointmentsWithStudents();
+        liveData.observe(this, appointments -> {
+            if (appointments == null || appointments.isEmpty()) {
+                showNoAppointmentsView();
+            } else {
+                this.appointmentList = appointments;
+                showAppointmentView();
+                setupSpinner(appointments);
+            }
+        });
+    }
+
+    private void setupSpinner(List<AppointmentWithStudent> appointments) {
+        if (isFinishing() || isDestroyed()) return;
+
+        List<String> spinnerItems = new ArrayList<>();
+        for (AppointmentWithStudent item : appointments) {
+            String displayText = String.format("ID: %s | Date: %s", item.student.getStuNum(), item.appointment.getDate());
+            spinnerItems.add(displayText);
         }
 
-        AppointmentWithStudent selectedAppointmentWithStudent = appointmentList.get(0);
-        updateDetails(selectedAppointmentWithStudent);
-        selectedItemTextView.setText(String.format("ID: %s | Date: %s | Time: %s",
-                selectedAppointmentWithStudent.student.getStuNum(),
-                selectedAppointmentWithStudent.appointment.getDate(),
-                selectedAppointmentWithStudent.appointment.getTime()));
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.custom_spinner_item, spinnerItems);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        appointmentSpinner.setAdapter(adapter);
 
-        customSpinner.setOnClickListener(v -> {
-            PopupMenu popupMenu = new PopupMenu(ReviewAppointmentActivity.this, v);
-            for (AppointmentWithStudent item : appointmentList) {
-                String itemText = String.format("ID: %s | Date: %s | Time: %s",
-                        item.student.getStuNum(),
-                        item.appointment.getDate(),
-                        item.appointment.getTime());
-                popupMenu.getMenu().add(itemText);
-            }
-
-            popupMenu.setOnMenuItemClickListener(item -> {
-                String selectedTitle = item.getTitle().toString();
-                for (AppointmentWithStudent currentItem : appointmentList) {
-                    String itemText = String.format("ID: %s | Date: %s | Time: %s",
-                            currentItem.student.getStuNum(),
-                            currentItem.appointment.getDate(),
-                            currentItem.appointment.getTime());
-                    if (itemText.equals(selectedTitle)) {
-                        updateDetails(currentItem);
-                        selectedItemTextView.setText(selectedTitle);
-                        break;
-                    }
+        appointmentSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (appointmentList != null && position < appointmentList.size()) {
+                    updateDetailsView(appointmentList.get(position));
                 }
-                return true;
-            });
+            }
 
-            popupMenu.show();
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                updateDetailsView(null);
+            }
         });
-    }
 
-    // Removed the StringFormatInvalid lint suppression as it's no longer needed
-    private void updateDetails(AppointmentWithStudent appointmentWithStudent) {
-        if (appointmentWithStudent != null) {
-            nameTextView.setText("Student Number: " + appointmentWithStudent.student.getStuNum());
-            typeTextView.setText("Medication Requirement: " + appointmentWithStudent.student.getMedReq());
-            quantityTextView.setText("Appointment Date: " + appointmentWithStudent.appointment.getDate());
-        } else {
-            nameTextView.setText(R.string.not_available);
-            typeTextView.setText(R.string.not_available);
-            quantityTextView.setText(R.string.not_available);
+        if (!appointments.isEmpty()) {
+            updateDetailsView(appointments.get(0));
         }
     }
 
-    private void showLoading(boolean isLoading) {
-        int contentVisibility = isLoading ? View.GONE : View.VISIBLE;
-        int loadingVisibility = isLoading ? View.VISIBLE : View.GONE;
+    private void updateDetailsView(AppointmentWithStudent item) {
+        this.selectedAppointment = item;
+        if (item != null) {
+            // Convert the integer student number to a String before setting it
+            studentNumberValue.setText(String.valueOf(item.student.getStuNum()));
 
-        progressBar.setVisibility(loadingVisibility);
-        loadingText.setVisibility(loadingVisibility);
-
-        header.setVisibility(contentVisibility);
-        customSpinner.setVisibility(contentVisibility);
-        detailsCard.setVisibility(contentVisibility);
-        editButton.setVisibility(contentVisibility);
-
-        errorText.setVisibility(View.GONE);
+            medicationValue.setText(item.student.getMedReq());
+            foodValue.setText(item.student.getFoodReq());
+            dateValue.setText(item.appointment.getDate());
+            timeValue.setText(item.appointment.getTime());
+        }
     }
 
-    private void showError() {
-        progressBar.setVisibility(View.GONE);
-        loadingText.setVisibility(View.GONE);
+    private void showEditDialog(final Appointment appointmentToEdit) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.appnt_edit, null);
+        builder.setView(dialogView);
 
-        header.setVisibility(View.GONE);
-        customSpinner.setVisibility(View.GONE);
-        detailsCard.setVisibility(View.GONE);
+        final EditText dateEditText = dialogView.findViewById(R.id.dateEditText);
+        final EditText timeEditText = dialogView.findViewById(R.id.timeEditText);
+        final Button saveButton = dialogView.findViewById(R.id.saveButton);
+        final Button cancelButton = dialogView.findViewById(R.id.cancelButton);
+
+        dateEditText.setText(appointmentToEdit.getDate());
+        timeEditText.setText(appointmentToEdit.getTime());
+
+        final AlertDialog dialog = builder.create();
+
+        saveButton.setOnClickListener(v -> {
+            String newDate = dateEditText.getText().toString().trim();
+            String newTime = timeEditText.getText().toString().trim();
+
+            if (TextUtils.isEmpty(newDate) || TextUtils.isEmpty(newTime)) {
+                Toast.makeText(this, "Fields cannot be empty", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            appointmentToEdit.setDate(newDate);
+            appointmentToEdit.setTime(newTime);
+            updateAppointmentInDb(appointmentToEdit, dialog);
+        });
+
+        cancelButton.setOnClickListener(v -> dialog.dismiss());
+        dialog.show();
+    }
+
+    private void updateAppointmentInDb(Appointment appointment, AlertDialog dialog) {
+        databaseExecutor.execute(() -> {
+            appDb.appointmentDAO().update(appointment);
+            runOnUiThread(() -> {
+                Toast.makeText(this, "Appointment updated successfully", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+                // LiveData will automatically refresh the view
+            });
+        });
+    }
+
+    private void showDeleteConfirmationDialog(final Appointment appointmentToDelete) {
+        new AlertDialog.Builder(this)
+                .setTitle("Delete Appointment")
+                .setMessage("Are you sure you want to delete this appointment?")
+                .setPositiveButton("Yes", (dialog, which) -> deleteAppointmentFromDb(appointmentToDelete))
+                .setNegativeButton("No", null)
+                .show();
+    }
+
+    private void deleteAppointmentFromDb(Appointment appointment) {
+        databaseExecutor.execute(() -> {
+            appDb.appointmentDAO().deleteAppointment(appointment);
+            // Also delete associated links if necessary
+            appDb.appointmentMedicationDAO().deleteLinksForAppointment(appointment.getAppointmentNum());
+            runOnUiThread(() -> {
+                Toast.makeText(this, "Appointment deleted", Toast.LENGTH_SHORT).show();
+                // LiveData will auto-refresh the list
+            });
+        });
+    }
+
+    private void showAppointmentView() {
+        noAppointmentText.setVisibility(View.GONE);
+        appointmentSpinnerContainer.setVisibility(View.VISIBLE);
+        appointmentDetailsContainer.setVisibility(View.VISIBLE);
+        editButton.setVisibility(View.VISIBLE);
+        deleteButton.setVisibility(View.VISIBLE);
+    }
+
+    private void showNoAppointmentsView() {
+        noAppointmentText.setVisibility(View.VISIBLE);
+        appointmentSpinnerContainer.setVisibility(View.GONE);
+        appointmentDetailsContainer.setVisibility(View.GONE);
         editButton.setVisibility(View.GONE);
-
-        errorText.setVisibility(View.VISIBLE);
+        deleteButton.setVisibility(View.GONE);
     }
 }

@@ -14,6 +14,8 @@
 
         <activity android:name=".activities.ViewMedicationActivity"
             android:exported="false"/>
+        <activity android:name=".activities.NurseViewAppointmentActivity"
+            android:exported="false"/>
 
         <activity
             android:name=".activities.FoodViewActivity"
@@ -26,7 +28,7 @@
             android:name=".activities.EditFoodActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.ViewAppointmentActivity"
+            android:name=".activities.StudentViewAppointmentActivity"
             android:exported="false" />
         <activity android:name=".activities.ReviewAppointmentActivity"
             android:exported="false"/>

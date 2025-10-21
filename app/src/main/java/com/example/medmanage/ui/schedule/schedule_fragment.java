@@ -13,9 +13,10 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.example.medmanage.R;
+import com.example.medmanage.activities.NurseViewAppointmentActivity;
 import com.example.medmanage.activities.ReviewAppointmentActivity;
 import com.example.medmanage.activities.ScheduleAppointmentActivity;
-import com.example.medmanage.activities.ViewAppointmentActivity;
+import com.example.medmanage.activities.StudentViewAppointmentActivity;
 
 public class schedule_fragment extends Fragment {
     private String userType;
@@ -69,15 +70,15 @@ public class schedule_fragment extends Fragment {
         });
 
         cancelAppointmentCard.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), ViewAppointmentActivity.class);
-            intent.putExtra(ViewAppointmentActivity.STUDENT_ID_EXTRA, finalStudentId);
-            intent.putExtra(ViewAppointmentActivity.SHOW_CANCEL_BUTTON_EXTRA, true);
+            Intent intent = new Intent(getActivity(), StudentViewAppointmentActivity.class);
+            intent.putExtra(StudentViewAppointmentActivity.STUDENT_ID_EXTRA, finalStudentId);
+            intent.putExtra(StudentViewAppointmentActivity.SHOW_CANCEL_BUTTON_EXTRA, true);
             startActivity(intent);
         });
 
         viewAppointmentCard.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), ViewAppointmentActivity.class);
-            intent.putExtra(ViewAppointmentActivity.STUDENT_ID_EXTRA, finalStudentId);
+            Intent intent = new Intent(getActivity(), StudentViewAppointmentActivity.class);
+            intent.putExtra(StudentViewAppointmentActivity.STUDENT_ID_EXTRA, finalStudentId);
             startActivity(intent);
         });
 
@@ -89,16 +90,16 @@ public class schedule_fragment extends Fragment {
 
         viewAppointmentsCard.setOnClickListener(v -> {
 
-             Intent intent = new Intent(getActivity(), ReviewAppointmentActivity.class);
+             Intent intent = new Intent(getActivity(), NurseViewAppointmentActivity.class);
             startActivity(intent);
-            Toast.makeText(getContext(), "Nurse: View All Appointments Clicked", Toast.LENGTH_SHORT).show();
+
         });
 
         reviewAppointmentsCard.setOnClickListener(v -> {
 
              Intent intent = new Intent(getActivity(), ReviewAppointmentActivity.class);
              startActivity(intent);
-            Toast.makeText(getContext(), "Nurse: Review Appointments Clicked", Toast.LENGTH_SHORT).show();
+
         });
     }
 }

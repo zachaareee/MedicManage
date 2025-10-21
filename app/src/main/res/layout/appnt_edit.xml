@@ -1,80 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/blue"
-    android:padding="16dp"
-    tools:context=".activities.EditAppointmentActivity">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@color/blue">
 
     <TextView
-        android:id="@+id/editHeader"
+        android:id="@+id/dialogTitleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/edit"
-        android:textColor="@android:color/white"
-        android:textSize="28sp"
+        android:layout_gravity="center"
+        android:text="@string/review_appointment"
+        android:textColor="@color/yellow"
+        android:textSize="22sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginBottom="24dp" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/dateInputLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:hint="@string/date"
-        android:textColorHint="@color/white"
+        android:hint="@string/date_yyyy_mm_dd"
         app:boxStrokeColor="@color/yellow"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editHeader">
+        app:hintTextColor="@color/yellow"
+        android:textColorHint="@color/yellow">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextDate"
+            android:id="@+id/dateEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:inputType="date" />
+            android:inputType="date"
+            android:textColor="@color/white" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/timeInputLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="@string/time_placeholder"
-        android:textColorHint="@color/white"
+        android:hint="@string/time_hh_mm"
         app:boxStrokeColor="@color/yellow"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dateInputLayout">
+        app:hintTextColor="@color/yellow"
+        android:textColorHint="@color/yellow">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextTime"
+            android:id="@+id/timeEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:inputType="time" />
+            android:inputType="time"
+            android:textColor="@color/white"/>
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/saveButton"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:backgroundTint="@color/yellow"
-        android:paddingVertical="12dp"
-        android:text="@string/save_changes"
-        android:textColor="@color/black"
-        app:cornerRadius="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/timeInputLayout" />
+        android:layout_marginTop="24dp"
+        android:orientation="horizontal">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/cancelButton"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/Cancel"
+            android:textColor="@color/yellow"
+            app:strokeColor="@color/yellow"
+            android:layout_marginEnd="8dp"
+            android:padding = "16dp"
+            app:cornerRadius = "24dp"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/saveButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/save"
+            android:backgroundTint="@color/yellow"
+            android:textColor="@color/blue"
+            android:layout_marginStart="8dp"
+            android:padding = "16dp"
+            app:cornerRadius="24dp"/>
+    </LinearLayout>
+
+</LinearLayout>

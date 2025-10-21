@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/blue"
     android:padding="16dp"
-    tools:context=".activities.ViewAppointmentActivity">
+    tools:context=".activities.NurseViewAppointmentActivity">
 
     <TextView
         android:id="@+id/titleTextView"
@@ -21,6 +21,45 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/appointmentSpinnerContainer"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/border_white_rounded"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleTextView"
+        tools:visibility="visible">
+
+        <Spinner
+            android:id="@+id/appointmentSpinner"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:paddingStart="16dp"
+            android:paddingEnd="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/appointmentDropdownArrow"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/med_dropdown_arrow"
+            android:scaleType="fitCenter"
+            android:src="@drawable/icon_arrow"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/yellow" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <LinearLayout
         android:id="@+id/appointmentDetailsContainer"
         android:layout_width="0dp"
@@ -30,7 +69,7 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/titleTextView"
+        app:layout_constraintTop_toBottomOf="@id/appointmentSpinnerContainer"
         tools:visibility="visible">
 
         <TextView
@@ -118,30 +157,10 @@
         android:textColor="@color/white"
         android:textSize="18sp"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/cancelAppointmentButton"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/titleTextView"
         tools:visibility="visible" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/cancelAppointmentButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="24dp"
-        android:backgroundTint="@color/yellow"
-        android:padding="12dp"
-        android:text="@string/cancel_appointment_button_text"
-        android:textColor="@color/blue"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:visibility="visible"
-        app:cornerRadius = "24dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

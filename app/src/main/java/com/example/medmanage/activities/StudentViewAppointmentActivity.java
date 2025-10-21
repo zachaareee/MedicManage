@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.stream.Collectors;
 
-public class ViewAppointmentActivity extends AppCompatActivity {
+public class StudentViewAppointmentActivity extends AppCompatActivity {
 
     public static final String STUDENT_ID_EXTRA = "student_id_extra";
     public static final String SHOW_CANCEL_BUTTON_EXTRA = "show_cancel_button";
@@ -37,7 +37,7 @@ public class ViewAppointmentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.appnt_view);
+        setContentView(R.layout.appnt_view_stu);
 
 
         Intent intent = getIntent();
@@ -124,7 +124,7 @@ public class ViewAppointmentActivity extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
                 runOnUiThread(() -> {
-                    Toast.makeText(ViewAppointmentActivity.this, "Error loading appointment data", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(StudentViewAppointmentActivity.this, "Error loading appointment data", Toast.LENGTH_SHORT).show();
                 });
             }
         });
@@ -133,7 +133,7 @@ public class ViewAppointmentActivity extends AppCompatActivity {
     private void showCancelConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.appnt_cancel_dialog, null);
+        View dialogView = inflater.inflate(R.layout.appnt_quit_dialog, null);
         builder.setView(dialogView);
 
         final Button yesButton = dialogView.findViewById(R.id.positiveButton);

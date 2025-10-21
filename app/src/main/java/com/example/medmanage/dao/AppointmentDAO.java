@@ -7,6 +7,7 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Transaction;
+import androidx.room.Update;
 
 import com.example.medmanage.model.Appointment;
 import com.example.medmanage.model.AppointmentDetails;
@@ -18,6 +19,8 @@ import java.util.List;
 public interface AppointmentDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAppointment(Appointment appointment);
+    @Update
+    void update(Appointment appointment);
     @Delete
     void deleteAppointment(Appointment appointment);
     @Query("SELECT * FROM appointment ORDER BY date, time ASC")

@@ -171,5 +171,7 @@
     <string name="view_appointments">View Appointments</string>
     <string name="review_appointment">Review Appointment</string>
     <string name="cancel_sign_up">Are you sure you want to go back to the main screen?</string>
+    <string name="time_hh_mm">time_hh_mm</string>
+    <string name="date_yyyy_mm_dd">date_yyyy_mm_dd</string>
 
 </resources>
