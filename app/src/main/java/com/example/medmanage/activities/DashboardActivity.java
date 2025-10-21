@@ -5,14 +5,13 @@ import android.os.Bundle;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions; // Import this
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import com.example.medmanage.R;
 import com.example.medmanage.databinding.DashboardBinding;
-import com.example.medmanage.ui.profile.profile_fragment;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -67,26 +66,36 @@ public class DashboardActivity extends AppCompatActivity {
                 .build();
 
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-
+        NavigationUI.setupWithNavController(binding.navView, navController);
 
 
         binding.navView.setOnItemSelectedListener(item -> {
-            if (item.getItemId() == R.id.navigation_profile) {
+            int itemId = item.getItemId();
 
+            // Prevent re-selecting the same item, which can cause issues.
+            if (navController.getCurrentDestination() != null && navController.getCurrentDestination().getId() == itemId) {
+                return false;
+            }
+
+            if (itemId == R.id.navigation_profile) {
                 Bundle bundle = new Bundle();
                 bundle.putString("USERNAME", username);
                 bundle.putString("USER_TYPE", userType);
 
+                // **THE FIX IS HERE:**
+                // Create NavOptions to mimic the default behavior of popping the
+                // back stack to the start destination. This keeps navigation consistent.
+                NavOptions navOptions = new NavOptions.Builder()
+                        .setLaunchSingleTop(true) // Don't re-create a fragment if it's already on top
+                        .setPopUpTo(navController.getGraph().getStartDestinationId(), false)
+                        .build();
 
-                try {
-                    navController.navigate(R.id.navigation_profile, bundle);
-                    return true;
-                } catch (Exception e) {
-                    return false;
-                }
+                // Navigate to profile using the bundle AND the new options
+                navController.navigate(R.id.navigation_profile, bundle, navOptions);
+                return true; // We've handled this item.
             }
 
-
+            // For all other items, use the default helper method
             return NavigationUI.onNavDestinationSelected(item, navController);
         });
     }

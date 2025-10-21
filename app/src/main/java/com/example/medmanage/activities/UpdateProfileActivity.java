@@ -48,7 +48,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
         lastNameEditText = findViewById(R.id.editText_lastName);
         usernameEditText = findViewById(R.id.editText_username);
         passwordEditText = findViewById(R.id.editText_password);
-        studentFieldsLayout = findViewById(R.id.layout_studentFields);
+        studentFieldsLayout = findViewById(R.id.group_student_fields);
         studentNoEditText = findViewById(R.id.editText_studentNo);
         medicationReqEditText = findViewById(R.id.editText_medicationReq);
         foodReqRadioGroup = findViewById(R.id.radioGroup_foodReq);
@@ -169,4 +169,5 @@ public class UpdateProfileActivity extends AppCompatActivity {
             });
         });
     }
+
 }

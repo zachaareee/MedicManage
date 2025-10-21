@@ -26,7 +26,8 @@ public class ViewMedicationActivity extends AppCompatActivity {
 
     private Spinner medicationSpinner, brandSpinner, dosageSpinner;
     private TextView quantityTextView;
-    private Button addButton, updateButton, deleteButton;
+    private Button addButton, updateButton, deleteButton, quitButton;
+
     private View brandSpinnerContainer, dosageSpinnerContainer;
 
     private UserViewModel userViewModel;
@@ -48,6 +49,7 @@ public class ViewMedicationActivity extends AppCompatActivity {
         addButton = findViewById(R.id.addButton);
         updateButton = findViewById(R.id.updateButton);
         deleteButton = findViewById(R.id.deleteButton);
+        quitButton=findViewById(R.id.quitButton);
         brandSpinnerContainer = findViewById(R.id.brandSpinnerContainer);
         dosageSpinnerContainer = findViewById(R.id.dosageSpinnerContainer);
 
@@ -63,9 +65,7 @@ public class ViewMedicationActivity extends AppCompatActivity {
         // 1. Load distinct medication names into the first spinner
         userViewModel.getAllMedications().observe(this, medications -> {
             if (medications != null) {
-                // Extract distinct medication names
-                // Note: This is a simplified approach. You might want to create a method in your DAO
-                // to get distinct names directly from the database for better performance
+
                 List<String> medNames = medications.stream()
                         .map(Medication::getMedName)
                         .distinct()
@@ -215,6 +215,10 @@ public class ViewMedicationActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(this, getString(R.string.select_med_to_delete), Toast.LENGTH_SHORT).show();
             }
+        });
+        quitButton.setOnClickListener(v -> {
+            // Closes the current activity and returns to the previous screen (the dashboard)
+            finish();
         });
     }
 

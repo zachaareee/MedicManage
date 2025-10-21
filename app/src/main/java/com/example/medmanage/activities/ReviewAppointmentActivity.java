@@ -37,6 +37,7 @@ public class ReviewAppointmentActivity extends AppCompatActivity {
     private TextView studentNumberValue, medicationValue, foodValue, dateValue, timeValue;
     private TextView noAppointmentText;
     private Button editButton, deleteButton;
+    private Button negativeButton;
 
     // Database and Data
     private databaseMedicManage appDb;
@@ -73,6 +74,7 @@ public class ReviewAppointmentActivity extends AppCompatActivity {
         noAppointmentText = findViewById(R.id.noAppointmentText);
         editButton = findViewById(R.id.editButton);
         deleteButton = findViewById(R.id.deleteButton);
+        negativeButton = findViewById(R.id.negativeButton);
 
         editButton.setOnClickListener(v -> {
             if (selectedAppointment != null) {
@@ -89,6 +91,11 @@ public class ReviewAppointmentActivity extends AppCompatActivity {
                 Toast.makeText(this, "Please select an appointment to delete", Toast.LENGTH_SHORT).show();
             }
         });
+        negativeButton.setOnClickListener(v -> {
+            showQuitConfirmationDialog();
+
+        });
+
     }
 
     private void loadAllAppointments() {
@@ -213,6 +220,21 @@ public class ReviewAppointmentActivity extends AppCompatActivity {
                 // LiveData will auto-refresh the list
             });
         });
+    }
+    private void showQuitConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.general_confirm_dialog, null);
+        builder.setView(dialogView);
+
+        final Button yesButton = dialogView.findViewById(R.id.positiveButton);
+        final Button noButton = dialogView.findViewById(R.id.negativeButton);
+
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+
+        yesButton.setOnClickListener(v -> finish());
+        noButton.setOnClickListener(v -> dialog.dismiss());
     }
 
     private void showAppointmentView() {

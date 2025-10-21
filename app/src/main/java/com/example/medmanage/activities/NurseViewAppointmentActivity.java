@@ -1,18 +1,23 @@
 package com.example.medmanage.activities;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.LiveData;
 import com.example.medmanage.R;
 import com.example.medmanage.database.databaseMedicManage;
 import com.example.medmanage.model.AppointmentWithStudent;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +29,7 @@ public class NurseViewAppointmentActivity extends AppCompatActivity {
     private LinearLayout appointmentDetailsContainer;
     private TextView medicationValue, foodValue, dateValue, timeValue;
     private TextView noAppointmentText;
+    private MaterialButton negativeButton;
 
     private databaseMedicManage appDb;
     private List<AppointmentWithStudent> appointmentList;
@@ -51,6 +57,9 @@ public class NurseViewAppointmentActivity extends AppCompatActivity {
         dateValue = findViewById(R.id.dateValue);
         timeValue = findViewById(R.id.timeValue);
         noAppointmentText = findViewById(R.id.noAppointmentText);
+        negativeButton = findViewById(R.id.negativeButton);
+
+        negativeButton.setOnClickListener(v -> showQuitConfirmationDialog());
     }
 
     private void loadAllAppointments() {
@@ -73,7 +82,7 @@ public class NurseViewAppointmentActivity extends AppCompatActivity {
         List<String> spinnerItems = new ArrayList<>();
         // Create a display string for each appointment in the list
         for (AppointmentWithStudent item : appointments) {
-            String displayText = String.format("ID: %s | Date: %s", item.student.getStuNum(), item.appointment.getDate());
+            String displayText = String.format("Student Number: %s | Date: %s", item.student.getStuNum(), item.appointment.getDate());
             spinnerItems.add(displayText);
         }
 
@@ -117,7 +126,21 @@ public class NurseViewAppointmentActivity extends AppCompatActivity {
             timeValue.setText("");
         }
     }
+    private void showQuitConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.general_confirm_dialog, null);
+        builder.setView(dialogView);
 
+        final Button yesButton = dialogView.findViewById(R.id.positiveButton);
+        final Button noButton = dialogView.findViewById(R.id.negativeButton);
+
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+
+        yesButton.setOnClickListener(v -> finish());
+        noButton.setOnClickListener(v -> dialog.dismiss());
+    }
     private void showAppointmentView() {
         noAppointmentText.setVisibility(View.GONE);
         appointmentSpinnerContainer.setVisibility(View.VISIBLE);

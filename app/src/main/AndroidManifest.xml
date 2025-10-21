@@ -26,10 +26,7 @@
             android:exported="false" />
 
 
-        <activity
-            android:name=".activities.EditFoodActivity"
-            android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
+
         <activity
             android:name=".activities.StudentViewAppointmentActivity"
             android:exported="false" />

@@ -27,7 +27,8 @@ public class StudentViewAppointmentActivity extends AppCompatActivity {
     public static final String SHOW_CANCEL_BUTTON_EXTRA = "show_cancel_button";
     private TextView medicationValue, foodValue, dateValue, timeValue, noAppointmentText;
     private LinearLayout appointmentDetailsContainer;
-    private Button cancelAppointmentButton;
+    private Button cancelAppointmentButton,negativeButton;
+
 
     private databaseMedicManage appDb;
     private ExecutorService databaseExecutor;
@@ -64,11 +65,15 @@ public class StudentViewAppointmentActivity extends AppCompatActivity {
         dateValue = findViewById(R.id.dateValue);
         timeValue = findViewById(R.id.timeValue);
         cancelAppointmentButton = findViewById(R.id.cancelAppointmentButton);
+        negativeButton = findViewById(R.id.negativeButton);
 
         cancelAppointmentButton.setOnClickListener(v -> {
             if (currentAppointment != null) {
                 showCancelConfirmationDialog();
             }
+        });
+        negativeButton.setOnClickListener(v ->{
+            showQuitConfirmationDialog();
         });
     }
 
@@ -128,6 +133,21 @@ public class StudentViewAppointmentActivity extends AppCompatActivity {
                 });
             }
         });
+    }
+    private void showQuitConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.general_confirm_dialog, null);
+        builder.setView(dialogView);
+
+        final Button yesButton = dialogView.findViewById(R.id.positiveButton);
+        final Button noButton = dialogView.findViewById(R.id.negativeButton);
+
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+
+        yesButton.setOnClickListener(v -> finish());
+        noButton.setOnClickListener(v -> dialog.dismiss());
     }
 
     private void showCancelConfirmationDialog() {

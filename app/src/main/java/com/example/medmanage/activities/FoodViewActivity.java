@@ -1,15 +1,19 @@
 package com.example.medmanage.activities;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import com.example.medmanage.R;
@@ -55,23 +59,22 @@ public class FoodViewActivity extends AppCompatActivity {
         updateButton = findViewById(R.id.updateButton);
 
         Button backButton = findViewById(R.id.backButton);
-        backButton.setOnClickListener(v -> finish()); // Closes the activity
+        backButton.setOnClickListener(v -> showQuitConfirmationDialog());
 
+        // MODIFIED: This now calls the dialog method instead of starting a new activity
         updateButton.setOnClickListener(v -> {
             if (selectedFood != null) {
-                Intent intent = new Intent(FoodViewActivity.this, EditFoodActivity.class);
-                intent.putExtra("FOOD_ITEM", selectedFood);
-                startActivity(intent);
+                showEditFoodDialog(selectedFood);
             } else {
                 Toast.makeText(this, "Please select a food item first", Toast.LENGTH_SHORT).show();
             }
         });
-        String userType = getIntent().getStringExtra("USER_TYPE");
 
+        String userType = getIntent().getStringExtra("USER_TYPE");
         if ("student".equalsIgnoreCase(userType)) {
             updateButton.setVisibility(View.GONE);
         } else if ("nurse".equalsIgnoreCase(userType)) {
-           updateButton.setVisibility(View.VISIBLE);
+            updateButton.setVisibility(View.VISIBLE);
         }
         fetchFoodData();
     }
@@ -79,7 +82,9 @@ public class FoodViewActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        fetchFoodData();
+        // No need to always fetch here anymore as the dialog will refresh data upon success.
+        // If you still need it for other reasons (e.g., coming back from another app), you can leave it.
+        // For now, let's assume the main refresh happens after editing.
     }
 
     private void fetchFoodData() {
@@ -98,6 +103,70 @@ public class FoodViewActivity extends AppCompatActivity {
                 runOnUiThread(this::showError);
             }
         });
+    }
+
+    /**
+     * ADDED: This method contains all the logic from the old EditFoodActivity.
+     * It creates and displays an AlertDialog to edit the food item's quantity.
+     * @param foodToEdit The Food object to be modified.
+     */
+    private void showEditFoodDialog(final Food foodToEdit) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.food_edit_dialog, null);
+        builder.setView(dialogView);
+
+        // Find views inside the dialog layout
+        TextView dialogTitleTextView = dialogView.findViewById(R.id.dialogTitleTextView);
+        TextView quantityTextViewDialog = dialogView.findViewById(R.id.quantityTextView);
+        ImageButton minusButton = dialogView.findViewById(R.id.minusButton);
+        ImageButton plusButton = dialogView.findViewById(R.id.plusButton);
+        Button cancelButton = dialogView.findViewById(R.id.cancelButton);
+        Button saveButton = dialogView.findViewById(R.id.saveButton);
+
+        // Set initial values from the food item
+        dialogTitleTextView.setText(foodToEdit.getFoodName());
+        final int[] currentQuantity = {foodToEdit.getQuantity()}; // Use array to be mutable in lambda
+        quantityTextViewDialog.setText(String.valueOf(currentQuantity[0]));
+
+        final AlertDialog dialog = builder.create();
+
+        // This makes the dialog's background transparent to show the rounded corners from the XML
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+
+        // Set up button listeners
+        minusButton.setOnClickListener(v -> {
+            if (currentQuantity[0] > 0) {
+                currentQuantity[0]--;
+                quantityTextViewDialog.setText(String.valueOf(currentQuantity[0]));
+            }
+        });
+
+        plusButton.setOnClickListener(v -> {
+            currentQuantity[0]++;
+            quantityTextViewDialog.setText(String.valueOf(currentQuantity[0]));
+        });
+
+        cancelButton.setOnClickListener(v -> dialog.dismiss());
+
+        saveButton.setOnClickListener(v -> {
+            foodToEdit.setQuantity(currentQuantity[0]);
+
+            ExecutorService executor = databaseMedicManage.databaseWriteExecutor;
+            executor.execute(() -> {
+                db.foodDAO().updateFood(foodToEdit);
+                runOnUiThread(() -> {
+                    Toast.makeText(this, "Quantity updated!", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                    // Crucial: Refresh the data in this activity after saving
+                    fetchFoodData();
+                });
+            });
+        });
+
+        dialog.show();
     }
 
     private void setupCustomSpinner(List<Food> foodList) {
@@ -135,6 +204,21 @@ public class FoodViewActivity extends AppCompatActivity {
             popupMenu.show();
         });
     }
+    private void showQuitConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.general_confirm_dialog, null);
+        builder.setView(dialogView);
+
+        final Button yesButton = dialogView.findViewById(R.id.positiveButton);
+        final Button noButton = dialogView.findViewById(R.id.negativeButton);
+
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+
+        yesButton.setOnClickListener(v -> finish());
+        noButton.setOnClickListener(v -> dialog.dismiss());
+    }
 
     private void updateDetails(Food food) {
         if (food != null) {
@@ -154,11 +238,10 @@ public class FoodViewActivity extends AppCompatActivity {
         progressBar.setVisibility(loadingVisibility);
         loadingText.setVisibility(loadingVisibility);
 
-        // Toggle visibility of all content, including the button's parent container
         header.setVisibility(contentVisibility);
         customSpinner.setVisibility(contentVisibility);
         detailsCard.setVisibility(contentVisibility);
-        findViewById(R.id.buttonContainer).setVisibility(contentVisibility); // Use the container ID
+        findViewById(R.id.buttonContainer).setVisibility(contentVisibility);
 
         errorText.setVisibility(View.GONE);
     }
@@ -169,9 +252,7 @@ public class FoodViewActivity extends AppCompatActivity {
         header.setVisibility(View.GONE);
         customSpinner.setVisibility(View.GONE);
         detailsCard.setVisibility(View.GONE);
-        findViewById(R.id.buttonContainer).setVisibility(View.GONE); // Use the container ID
+        findViewById(R.id.buttonContainer).setVisibility(View.GONE);
         errorText.setVisibility(View.VISIBLE);
     }
-
-
 }
