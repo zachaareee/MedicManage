@@ -5,7 +5,6 @@
     android:layout_height="wrap_content"
     android:background="@drawable/bg_dialog_rounded"
     android:padding="24dp">
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="100dp"

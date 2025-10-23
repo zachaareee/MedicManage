@@ -179,5 +179,6 @@
     <string name="zero">0</string>
     <string name="food_qoh">Quantity on Hand</string>
     <string name="food_update_quantity">Update Food Quantity</string>
+    <string name="general_dialog_text">Are you sure you want to go back?</string>
 
 </resources>
