@@ -74,7 +74,6 @@
                 android:text="@string/nurse"
                 android:textColor="@drawable/rb_text_color_selector"
                 android:textSize="20sp" />
-
         </RadioGroup>
 
         <EditText
@@ -103,56 +102,88 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editText_firstName" />
 
-        <TextView
-            android:id="@+id/textView_foodReq"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@string/foodReq"
-            android:textColor="@color/yellow"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText_lastName" />
 
-        <RadioGroup
-            android:id="@+id/radioGroup_foodReq"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView_foodReq">
-
-            <RadioButton
-                android:id="@+id/radioButton_foodYes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:textColor="@color/white"
-                android:textSize="20sp" />
-
-            <RadioButton
-                android:id="@+id/radioButton_foodNo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:text="@string/no"
-                android:textColor="@color/white"
-                android:textSize="20sp" />
-        </RadioGroup>
-
-        <EditText
-            android:id="@+id/editText_medicationReq"
+        <LinearLayout
+            android:id="@+id/layout_studentFields"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:background="@drawable/btn_white_rounded"
-            android:hint="@string/medicationReq"
-            android:inputType="text"
-            android:padding="12dp"
+            android:orientation="vertical"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/radioGroup_foodReq" />
+            app:layout_constraintTop_toBottomOf="@+id/editText_lastName">
+
+            <EditText
+                android:id="@+id/editText_studentNo"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/btn_white_rounded"
+                android:hint="@string/studentno"
+                android:inputType="number"
+                android:padding="12dp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textField_medication"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="@string/medicationReq"
+
+                app:boxBackgroundColor="@color/white"
+                app:boxCornerRadiusBottomEnd="24dp"
+                app:boxCornerRadiusBottomStart="24dp"
+                app:boxCornerRadiusTopEnd="24dp"
+                app:boxCornerRadiusTopStart="24dp"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp">
+
+                <AutoCompleteTextView
+                    android:id="@+id/autoComplete_medication"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:textColor="@color/black"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:id="@+id/textView_foodReq"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/foodReq"
+                android:textColor="@color/yellow"
+                android:textSize="20sp" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup_foodReq"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radioButton_foodYes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/yes"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <RadioButton
+                    android:id="@+id/radioButton_foodNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/no"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+            </RadioGroup>
+
+        </LinearLayout>
+
 
         <EditText
             android:id="@+id/editText_staffNo"
@@ -166,28 +197,16 @@
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText_medicationReq" />
+            app:layout_constraintTop_toBottomOf="@+id/editText_lastName" />
 
-        <LinearLayout
-            android:id="@+id/layout_studentFields"
-            android:layout_width="0dp"
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier_user_specific_fields"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText_staffNo">
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="layout_studentFields,editText_staffNo" />
 
-            <EditText
-                android:id="@+id/editText_studentNo"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/btn_white_rounded"
-                android:hint="@string/studentno"
-                android:inputType="number"
-                android:padding="12dp" />
-        </LinearLayout>
 
         <EditText
             android:id="@+id/editText_username"
@@ -200,7 +219,7 @@
             android:padding="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_studentFields" />
+            app:layout_constraintTop_toBottomOf="@+id/barrier_user_specific_fields" />
 
         <RelativeLayout
             android:id="@+id/password_layout"
@@ -218,7 +237,6 @@
                 android:background="@drawable/btn_white_rounded"
                 android:hint="@string/Password"
                 android:inputType="textPassword"
-                android:padding="12dp"
                 android:paddingStart="12dp"
                 android:paddingEnd="50dp" />
 
@@ -241,6 +259,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
             android:padding="12dp"
             android:text="@string/Cancel"
             android:textColor="@color/yellow"
@@ -257,16 +276,15 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
             android:backgroundTint="@color/yellow"
             android:padding="12dp"
             android:text="@string/CONFIRM"
             android:textColor="@color/white"
             android:textSize="20sp"
             app:cornerRadius="24dp"
+            app:layout_constraintBaseline_toBaselineOf="@id/negativeButton"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/negativeButton"
-            app:layout_constraintTop_toBottomOf="@+id/password_layout" />
+            app:layout_constraintStart_toEndOf="@+id/negativeButton" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

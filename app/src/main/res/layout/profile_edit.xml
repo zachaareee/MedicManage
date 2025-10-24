@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/blue"
-    tools:context="activities.SignupActivity">
+    tools:context=".activities.SignupActivity">
 
     <ImageView
         android:id="@+id/imageView5"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginTop="16dp"
         android:contentDescription="@string/logo"
         android:src="@drawable/icon_logo"
@@ -50,7 +50,7 @@
         app:layout_constraintGuide_percent="0.4" />
 
     <TextView
-        android:id="@+id/textView14"
+        android:id="@+id/label_firstName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -63,191 +63,169 @@
         app:layout_constraintTop_toBottomOf="@id/textView7" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName2"
+        android:id="@+id/editText_firstName"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/btn_white_rounded"
-        android:ems="10"
-        android:importantForAutofill="no"
         android:inputType="textPersonName"
         android:padding="8dp"
         android:textColor="@color/black"
-        app:layout_constraintBaseline_toBaselineOf="@id/textView14"
+        app:layout_constraintBaseline_toBaselineOf="@id/label_firstName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/guideline_vertical"
-        tools:ignore="LabelFor" />
+        app:layout_constraintStart_toEndOf="@id/guideline_vertical" />
 
     <TextView
-        android:id="@+id/textView15"
+        android:id="@+id/label_lastName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:text="@string/last_name"
         android:textColor="@color/yellow"
         android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@id/guideline_vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editTextTextPersonName2" />
+        app:layout_constraintTop_toBottomOf="@id/editText_firstName" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName6"
+        android:id="@+id/editText_lastName"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/btn_white_rounded"
-        android:ems="10"
-        android:importantForAutofill="no"
         android:inputType="textPersonName"
         android:padding="8dp"
         android:textColor="@color/black"
-        app:layout_constraintBaseline_toBaselineOf="@id/textView15"
+        app:layout_constraintBaseline_toBaselineOf="@id/label_lastName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/guideline_vertical"
-        tools:ignore="LabelFor" />
+        app:layout_constraintStart_toEndOf="@id/guideline_vertical" />
 
     <TextView
-        android:id="@+id/textView16"
+        android:id="@+id/label_studentNo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:text="@string/studentno"
         android:textColor="@color/yellow"
         android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@id/guideline_vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editTextTextPersonName6" />
+        app:layout_constraintTop_toBottomOf="@id/editText_lastName" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/editText_studentNo"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/btn_white_rounded"
-        android:ems="10"
-        android:importantForAutofill="no"
         android:inputType="text"
         android:padding="8dp"
         android:textColor="@color/black"
-        app:layout_constraintBaseline_toBaselineOf="@id/textView16"
+        app:layout_constraintBaseline_toBaselineOf="@id/label_studentNo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/guideline_vertical"
-        tools:ignore="LabelFor" />
+        app:layout_constraintStart_toEndOf="@id/guideline_vertical" />
 
     <TextView
-        android:id="@+id/textView17"
+        android:id="@+id/label_username"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:text="@string/username"
         android:textColor="@color/yellow"
         android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@id/guideline_vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editTextTextPersonName" />
+        app:layout_constraintTop_toBottomOf="@id/editText_studentNo" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName5"
+        android:id="@+id/editText_username"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/btn_white_rounded"
-        android:ems="10"
-        android:importantForAutofill="no"
         android:inputType="text"
         android:padding="8dp"
         android:textColor="@color/black"
-        app:layout_constraintBaseline_toBaselineOf="@id/textView17"
+        app:layout_constraintBaseline_toBaselineOf="@id/label_username"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/guideline_vertical"
-        tools:ignore="LabelFor" />
+        app:layout_constraintStart_toEndOf="@id/guideline_vertical" />
 
     <TextView
-        android:id="@+id/textView18"
+        android:id="@+id/label_password"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/Password"
+        android:layout_marginTop="16dp"
+        android:text="@string/password"
         android:textColor="@color/yellow"
         android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@id/guideline_vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editTextTextPersonName5" />
+        app:layout_constraintTop_toBottomOf="@id/editText_username" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName4"
+        android:id="@+id/editText_password"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/btn_white_rounded"
-        android:ems="10"
-        android:importantForAutofill="no"
         android:inputType="textPassword"
         android:padding="8dp"
         android:textColor="@color/black"
-        app:layout_constraintBaseline_toBaselineOf="@id/textView18"
+        app:layout_constraintBaseline_toBaselineOf="@id/label_password"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/guideline_vertical"
-        tools:ignore="LabelFor" />
+        app:layout_constraintStart_toEndOf="@id/guideline_vertical" />
 
     <TextView
-        android:id="@+id/textView19"
+        android:id="@+id/label_medicationReq"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:text="@string/medicationReq"
         android:textColor="@color/yellow"
         android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@id/guideline_vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editTextTextPersonName4" />
+        app:layout_constraintTop_toBottomOf="@id/editText_password" />
 
-    <RadioGroup
-        android:id="@+id/medicationRadioGroup"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textField_medication"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="@id/textView19"
-        app:layout_constraintBottom_toBottomOf="@id/textView19"
+        app:layout_constraintBottom_toBottomOf="@id/label_medicationReq"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/guideline_vertical">
+        app:layout_constraintStart_toEndOf="@id/guideline_vertical"
+        app:layout_constraintTop_toTopOf="@id/label_medicationReq">
 
-        <RadioButton
-            android:id="@+id/medicationYesRadioButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/yes"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-
-        <RadioButton
-            android:id="@+id/medicationNoRadioButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="@string/no"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-    </RadioGroup>
+        <AutoCompleteTextView
+            android:id="@+id/autoComplete_medication"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/btn_white_rounded"
+            android:inputType="none"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:textColor="@color/black" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/label_foodReq"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:text="@string/foodReq"
         android:textColor="@color/yellow"
         android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@id/guideline_vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/medicationRadioGroup" />
+        app:layout_constraintTop_toBottomOf="@id/textField_medication" />
 
     <RadioGroup
         android:id="@+id/foodRadioGroup"
@@ -255,10 +233,10 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="@id/textView13"
-        app:layout_constraintBottom_toBottomOf="@id/textView13"
+        app:layout_constraintBottom_toBottomOf="@id/label_foodReq"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/guideline_vertical">
+        app:layout_constraintStart_toEndOf="@id/guideline_vertical"
+        app:layout_constraintTop_toTopOf="@id/label_foodReq">
 
         <RadioButton
             android:id="@+id/foodYesRadioButton"
@@ -278,28 +256,27 @@
             android:textSize="18sp" />
     </RadioGroup>
 
-
     <Button
-        android:id="@+id/button9"
+        android:id="@+id/button_cancel"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="68dp"
+        android:layout_marginBottom="24dp"
         android:padding="12dp"
         android:text="@string/Cancel"
         android:textColor="@color/yellow"
         android:textSize="20sp"
         app:cornerRadius="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/button2"
+        app:layout_constraintEnd_toStartOf="@id/button_confirm"
         app:layout_constraintStart_toStartOf="parent"
         app:strokeColor="@color/yellow"
         app:strokeWidth="2dp" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/button_confirm"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -310,8 +287,8 @@
         android:textColor="@color/white"
         android:textSize="20sp"
         app:cornerRadius="24dp"
-        app:layout_constraintBaseline_toBaselineOf="@id/button9"
+        app:layout_constraintBaseline_toBaselineOf="@id/button_cancel"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/button9" />
+        app:layout_constraintStart_toEndOf="@id/button_cancel" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

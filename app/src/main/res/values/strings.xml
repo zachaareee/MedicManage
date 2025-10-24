@@ -6,6 +6,7 @@
     <string name="new_user_prompt">New user? Sign up below</string>
     <string name="signup_button_text">Sign Up</string>
     <string name="signup">Sign Up</string>
+    <string name="signout">Sign Out</string>
     <string name="profile_details">Profile Details</string>
     <string name="user_type">User Type (Student/Nurse)</string>
     <string name="id_num">ID Number</string>
@@ -177,8 +178,10 @@
     <string name="date_yyyy_mm_dd">date_yyyy_mm_dd</string>
     <string name="edit_food_quantity">Edit Food Quantity</string>
     <string name="zero">0</string>
+    <string name="delete_appointment">Are you sure you want to delete the student_s appointment</string>
     <string name="food_qoh">Quantity on Hand</string>
     <string name="food_update_quantity">Update Food Quantity</string>
     <string name="general_dialog_text">Are you sure you want to go back?</string>
+    <string name="profile_update">Are you want to make changes to your profile ?</string>
 
 </resources>

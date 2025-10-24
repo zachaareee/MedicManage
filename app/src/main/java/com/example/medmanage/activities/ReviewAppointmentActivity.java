@@ -202,12 +202,33 @@ public class ReviewAppointmentActivity extends AppCompatActivity {
     }
 
     private void showDeleteConfirmationDialog(final Appointment appointmentToDelete) {
-        new AlertDialog.Builder(this)
-                .setTitle("Delete Appointment")
-                .setMessage("Are you sure you want to delete this appointment?")
-                .setPositiveButton("Yes", (dialog, which) -> deleteAppointmentFromDb(appointmentToDelete))
-                .setNegativeButton("No", null)
-                .show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.appnt_delete_dialog, null);
+        builder.setView(dialogView);
+
+
+        final Button yesButton = dialogView.findViewById(R.id.positiveButton);
+        final Button noButton = dialogView.findViewById(R.id.negativeButton);
+
+        final AlertDialog dialog = builder.create();
+
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
+
+        yesButton.setOnClickListener(v -> {
+            deleteAppointmentFromDb(appointmentToDelete);
+            dialog.dismiss();
+        });
+
+        noButton.setOnClickListener(v -> {
+            dialog.dismiss();
+        });
+
+        // 6. Show the dialog
+        dialog.show();
     }
 
     private void deleteAppointmentFromDb(Appointment appointment) {

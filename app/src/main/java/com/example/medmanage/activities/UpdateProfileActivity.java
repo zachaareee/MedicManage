@@ -2,36 +2,53 @@ package com.example.medmanage.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.Group;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.medmanage.R;
 import com.example.medmanage.database.databaseMedicManage;
+import com.example.medmanage.model.Medication;
 import com.example.medmanage.model.Nurse;
 import com.example.medmanage.model.Student;
+import com.example.medmanage.view_model.UserViewModel;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
+import java.util.stream.Collectors;
 
 public class UpdateProfileActivity extends AppCompatActivity {
-    private EditText staffNoEditText;
-    private TextView staffNoLabel;
 
+    // Common UI Elements
     private EditText firstNameEditText, lastNameEditText, usernameEditText, passwordEditText;
-    private EditText studentNoEditText, medicationReqEditText;
-    private LinearLayout studentFieldsLayout;
-    private RadioGroup foodReqRadioGroup;
     private Button confirmButton, cancelButton;
 
+    // Nurse-Specific UI
+    private EditText staffNoEditText;
+    private Group nurseFieldsGroup;
+
+    // Student-Specific UI
+    private EditText studentNoEditText;
+    private AutoCompleteTextView medicationAutoComplete;
+    private RadioGroup foodReqRadioGroup;
+    private Group studentFieldsGroup;
+
+    // Database and ViewModel
     private databaseMedicManage db;
+    private UserViewModel userViewModel;
     private Object currentUser;
     private String username;
     private String userType;
@@ -42,81 +59,64 @@ public class UpdateProfileActivity extends AppCompatActivity {
         setContentView(R.layout.profile_update);
 
         db = databaseMedicManage.getDatabase(getApplicationContext());
-        staffNoEditText = findViewById(R.id.editText_staffNo);
-        staffNoLabel = findViewById(R.id.label_staffNo);
-        firstNameEditText = findViewById(R.id.editText_firstName);
-        lastNameEditText = findViewById(R.id.editText_lastName);
-        usernameEditText = findViewById(R.id.editText_username);
-        passwordEditText = findViewById(R.id.editText_password);
-        studentFieldsLayout = findViewById(R.id.group_student_fields);
-        studentNoEditText = findViewById(R.id.editText_studentNo);
-        medicationReqEditText = findViewById(R.id.editText_medicationReq);
-        foodReqRadioGroup = findViewById(R.id.radioGroup_foodReq);
-        confirmButton = findViewById(R.id.button_confirm);
-        cancelButton = findViewById(R.id.button_cancel);
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+
+        initializeViews();
+        setupMedicationDropdown();
 
         username = getIntent().getStringExtra("USERNAME");
         userType = getIntent().getStringExtra("USER_TYPE");
 
         fetchUser();
 
-        confirmButton.setOnClickListener(v -> updateUser());
+        // **CHANGE**: The confirm button now calls the dialog method instead of updating directly.
+        confirmButton.setOnClickListener(v -> showUpdateConfirmationDialog());
         cancelButton.setOnClickListener(v -> finish());
     }
 
-    private void fetchUser() {
-        if ("student".equalsIgnoreCase(userType)) {
-            db.studentDAO().getStudentByUsernameLive(username)
-                    .observe(this, student -> {
-                        if (student != null) {
-                            currentUser = student;
-                            populateFieldsStudent(student);
-                        }
-                    });
-        } else if ("nurse".equalsIgnoreCase(userType)) {
-            db.nurseDAO().getNurseByUsernameLive(username)
-                    .observe(this, nurse -> {
-                        if (nurse != null) {
-                            currentUser = nurse;
-                            populateFieldsNurse(nurse);
-                        }
-                    });
+    /**
+     * **NEW METHOD**: Inflates and displays the custom confirmation dialog.
+     */
+    private void showUpdateConfirmationDialog() {
+        // Create a builder for the dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        // Inflate the custom layout
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.profile_update_dialog, null);
+        builder.setView(dialogView);
+
+        // Find buttons inside the dialog layout
+        Button positiveButton = dialogView.findViewById(R.id.positiveButton);
+        Button negativeButton = dialogView.findViewById(R.id.negativeButton);
+
+        // Create the AlertDialog object
+        final AlertDialog dialog = builder.create();
+
+        // Make the dialog window background transparent to show the rounded corners
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         }
+
+        // Set button listeners
+        positiveButton.setOnClickListener(v -> {
+            // When "Yes" is clicked, perform the update and close the dialog
+            updateUser();
+            dialog.dismiss();
+        });
+
+        negativeButton.setOnClickListener(v -> {
+            // When "Cancel" is clicked, just close the dialog
+            dialog.dismiss();
+        });
+
+        // Show the dialog
+        dialog.show();
     }
 
-    private void populateFieldsStudent(Student student) {
-        staffNoEditText.setVisibility(View.GONE);
-        staffNoLabel.setVisibility(View.GONE);
-        studentFieldsLayout.setVisibility(LinearLayout.VISIBLE);
-        firstNameEditText.setText(student.getStuName());
-        lastNameEditText.setText(student.getStuSurname());
-        studentNoEditText.setText(String.valueOf(student.getStuNum()));
-        studentNoEditText.setEnabled(false);//students should not be allowed to edit their student number
-        usernameEditText.setText(student.getUserName());
-        passwordEditText.setText(student.getPassword());
-        medicationReqEditText.setText(student.getMedReq());
-
-        if ("Yes".equalsIgnoreCase(student.getFoodReq())) {
-            ((RadioButton) findViewById(R.id.radioButton_foodYes)).setChecked(true);
-        } else {
-            ((RadioButton) findViewById(R.id.radioButton_foodNo)).setChecked(true);
-        }
-    }
-
-    private void populateFieldsNurse(Nurse nurse) {
-        staffNoEditText.setVisibility(View.VISIBLE);
-        staffNoLabel.setVisibility(View.VISIBLE);
-        staffNoEditText.setText(String.valueOf(nurse.getEmpNum()));
-        staffNoEditText.setEnabled(false);
-        studentFieldsLayout.setVisibility(View.GONE);
-        firstNameEditText.setText(nurse.getEmpName());
-
-        lastNameEditText.setText(nurse.getEmpSurname());
-        usernameEditText.setText(nurse.getEmpUserName());
-        passwordEditText.setText(nurse.getPassword());
-
-    }
-
+    /**
+     * Gathers data from the UI and updates the user's record in the database.
+     * This method is now called from the dialog's positive button.
+     */
     private void updateUser() {
         final String firstName = firstNameEditText.getText().toString().trim();
         final String lastName = lastNameEditText.getText().toString().trim();
@@ -126,31 +126,21 @@ public class UpdateProfileActivity extends AppCompatActivity {
         ExecutorService executor = databaseMedicManage.databaseWriteExecutor;
         executor.execute(() -> {
             if (currentUser instanceof Student) {
-                final String studentNoStr = studentNoEditText.getText().toString().trim();
-                final String medication = medicationReqEditText.getText().toString().trim();
-                final String foodReq = ((RadioButton) findViewById(foodReqRadioGroup.getCheckedRadioButtonId()))
-                        .getText().toString();
-
-                try{
-                    final int studentNo= Integer.parseInt(studentNoStr);
                 Student student = (Student) currentUser;
-                student.setStuNum(studentNo);
+                String selectedMedication = medicationAutoComplete.getText().toString();
+                String foodReq = ((RadioButton) findViewById(foodReqRadioGroup.getCheckedRadioButtonId())).getText().toString();
+
                 student.setStuName(firstName);
                 student.setStuSurname(lastName);
                 student.setUserName(usernameInput);
                 student.setPassword(password);
-                student.setMedReq(medication);
                 student.setFoodReq(foodReq);
+                student.setMedReq("None".equalsIgnoreCase(selectedMedication) ? "No" : selectedMedication);
 
                 db.studentDAO().updateStudent(student);
-                } catch (NumberFormatException e){
-                    runOnUiThread(() -> Toast.makeText(UpdateProfileActivity.this,"Invalid Student Number format. ",Toast.LENGTH_SHORT).show());
-                    return;
-                }
 
             } else if (currentUser instanceof Nurse) {
                 Nurse nurse = (Nurse) currentUser;
-
                 nurse.setEmpName(firstName);
                 nurse.setEmpSurname(lastName);
                 nurse.setEmpUserName(usernameInput);
@@ -159,15 +149,99 @@ public class UpdateProfileActivity extends AppCompatActivity {
                 db.nurseDAO().updateNurse(nurse);
             }
 
-            // Notify parent activity to refresh using runOnUiThread
             runOnUiThread(() -> {
                 Toast.makeText(UpdateProfileActivity.this, "Profile updated successfully!", Toast.LENGTH_SHORT).show();
                 Intent resultIntent = new Intent();
-                resultIntent.putExtra("UPDATED_USERNAME",usernameInput);
-                setResult(RESULT_OK,resultIntent); // this signals ViewProfileDetailsActivity to refresh
+                resultIntent.putExtra("UPDATED_USERNAME", usernameInput);
+                setResult(RESULT_OK, resultIntent);
                 finish();
             });
         });
     }
 
+    // --- NO CHANGES NEEDED IN THE METHODS BELOW ---
+
+    private void initializeViews() {
+        firstNameEditText = findViewById(R.id.editText_firstName);
+        lastNameEditText = findViewById(R.id.editText_lastName);
+        usernameEditText = findViewById(R.id.editText_username);
+        passwordEditText = findViewById(R.id.editText_password);
+        confirmButton = findViewById(R.id.button_confirm);
+        cancelButton = findViewById(R.id.button_cancel);
+        staffNoEditText = findViewById(R.id.editText_staffNo);
+        nurseFieldsGroup = findViewById(R.id.group_nurse_fields);
+        studentNoEditText = findViewById(R.id.editText_studentNo);
+        medicationAutoComplete = findViewById(R.id.autoComplete_medication);
+        foodReqRadioGroup = findViewById(R.id.radioGroup_foodReq);
+        studentFieldsGroup = findViewById(R.id.group_student_fields);
+    }
+
+    private void setupMedicationDropdown() {
+        userViewModel.getAllMedications().observe(this, medications -> {
+            if (medications != null) {
+                List<String> medNames = medications.stream()
+                        .map(Medication::getMedName)
+                        .distinct()
+                        .collect(Collectors.toCollection(ArrayList::new));
+                medNames.add(0, "None");
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                        this,
+                        android.R.layout.simple_dropdown_item_1line,
+                        medNames
+                );
+                medicationAutoComplete.setAdapter(adapter);
+            }
+        });
+    }
+
+    private void fetchUser() {
+        db.databaseWriteExecutor.execute(() -> {
+            if ("student".equalsIgnoreCase(userType)) {
+                Student student = db.studentDAO().getStudentByUsername(username);
+                if (student != null) {
+                    currentUser = student;
+                    runOnUiThread(() -> populateFieldsStudent(student));
+                }
+            } else if ("nurse".equalsIgnoreCase(userType)) {
+                Nurse nurse = db.nurseDAO().getNurseByUsername(username);
+                if (nurse != null) {
+                    currentUser = nurse;
+                    runOnUiThread(() -> populateFieldsNurse(nurse));
+                }
+            }
+        });
+    }
+
+    private void populateFieldsStudent(Student student) {
+        nurseFieldsGroup.setVisibility(View.GONE);
+        studentFieldsGroup.setVisibility(View.VISIBLE);
+        firstNameEditText.setText(student.getStuName());
+        lastNameEditText.setText(student.getStuSurname());
+        studentNoEditText.setText(String.valueOf(student.getStuNum()));
+        studentNoEditText.setEnabled(false);
+        usernameEditText.setText(student.getUserName());
+        passwordEditText.setText(student.getPassword());
+        String savedMedication = student.getMedReq();
+        if (savedMedication == null || savedMedication.isEmpty() || "No".equalsIgnoreCase(savedMedication)) {
+            medicationAutoComplete.setText("None", false);
+        } else {
+            medicationAutoComplete.setText(savedMedication, false);
+        }
+        if ("Yes".equalsIgnoreCase(student.getFoodReq())) {
+            ((RadioButton) findViewById(R.id.radioButton_foodYes)).setChecked(true);
+        } else {
+            ((RadioButton) findViewById(R.id.radioButton_foodNo)).setChecked(true);
+        }
+    }
+
+    private void populateFieldsNurse(Nurse nurse) {
+        studentFieldsGroup.setVisibility(View.GONE);
+        nurseFieldsGroup.setVisibility(View.VISIBLE);
+        firstNameEditText.setText(nurse.getEmpName());
+        lastNameEditText.setText(nurse.getEmpSurname());
+        staffNoEditText.setText(String.valueOf(nurse.getEmpNum()));
+        staffNoEditText.setEnabled(false);
+        usernameEditText.setText(nurse.getEmpUserName());
+        passwordEditText.setText(nurse.getPassword());
+    }
 }
