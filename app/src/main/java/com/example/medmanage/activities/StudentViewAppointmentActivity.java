@@ -27,7 +27,7 @@ public class StudentViewAppointmentActivity extends AppCompatActivity {
     public static final String SHOW_CANCEL_BUTTON_EXTRA = "show_cancel_button";
     private TextView medicationValue, foodValue, dateValue, timeValue, noAppointmentText;
     private LinearLayout appointmentDetailsContainer;
-    private Button cancelAppointmentButton,negativeButton;
+    private Button cancelAppointmentButton, negativeButton;
 
 
     private databaseMedicManage appDb;
@@ -35,6 +35,7 @@ public class StudentViewAppointmentActivity extends AppCompatActivity {
     private int currentStudentId;
     private Appointment currentAppointment;
     private boolean shouldShowCancelButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +73,7 @@ public class StudentViewAppointmentActivity extends AppCompatActivity {
                 showCancelConfirmationDialog();
             }
         });
-        negativeButton.setOnClickListener(v ->{
+        negativeButton.setOnClickListener(v -> {
             showQuitConfirmationDialog();
         });
     }
@@ -134,6 +135,7 @@ public class StudentViewAppointmentActivity extends AppCompatActivity {
             }
         });
     }
+
     private void showQuitConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
@@ -144,6 +146,12 @@ public class StudentViewAppointmentActivity extends AppCompatActivity {
         final Button noButton = dialogView.findViewById(R.id.negativeButton);
 
         final AlertDialog dialog = builder.create();
+
+        // FIX: Add this block to make the dialog background transparent
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
+
         dialog.show();
 
         yesButton.setOnClickListener(v -> finish());
@@ -153,13 +161,19 @@ public class StudentViewAppointmentActivity extends AppCompatActivity {
     private void showCancelConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.general_confirm_dialog, null);
+        View dialogView = inflater.inflate(R.layout.appnt_cancel_dialog, null);
         builder.setView(dialogView);
 
         final Button yesButton = dialogView.findViewById(R.id.positiveButton);
         final Button noButton = dialogView.findViewById(R.id.negativeButton);
 
         final AlertDialog dialog = builder.create();
+
+        // FIX: Add this block to make the dialog background transparent
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
+
         dialog.show();
 
         yesButton.setOnClickListener(v -> {

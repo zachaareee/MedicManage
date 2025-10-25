@@ -170,7 +170,8 @@ public class ReviewAppointmentActivity extends AppCompatActivity {
         dateEditText.setText(appointmentToEdit.getDate());
         timeEditText.setText(appointmentToEdit.getTime());
 
-        final AlertDialog dialog = builder.create();
+        // This is the first (edit) dialog
+        final AlertDialog editDialog = builder.create();
 
         saveButton.setOnClickListener(v -> {
             String newDate = dateEditText.getText().toString().trim();
@@ -181,21 +182,73 @@ public class ReviewAppointmentActivity extends AppCompatActivity {
                 return;
             }
 
+            // Set the new values on the object
             appointmentToEdit.setDate(newDate);
             appointmentToEdit.setTime(newTime);
-            updateAppointmentInDb(appointmentToEdit, dialog);
+
+            // FIX: Instead of updating, show the confirmation dialog
+            // We pass the appointment object and the first dialog (editDialog)
+            // so we can dismiss it if the user confirms.
+            showUpdateConfirmationDialog(appointmentToEdit, editDialog);
         });
 
-        cancelButton.setOnClickListener(v -> dialog.dismiss());
-        dialog.show();
+        cancelButton.setOnClickListener(v -> editDialog.dismiss());
+        editDialog.show();
     }
 
-    private void updateAppointmentInDb(Appointment appointment, AlertDialog dialog) {
+    /**
+     * NEW METHOD
+     * Shows the final "Are you sure?" confirmation dialog using appnt_review_changes_dialog.xml
+     * @param appointmentToUpdate The appointment object with the new date/time already set.
+     * @param editDialog The first (edit) dialog, so we can dismiss it.
+     */
+    private void showUpdateConfirmationDialog(final Appointment appointmentToUpdate, final AlertDialog editDialog) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        // Use the new layout file
+        View dialogView = inflater.inflate(R.layout.appnt_review_changes_dialog, null);
+        builder.setView(dialogView);
+
+        final Button yesButton = dialogView.findViewById(R.id.positiveButton);
+        final Button noButton = dialogView.findViewById(R.id.negativeButton);
+
+        // This is the second (confirmation) dialog
+        final AlertDialog confirmDialog = builder.create();
+
+        // Make it look nice like the delete dialog
+        if (confirmDialog.getWindow() != null) {
+            confirmDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
+
+        yesButton.setOnClickListener(v -> {
+            // User clicked "Yes", so now we update the DB
+            // We pass both dialogs so the update method can close them
+            updateAppointmentInDb(appointmentToUpdate, editDialog, confirmDialog);
+        });
+
+        noButton.setOnClickListener(v -> {
+            // User clicked "Cancel", just close this (confirmation) dialog
+            confirmDialog.dismiss();
+        });
+
+        confirmDialog.show();
+    }
+
+    /**
+     * MODIFIED METHOD
+     * Now accepts one or more dialogs to dismiss upon successful update.
+     */
+    private void updateAppointmentInDb(Appointment appointment, AlertDialog... dialogsToDismiss) {
         databaseExecutor.execute(() -> {
             appDb.appointmentDAO().update(appointment);
             runOnUiThread(() -> {
                 Toast.makeText(this, "Appointment updated successfully", Toast.LENGTH_SHORT).show();
-                dialog.dismiss();
+                // Dismiss all passed dialogs
+                for (AlertDialog dialog : dialogsToDismiss) {
+                    if (dialog != null) {
+                        dialog.dismiss();
+                    }
+                }
                 // LiveData will automatically refresh the view
             });
         });
@@ -205,7 +258,7 @@ public class ReviewAppointmentActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.appnt_delete_dialog, null);
+        View dialogView = inflater.inflate(R.layout.appnt_delete_dialog_nur, null);
         builder.setView(dialogView);
 
 

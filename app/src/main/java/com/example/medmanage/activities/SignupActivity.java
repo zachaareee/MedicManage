@@ -247,7 +247,6 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     private void showCancelConfirmationDialog() {
-        // ... (This method is correct as is)
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.sign_up_cancel_dialog, null);

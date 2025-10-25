@@ -208,20 +208,39 @@ public class profile_fragment extends Fragment {
         });
     }
 
+    // In profile_fragment.java
+
+// ... (other methods)
+
     private void showSignOutConfirmationDialog() {
-        new AlertDialog.Builder(requireContext())
-                .setTitle("Sign Out")
-                .setMessage("Are you sure you want to sign out?")
-                .setPositiveButton("Yes", (dialog, which) -> {
-                    Toast.makeText(getContext(), "Signing out...", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getContext(), SigninActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-                    if (getActivity() != null) {
-                        getActivity().finish();
-                    }
-                })
-                .setNegativeButton("No", null)
-                .show();
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(requireContext());
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.sign_out_dialog, null);
+        builder.setView(dialogView);
+
+        Button positiveButton = dialogView.findViewById(R.id.positiveButton);
+        Button negativeButton = dialogView.findViewById(R.id.negativeButton);
+
+        final androidx.appcompat.app.AlertDialog dialog = builder.create();
+
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
+
+        positiveButton.setOnClickListener(v -> {
+            dialog.dismiss();
+            if (getContext() != null) {
+                Intent intent = new Intent(getContext(), SigninActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                requireActivity().finish();
+            }
+        });
+
+        negativeButton.setOnClickListener(v -> dialog.dismiss());
+        dialog.show();
     }
+
 }
+
+

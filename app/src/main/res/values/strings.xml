@@ -96,6 +96,8 @@
     <string name="confirm_delete_med">Are you sure you want to delete %1$s?</string>
     <string name="med_deleted_success">%1$s deleted.</string>
     <string name="view_profile_details">View Profile Details</string>
+    <string name="review_appointment_dialog">Are you sure want to make permanent changes to the student_s appointment</string>
+
     <string name="confirmation_message">Are you sure?</string>
     <string name="profile">Profile</string>
     <string name="profile_icon_desc">User profile icon</string>
@@ -113,7 +115,7 @@
 
 
     <string name="cancel_booking_title">Cancel Booking</string>
-    <string name="cancel_booking_message">Are you sure you want to delete this booking?</string>
+    <string name="cancel_booking_message">Are you sure you want to delete this appointment booking?</string>
     <string name="done">Done</string>
     <string name="cancel_booking">Delete Booking</string>
     <string name="confirm_undo_booking_title">Delete This Booking</string>
@@ -183,5 +185,8 @@
     <string name="food_update_quantity">Update Food Quantity</string>
     <string name="general_dialog_text">Are you sure you want to go back?</string>
     <string name="profile_update">Are you want to make changes to your profile ?</string>
+    <string name="sign_out">Are you sure you want to sign out  ?</string>
+    <string name="cancel_appointment_stu">Are you sure you want to cancel your appointment?</string>
+
 
 </resources>

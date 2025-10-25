@@ -1,7 +1,10 @@
 package com.example.medmanage.activities;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.WindowInsets;
+import android.view.WindowInsetsController;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -23,6 +26,10 @@ public class DashboardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
 
         binding = DashboardBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
