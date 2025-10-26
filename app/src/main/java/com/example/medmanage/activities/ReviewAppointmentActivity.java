@@ -116,7 +116,7 @@ public class ReviewAppointmentActivity extends AppCompatActivity {
 
         List<String> spinnerItems = new ArrayList<>();
         for (AppointmentWithStudent item : appointments) {
-            String displayText = String.format("ID: %s | Date: %s", item.student.getStuNum(), item.appointment.getDate());
+            String displayText = String.format("Student Number: %s ", item.student.getStuNum());
             spinnerItems.add(displayText);
         }
 
@@ -158,12 +158,7 @@ public class ReviewAppointmentActivity extends AppCompatActivity {
 
 
 
-    /**
-     * NEW METHOD
-     * Shows the final "Are you sure?" confirmation dialog using appnt_review_changes_dialog.xml
-     * @param appointmentToUpdate The appointment object with the new date/time already set.
-     * @param editDialog The first (edit) dialog, so we can dismiss it.
-     */
+
     private void showUpdateConfirmationDialog(final Appointment appointmentToUpdate, final AlertDialog editDialog) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
@@ -189,17 +184,12 @@ public class ReviewAppointmentActivity extends AppCompatActivity {
         });
 
         noButton.setOnClickListener(v -> {
-            // User clicked "Cancel", just close this (confirmation) dialog
             confirmDialog.dismiss();
         });
 
         confirmDialog.show();
     }
 
-    /**
-     * MODIFIED METHOD
-     * Now accepts one or more dialogs to dismiss upon successful update.
-     */
     private void updateAppointmentInDb(Appointment appointment, AlertDialog... dialogsToDismiss) {
         databaseExecutor.execute(() -> {
             appDb.appointmentDAO().update(appointment);
@@ -285,11 +275,8 @@ public class ReviewAppointmentActivity extends AppCompatActivity {
         final Button noButton = dialogView.findViewById(R.id.negativeButton);
         final TextView messageTextView = dialogView.findViewById(R.id.confirmationMessageTextView);
 
-        // Set a specific message for quitting
-        // You should add this string to your strings.xml
-        // messageTextView.setText(getString(R.string.confirm_quit));
-        // For now, I'll use the default text from the layout or hardcode it:
-        messageTextView.setText("Are you sure you want to quit?");
+        it:
+        messageTextView.setText(R.string.quit_dialog);
 
         final AlertDialog dialog = builder.create();
 

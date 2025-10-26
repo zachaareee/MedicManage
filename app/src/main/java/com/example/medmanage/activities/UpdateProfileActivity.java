@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -75,7 +76,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
         fetchUser();
 
         confirmButton.setOnClickListener(v -> showUpdateConfirmationDialog());
-        cancelButton.setOnClickListener(v -> finish());
+        cancelButton.setOnClickListener(v -> showQuitConfirmationDialog());
         passwordToggle.setOnClickListener(v -> togglePasswordVisibility());
     }
 
@@ -174,6 +175,33 @@ public class UpdateProfileActivity extends AppCompatActivity {
                 finish();
             });
         });
+    }
+    private void showQuitConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        // Use the general confirmation dialog layout
+        View dialogView = inflater.inflate(R.layout.general_confirm_dialog, null);
+        builder.setView(dialogView);
+
+        final Button yesButton = dialogView.findViewById(R.id.positiveButton);
+        final Button noButton = dialogView.findViewById(R.id.negativeButton);
+        final TextView messageTextView = dialogView.findViewById(R.id.confirmationMessageTextView);
+
+        messageTextView.setText(R.string.quit_dialog);
+
+        final AlertDialog dialog = builder.create();
+
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
+
+        yesButton.setOnClickListener(v -> {
+            dialog.dismiss();
+            finish(); // Quit the activity
+        });
+        noButton.setOnClickListener(v -> dialog.dismiss());
+
+        dialog.show();
     }
 
 

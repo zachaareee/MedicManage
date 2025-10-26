@@ -189,6 +189,7 @@
     <string name="cancel_appointment_stu">Are you sure you want to cancel your appointment?</string>
     <string name="confirm_add_med">Are you sure you want to add %1$s?</string>
     <string name="confirm_update_med">Are you sure you want to update %1$s?</string>
+    <string name="quit_dialog">Are you sure you want to quit?</string>
 
 
 </resources>

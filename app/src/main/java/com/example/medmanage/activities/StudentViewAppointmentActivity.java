@@ -94,18 +94,7 @@ public class StudentViewAppointmentActivity extends AppCompatActivity {
                     Student student = appDb.studentDAO().getStudentById(currentAppointment.getStuNum());
                     String foodRequirement = student != null ? student.getFoodReq() : "N/A";
 
-                    List<Integer> medIds = appDb.appointmentMedicationDAO().getMedicationIdsForAppointment(currentAppointment.getAppointmentNum());
-                    String medicationNames = "None";
-                    if (medIds != null && !medIds.isEmpty()) {
-                        List<Medication> medications = appDb.medicationDAO().getMedicationsByIds(medIds);
-                        if (medications != null) {
-                            medicationNames = medications.stream()
-                                    .map(Medication::getMedName)
-                                    .collect(Collectors.joining(", "));
-                        }
-                    }
-
-                    String finalMedicationNames = medicationNames;
+                    String medicationRequirement = student != null ? student.getMedReq() : "N/A";
                     runOnUiThread(() -> {
                         appointmentDetailsContainer.setVisibility(View.VISIBLE);
                         noAppointmentText.setVisibility(View.GONE);
@@ -115,9 +104,7 @@ public class StudentViewAppointmentActivity extends AppCompatActivity {
                             cancelAppointmentButton.setVisibility(View.GONE);
                         }
 
-                        medicationValue.setText(TextUtils.isEmpty(finalMedicationNames) ? "None" : finalMedicationNames);
-                        foodValue.setText(foodRequirement);
-                        dateValue.setText(currentAppointment.getDate());
+                        medicationValue.setText(TextUtils.isEmpty(medicationRequirement) ? "None" : medicationRequirement);                        dateValue.setText(currentAppointment.getDate());
                         timeValue.setText(currentAppointment.getTime());
                     });
                 } else {
@@ -147,11 +134,7 @@ public class StudentViewAppointmentActivity extends AppCompatActivity {
         final Button noButton = dialogView.findViewById(R.id.negativeButton);
         final TextView messageTextView = dialogView.findViewById(R.id.confirmationMessageTextView);
 
-        // Set a specific message for quitting
-        // You should add this string to your strings.xml
-        // messageTextView.setText(getString(R.string.confirm_quit));
-        // For now, I'll use the default text from the layout or hardcode it:
-        messageTextView.setText("Are you sure you want to quit?");
+        messageTextView.setText(R.string.quit_dialog);
 
         final AlertDialog dialog = builder.create();
 
