@@ -82,7 +82,7 @@ public class NurseViewAppointmentActivity extends AppCompatActivity {
         List<String> spinnerItems = new ArrayList<>();
         // Create a display string for each appointment in the list
         for (AppointmentWithStudent item : appointments) {
-            String displayText = String.format("Student Number: %s | Date: %s", item.student.getStuNum(), item.appointment.getDate());
+            String displayText = String.format("Student Number: %s ", item.student.getStuNum());
             spinnerItems.add(displayText);
         }
 
@@ -137,11 +137,8 @@ public class NurseViewAppointmentActivity extends AppCompatActivity {
         final Button noButton = dialogView.findViewById(R.id.negativeButton);
         final TextView messageTextView = dialogView.findViewById(R.id.confirmationMessageTextView);
 
-        // Set a specific message for quitting
-        // You should add this string to your strings.xml
-        // messageTextView.setText(getString(R.string.confirm_quit));
-        // For now, I'll use the default text from the layout or hardcode it:
-        messageTextView.setText("Are you sure you want to quit?");
+
+        messageTextView.setText(R.string.quit_dialog);
 
         final AlertDialog dialog = builder.create();
 

@@ -215,11 +215,8 @@ public class FoodViewActivity extends AppCompatActivity {
         final Button noButton = dialogView.findViewById(R.id.negativeButton);
         final TextView messageTextView = dialogView.findViewById(R.id.confirmationMessageTextView);
 
-        // Set a specific message for quitting
-        // You should add this string to your strings.xml
-        // messageTextView.setText(getString(R.string.confirm_quit));
-        // For now, I'll use the default text from the layout or hardcode it:
-        messageTextView.setText("Are you sure you want to quit?");
+
+        messageTextView.setText(R.string.quit_dialog);
 
         final AlertDialog dialog = builder.create();
 

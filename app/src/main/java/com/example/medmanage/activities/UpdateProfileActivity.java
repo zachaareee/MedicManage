@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -47,6 +48,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
     // Student-Specific UI
     private EditText studentNoEditText;
     private AutoCompleteTextView medicationAutoComplete;
+    private ImageView medicationDropdownArrow;
     private RadioGroup foodReqRadioGroup;
     private Group studentFieldsGroup;
 
@@ -75,8 +77,9 @@ public class UpdateProfileActivity extends AppCompatActivity {
         fetchUser();
 
         confirmButton.setOnClickListener(v -> showUpdateConfirmationDialog());
-        cancelButton.setOnClickListener(v -> finish());
+        cancelButton.setOnClickListener(v -> showQuitConfirmationDialog());
         passwordToggle.setOnClickListener(v -> togglePasswordVisibility());
+        medicationDropdownArrow.setOnClickListener(v -> medicationAutoComplete.showDropDown());
     }
 
     private void togglePasswordVisibility() {
@@ -175,6 +178,33 @@ public class UpdateProfileActivity extends AppCompatActivity {
             });
         });
     }
+    private void showQuitConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        // Use the general confirmation dialog layout
+        View dialogView = inflater.inflate(R.layout.general_confirm_dialog, null);
+        builder.setView(dialogView);
+
+        final Button yesButton = dialogView.findViewById(R.id.positiveButton);
+        final Button noButton = dialogView.findViewById(R.id.negativeButton);
+        final TextView messageTextView = dialogView.findViewById(R.id.confirmationMessageTextView);
+
+        messageTextView.setText(R.string.quit_dialog);
+
+        final AlertDialog dialog = builder.create();
+
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
+
+        yesButton.setOnClickListener(v -> {
+            dialog.dismiss();
+            finish(); // Quit the activity
+        });
+        noButton.setOnClickListener(v -> dialog.dismiss());
+
+        dialog.show();
+    }
 
 
     private void initializeViews() {
@@ -191,24 +221,20 @@ public class UpdateProfileActivity extends AppCompatActivity {
         medicationAutoComplete = findViewById(R.id.autoComplete_medication);
         foodReqRadioGroup = findViewById(R.id.radioGroup_foodReq);
         studentFieldsGroup = findViewById(R.id.group_student_fields);
+        medicationDropdownArrow = findViewById(R.id.medicationDropdownArrow);
     }
 
     private void setupMedicationDropdown() {
-        userViewModel.getAllMedications().observe(this, medications -> {
-            if (medications != null) {
-                List<String> medNames = medications.stream()
-                        .map(Medication::getMedName)
-                        .distinct()
-                        .collect(Collectors.toCollection(ArrayList::new));
-                medNames.add(0, "None");
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                        this,
-                        android.R.layout.simple_dropdown_item_1line,
-                        medNames
-                );
-                medicationAutoComplete.setAdapter(adapter);
-            }
-        });
+        // Get the predefined list from your string resources
+        String[] illnesses = getResources().getStringArray(R.array.illness_array);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_dropdown_item_1line,
+                illnesses
+        );
+
+        medicationAutoComplete.setAdapter(adapter);
     }
 
     private void fetchUser() {

@@ -1,6 +1,5 @@
 package com.example.medmanage.activities;
 
-import android.app.AlertDialog;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.InputType;
@@ -16,8 +15,11 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+import android.widget.TextView;
+
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -41,6 +43,7 @@ public class SignupActivity extends AppCompatActivity {
     private EditText firstNameEditText, lastNameEditText, usernameEditText, passwordEditText;
     private EditText staffNoEditText, studentNoEditText;
     private LinearLayout studentFieldsLayout;
+    private ImageView medicationDropdownArrow;
     private AutoCompleteTextView medicationAutoComplete;
     private RadioGroup foodReqRadioGroup;
     private Button confirmButton, cancelButton;
@@ -78,6 +81,7 @@ public class SignupActivity extends AppCompatActivity {
         usernameEditText = findViewById(R.id.editText_username);
         passwordEditText = findViewById(R.id.editText_password);
         passwordToggle = findViewById(R.id.password_toggle);
+        medicationDropdownArrow = findViewById(R.id.medicationDropdownArrow);
 
         // Student-specific layout and fields
         studentFieldsLayout = findViewById(R.id.layout_studentFields);
@@ -97,35 +101,25 @@ public class SignupActivity extends AppCompatActivity {
         userTypeRadioGroup.setOnCheckedChangeListener((group, checkedId) -> updateUiForUserType(checkedId));
 
         confirmButton.setOnClickListener(v -> registerUser());
-        cancelButton.setOnClickListener(v -> showCancelConfirmationDialog());
+        cancelButton.setOnClickListener(v -> showQuitConfirmationDialog());
         passwordToggle.setOnClickListener(v -> togglePasswordVisibility());
+        medicationDropdownArrow.setOnClickListener(v -> medicationAutoComplete.showDropDown());
     }
 
     /**
      * Fetches medication names from the database and populates the dropdown.
      */
     private void setupMedicationDropdown() {
-        userViewModel.getAllMedications().observe(this, medications -> {
-            if (medications != null) {
-                // Get distinct medication names
-                List<String> medNames = medications.stream()
-                        .map(Medication::getMedName)
-                        .distinct()
-                        .collect(Collectors.toList());
+        // Get the predefined list from your string resources
+        String[] illnesses = getResources().getStringArray(R.array.illness_array);
 
-                // Add a "None" option at the beginning
-                List<String> optionsWithNone = new ArrayList<>();
-                optionsWithNone.add("None");
-                optionsWithNone.addAll(medNames);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_dropdown_item_1line,
+                illnesses
+        );
 
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                        this,
-                        android.R.layout.simple_dropdown_item_1line,
-                        optionsWithNone
-                );
-                medicationAutoComplete.setAdapter(adapter);
-            }
-        });
+        medicationAutoComplete.setAdapter(adapter);
     }
 
     /**
@@ -246,19 +240,32 @@ public class SignupActivity extends AppCompatActivity {
         passwordEditText.setSelection(passwordEditText.length());
     }
 
-    private void showCancelConfirmationDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    private void showQuitConfirmationDialog() {
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.sign_up_cancel_dialog, null);
+        // Use the general confirmation dialog layout
+        View dialogView = inflater.inflate(R.layout.general_confirm_dialog, null);
         builder.setView(dialogView);
-        Button positiveButton = dialogView.findViewById(R.id.positiveButton);
-        Button negativeButton = dialogView.findViewById(R.id.negativeButton);
+
+        final Button yesButton = dialogView.findViewById(R.id.positiveButton);
+        final Button noButton = dialogView.findViewById(R.id.negativeButton);
+        final TextView messageTextView = dialogView.findViewById(R.id.confirmationMessageTextView);
+
+        messageTextView.setText(R.string.quit_dialog);
+
         final AlertDialog dialog = builder.create();
-        positiveButton.setOnClickListener(v -> {
+
+        // Make the dialog window background transparent
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
+
+        yesButton.setOnClickListener(v -> {
             dialog.dismiss();
-            finish();
+            finish(); // Quit the activity
         });
-        negativeButton.setOnClickListener(v -> dialog.dismiss());
+        noButton.setOnClickListener(v -> dialog.dismiss());
+
         dialog.show();
     }
 }
