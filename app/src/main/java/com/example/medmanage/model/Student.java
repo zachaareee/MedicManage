@@ -1,12 +1,12 @@
 package com.example.medmanage.model;
 
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
-@Entity(tableName = "Student")
-public class Student implements Serializable {
+@Entity(tableName = "Student", indices = {@Index(value = {"userName"}, unique = true)})public class Student implements Serializable {
     @PrimaryKey
     private int stuNum;
     private String stuName;

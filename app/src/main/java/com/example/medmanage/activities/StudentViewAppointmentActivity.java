@@ -103,7 +103,7 @@ public class StudentViewAppointmentActivity extends AppCompatActivity {
                         } else {
                             cancelAppointmentButton.setVisibility(View.GONE);
                         }
-
+                        foodValue.setText(TextUtils.isEmpty(foodRequirement) ? "None" : foodRequirement);
                         medicationValue.setText(TextUtils.isEmpty(medicationRequirement) ? "None" : medicationRequirement);                        dateValue.setText(currentAppointment.getDate());
                         timeValue.setText(currentAppointment.getTime());
                     });
@@ -163,7 +163,6 @@ public class StudentViewAppointmentActivity extends AppCompatActivity {
 
         final AlertDialog dialog = builder.create();
 
-        // FIX: Add this block to make the dialog background transparent
         if (dialog.getWindow() != null) {
             dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         }

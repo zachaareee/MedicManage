@@ -136,13 +136,14 @@ public class SignupActivity extends AppCompatActivity {
         }
     }
 
+    // In SignupActivity.java
+
     private void registerNewStudent() {
         String firstName = firstNameEditText.getText().toString().trim();
         String lastName = lastNameEditText.getText().toString().trim();
         String studentNoStr = studentNoEditText.getText().toString().trim();
         String username = usernameEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
-        // Get text from the AutoCompleteTextView
         String medicationReq = medicationAutoComplete.getText().toString().trim();
 
         int selectedFoodRadioId = foodReqRadioGroup.getCheckedRadioButtonId();
@@ -168,31 +169,23 @@ public class SignupActivity extends AppCompatActivity {
         Student newStudent = new Student(studentNo, firstName, lastName, username, foodReq, medicationReq, password);
         ExecutorService executor = databaseMedicManage.databaseWriteExecutor;
         executor.execute(() -> {
-            db.studentDAO().addStudent(newStudent);
+
+
+            long newRowId = db.studentDAO().addStudent(newStudent);
+
             runOnUiThread(() -> {
-                Toast.makeText(this, "Student registered successfully!", Toast.LENGTH_LONG).show();
-                finish();
+                if (newRowId == -1) {
+                    // This means the insert failed due to a unique constraint (username)
+                    usernameEditText.setError("This username is already taken");
+                    Toast.makeText(this, "This username is already taken. Please choose another.", Toast.LENGTH_LONG).show();
+                } else {
+                    // Success!
+                    Toast.makeText(this, "Student registered successfully!", Toast.LENGTH_LONG).show();
+                    finish();
+                }
             });
+
         });
-    }
-
-
-
-    private void registerUser() {
-        int selectedUserTypeId = userTypeRadioGroup.getCheckedRadioButtonId();
-        if (selectedUserTypeId == -1) {
-            Toast.makeText(this, "Please select a user type", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (db == null) {
-            Toast.makeText(this, "Database is not yet ready. Please try again.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (selectedUserTypeId == R.id.student_radio_btn) {
-            registerNewStudent();
-        } else {
-            registerNewNurse();
-        }
     }
 
     private void registerNewNurse() {
@@ -218,13 +211,42 @@ public class SignupActivity extends AppCompatActivity {
         Nurse newNurse = new Nurse(staffNo, firstName, lastName, username, password);
         ExecutorService executor = databaseMedicManage.databaseWriteExecutor;
         executor.execute(() -> {
-            db.nurseDAO().addNurse(newNurse);
+
+
+            long newRowId = db.nurseDAO().addNurse(newNurse);
+
             runOnUiThread(() -> {
-                Toast.makeText(this, "Nurse registered successfully!", Toast.LENGTH_LONG).show();
-                finish();
+                if (newRowId == -1) {
+                    usernameEditText.setError("This username is already taken");
+                    Toast.makeText(this, "This username is already taken. Please choose another.", Toast.LENGTH_LONG).show();
+                } else {
+                    // Success!
+                    Toast.makeText(this, "Nurse registered successfully!", Toast.LENGTH_LONG).show();
+                    finish();
+                }
             });
         });
     }
+
+
+
+    private void registerUser() {
+        int selectedUserTypeId = userTypeRadioGroup.getCheckedRadioButtonId();
+        if (selectedUserTypeId == -1) {
+            Toast.makeText(this, "Please select a user type", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (db == null) {
+            Toast.makeText(this, "Database is not yet ready. Please try again.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (selectedUserTypeId == R.id.student_radio_btn) {
+            registerNewStudent();
+        } else {
+            registerNewNurse();
+        }
+    }
+
 
     private void togglePasswordVisibility() {
         // ... (This method is correct as is)

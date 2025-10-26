@@ -3,14 +3,16 @@ package com.example.medmanage.model;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 import java.io.Serializable;
 
-@Entity(tableName = "Nurse")
+// --- FIX IS HERE ---
+@Entity(tableName = "Nurse", indices = {@Index(value = {"empUsername"}, unique = true)})
 public class Nurse implements Serializable {
     @ColumnInfo(name = "empNum")
     @PrimaryKey(autoGenerate = false)
-            int empNum;
+    int empNum;
     @ColumnInfo(name = "empName")
     String empName;
 
@@ -48,9 +50,7 @@ public class Nurse implements Serializable {
 
     public void setEmpSurname(String empSurname) {this.empSurname = empSurname;}
 
-    public void setEmpUserName(String empSurname) {this.empUserName = empSurname;}
+    public void setEmpUserName(String empUserName) {this.empUserName = empUserName;}
     public void setPassword(String password){this.password =password;}
-
-
 
 }

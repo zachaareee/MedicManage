@@ -137,6 +137,8 @@ public class UpdateProfileActivity extends AppCompatActivity {
      * Gathers data from the UI and updates the user's record in the database.
      * This method is now called from the dialog's positive button.
      */
+    // In UpdateProfileActivity.java
+
     private void updateUser() {
         final String firstName = firstNameEditText.getText().toString().trim();
         final String lastName = lastNameEditText.getText().toString().trim();
@@ -145,37 +147,47 @@ public class UpdateProfileActivity extends AppCompatActivity {
 
         ExecutorService executor = databaseMedicManage.databaseWriteExecutor;
         executor.execute(() -> {
-            if (currentUser instanceof Student) {
-                Student student = (Student) currentUser;
-                String selectedMedication = medicationAutoComplete.getText().toString();
-                String foodReq = ((RadioButton) findViewById(foodReqRadioGroup.getCheckedRadioButtonId())).getText().toString();
 
-                student.setStuName(firstName);
-                student.setStuSurname(lastName);
-                student.setUserName(usernameInput);
-                student.setPassword(password);
-                student.setFoodReq(foodReq);
-                student.setMedReq("None".equalsIgnoreCase(selectedMedication) ? "No" : selectedMedication);
+            try {
 
-                db.studentDAO().updateStudent(student);
+                if (currentUser instanceof Student) {
+                    Student student = (Student) currentUser;
+                    String selectedMedication = medicationAutoComplete.getText().toString();
+                    String foodReq = ((RadioButton) findViewById(foodReqRadioGroup.getCheckedRadioButtonId())).getText().toString();
 
-            } else if (currentUser instanceof Nurse) {
-                Nurse nurse = (Nurse) currentUser;
-                nurse.setEmpName(firstName);
-                nurse.setEmpSurname(lastName);
-                nurse.setEmpUserName(usernameInput);
-                nurse.setPassword(password);
+                    student.setStuName(firstName);
+                    student.setStuSurname(lastName);
+                    student.setUserName(usernameInput);
+                    student.setPassword(password);
+                    student.setFoodReq(foodReq);
+                    student.setMedReq("None".equalsIgnoreCase(selectedMedication) ? "No" : selectedMedication);
 
-                db.nurseDAO().updateNurse(nurse);
+                    db.studentDAO().updateStudent(student);
+
+                } else if (currentUser instanceof Nurse) {
+                    Nurse nurse = (Nurse) currentUser;
+                    nurse.setEmpName(firstName);
+                    nurse.setEmpSurname(lastName);
+                    nurse.setEmpUserName(usernameInput);
+                    nurse.setPassword(password);
+
+                    db.nurseDAO().updateNurse(nurse);
+                }
+
+                runOnUiThread(() -> {
+                    Toast.makeText(UpdateProfileActivity.this, "Profile updated successfully!", Toast.LENGTH_SHORT).show();
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra("UPDATED_USERNAME", usernameInput);
+                    setResult(RESULT_OK, resultIntent);
+                    finish();
+                });
+
+            } catch (android.database.sqlite.SQLiteConstraintException e) {
+                runOnUiThread(() -> {
+                    usernameEditText.setError("This username is already taken");
+                    Toast.makeText(UpdateProfileActivity.this, "This username is already taken. Please choose another.", Toast.LENGTH_LONG).show();
+                });
             }
-
-            runOnUiThread(() -> {
-                Toast.makeText(UpdateProfileActivity.this, "Profile updated successfully!", Toast.LENGTH_SHORT).show();
-                Intent resultIntent = new Intent();
-                resultIntent.putExtra("UPDATED_USERNAME", usernameInput);
-                setResult(RESULT_OK, resultIntent);
-                finish();
-            });
         });
     }
     private void showQuitConfirmationDialog() {

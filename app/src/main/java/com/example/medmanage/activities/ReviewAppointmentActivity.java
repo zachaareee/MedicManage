@@ -17,7 +17,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.LiveData;
-
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
+import java.util.Calendar;
+import java.util.Locale;
 import com.example.medmanage.R;
 import com.example.medmanage.database.databaseMedicManage;
 import com.example.medmanage.model.Appointment;
@@ -275,7 +278,6 @@ public class ReviewAppointmentActivity extends AppCompatActivity {
         final Button noButton = dialogView.findViewById(R.id.negativeButton);
         final TextView messageTextView = dialogView.findViewById(R.id.confirmationMessageTextView);
 
-        it:
         messageTextView.setText(R.string.quit_dialog);
 
         final AlertDialog dialog = builder.create();
@@ -307,10 +309,23 @@ public class ReviewAppointmentActivity extends AppCompatActivity {
         dateEditText.setText(appointmentToEdit.getDate());
         timeEditText.setText(appointmentToEdit.getTime());
 
-        // This is the first (edit) dialog
+        // --- START OF CHANGES ---
+
+        // Make fields non-editable by keyboard
+        dateEditText.setFocusable(false);
+        dateEditText.setClickable(true);
+
+        timeEditText.setFocusable(false);
+        timeEditText.setClickable(true);
+
+        // Show pickers on click
+        dateEditText.setOnClickListener(v -> showDatePicker(dateEditText));
+        timeEditText.setOnClickListener(v -> showTimePicker(timeEditText));
+
+        // --- END OF CHANGES ---
+
         final AlertDialog editDialog = builder.create();
 
-        // CHANGED: Added transparent background
         if (editDialog.getWindow() != null) {
             editDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         }
@@ -318,6 +333,7 @@ public class ReviewAppointmentActivity extends AppCompatActivity {
         saveButton.setOnClickListener(v -> {
             String newDate = dateEditText.getText().toString().trim();
             String newTime = timeEditText.getText().toString().trim();
+
 
             if (TextUtils.isEmpty(newDate) || TextUtils.isEmpty(newTime)) {
                 Toast.makeText(this, "Fields cannot be empty", Toast.LENGTH_SHORT).show();
@@ -328,12 +344,79 @@ public class ReviewAppointmentActivity extends AppCompatActivity {
             appointmentToEdit.setDate(newDate);
             appointmentToEdit.setTime(newTime);
 
-            // We pass the appointment object and the first dialog (editDialog)
-            // so we can dismiss it if the user confirms.
             showUpdateConfirmationDialog(appointmentToEdit, editDialog);
         });
 
         cancelButton.setOnClickListener(v -> editDialog.dismiss());
         editDialog.show();
+    }
+    private void showDatePicker(final EditText dateEditText) {
+        final Calendar calendar = Calendar.getInstance();
+
+        // Try to parse existing date to pre-set the picker
+        try {
+            String[] dateParts = dateEditText.getText().toString().split("-");
+            if (dateParts.length == 3) {
+                calendar.set(Calendar.YEAR, Integer.parseInt(dateParts[0]));
+                calendar.set(Calendar.MONTH, Integer.parseInt(dateParts[1]) - 1); // Month is 0-indexed
+                calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(dateParts[2]));
+            }
+        } catch (Exception e) {
+            // Ignore if parsing fails, just use current date
+        }
+
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                (view, year1, monthOfYear, dayOfMonth) -> {
+                    // Format the date as yyyy-mm-dd
+                    String selectedDate = String.format(Locale.getDefault(), "%d-%02d-%02d", year1, (monthOfYear + 1), dayOfMonth);
+                    dateEditText.setText(selectedDate);
+                }, year, month, day);
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+        datePickerDialog.show();
+    }
+
+    private void showTimePicker(final EditText timeEditText) {
+        final Calendar calendar = Calendar.getInstance();
+
+        // Try to parse existing time to pre-set the picker
+        try {
+            String[] timeParts = timeEditText.getText().toString().split(":");
+            if (timeParts.length == 2) {
+                calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timeParts[0]));
+                calendar.set(Calendar.MINUTE, Integer.parseInt(timeParts[1]));
+            }
+        } catch (Exception e) {
+            // Ignore if parsing fails, just use current time
+        }
+
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this,
+                (view, hourOfDay, minuteOfHour) -> {
+
+
+
+                    boolean isTimeValid = true;
+                    if (hourOfDay < 8 || hourOfDay > 16 || (hourOfDay == 16 && minuteOfHour > 0)) {
+                        isTimeValid = false;
+                    }
+
+                    if (isTimeValid) {
+                        // Time is valid, update the text
+                        String selectedTime = String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minuteOfHour);
+                        timeEditText.setText(selectedTime);
+                    } else {
+                        // Time is invalid, show an error and do not update the text
+                        Toast.makeText(ReviewAppointmentActivity.this, "Please select a time between 08:00 and 16:00", Toast.LENGTH_LONG).show();
+                    }
+
+
+                }, hour, minute, true); // true for 24-hour view
+        timePickerDialog.show();
     }
 }

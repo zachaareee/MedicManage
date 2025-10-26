@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.navigation.NavController;
-import androidx.navigation.NavOptions; // Import this
+import androidx.navigation.NavOptions; // Make sure this import is here
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -73,37 +73,51 @@ public class DashboardActivity extends AppCompatActivity {
                 .build();
 
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        // We still call this to link the NavController, but we override the listener below
         NavigationUI.setupWithNavController(binding.navView, navController);
 
 
+        // --- START OF THE FIX ---
+        // Replace your setOnItemSelectedListener with this one.
         binding.navView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
 
-            // Prevent re-selecting the same item, which can cause issues.
+            // Prevent re-selecting the same tab
             if (navController.getCurrentDestination() != null && navController.getCurrentDestination().getId() == itemId) {
                 return false;
             }
 
+            // These options are the key:
+            // They pop the navigation stack back to your start destination (Home)
+            // before navigating to the new tab. This is the standard behavior
+            // you want for bottom navigation.
+            NavOptions navOptions = new NavOptions.Builder()
+                    .setLaunchSingleTop(true) // Don't re-create fragment if it's on top
+                    .setPopUpTo(navController.getGraph().getStartDestinationId(), false)
+                    .build();
+
+            // Handle each tab manually to ensure consistent behavior
+
             if (itemId == R.id.navigation_profile) {
+                // This is your special case with a bundle
                 Bundle bundle = new Bundle();
                 bundle.putString("USERNAME", username);
                 bundle.putString("USER_TYPE", userType);
-
-                // **THE FIX IS HERE:**
-                // Create NavOptions to mimic the default behavior of popping the
-                // back stack to the start destination. This keeps navigation consistent.
-                NavOptions navOptions = new NavOptions.Builder()
-                        .setLaunchSingleTop(true) // Don't re-create a fragment if it's already on top
-                        .setPopUpTo(navController.getGraph().getStartDestinationId(), false)
-                        .build();
-
-                // Navigate to profile using the bundle AND the new options
                 navController.navigate(R.id.navigation_profile, bundle, navOptions);
-                return true; // We've handled this item.
+                return true;
+
+            } else if (itemId == R.id.navigation_home) {
+                navController.navigate(R.id.navigation_home, null, navOptions);
+                return true;
+
+            } else if (itemId == R.id.navigation_schedule) {
+                navController.navigate(R.id.navigation_schedule, null, navOptions);
+                return true;
             }
 
-            // For all other items, use the default helper method
-            return NavigationUI.onNavDestinationSelected(item, navController);
+            // Fallback for any other item
+            return false;
         });
+        // --- END OF THE FIX ---
     }
 }
