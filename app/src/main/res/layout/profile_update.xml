@@ -262,11 +262,22 @@
             android:hint="@string/Password"
             android:inputType="textPassword"
             android:paddingStart="16dp"
-            android:paddingEnd="16dp"
+            android:paddingEnd="60dp"
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/label_password" />
+
+        <ImageView
+            android:id="@+id/password_toggle"
+            android:layout_width="41dp"
+            android:layout_height="46dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/toggle_password_visibility"
+            android:src="@drawable/icon_eye_selector"
+            app:layout_constraintBottom_toBottomOf="@id/editText_password"
+            app:layout_constraintEnd_toEndOf="@id/editText_password"
+            app:layout_constraintTop_toTopOf="@id/editText_password" />
 
         <Button
             android:id="@+id/button_cancel"

@@ -217,8 +217,7 @@ public class ViewMedicationActivity extends AppCompatActivity {
             }
         });
         quitButton.setOnClickListener(v -> {
-            // Closes the current activity and returns to the previous screen (the dashboard)
-            finish();
+            showQuitConfirmationDialog();// Closes the current activity and returns to the previous screen (the dashboard)
         });
     }
 
@@ -236,7 +235,9 @@ public class ViewMedicationActivity extends AppCompatActivity {
         final Button saveButton = dialogView.findViewById(R.id.saveButton);
         final Button cancelButton = dialogView.findViewById(R.id.cancelButton);
 
-        if (medication != null) {
+        final boolean isUpdate = (medication != null);
+
+        if (isUpdate) {
             // Setup for "Update" dialog
             titleTextView.setText(getString(R.string.med_update));
             medNameEditText.setText(medication.getMedName());
@@ -249,6 +250,11 @@ public class ViewMedicationActivity extends AppCompatActivity {
         }
 
         final AlertDialog dialog = builder.create();
+
+        // Make the dialog window background transparent to show custom corners
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
 
         saveButton.setOnClickListener(view -> {
             String medName = medNameEditText.getText().toString().trim();
@@ -279,25 +285,77 @@ public class ViewMedicationActivity extends AppCompatActivity {
                 return;
             }
 
-            if (medication != null) {
-                // Update existing medication
-
+            if (isUpdate) {
+                // It's an update. Set the new values on the existing object...
                 medication.setMedName(medName);
                 medication.setBrand(brand);
                 medication.setDosage(dosage);
                 medication.setQuantityOnHand(quantity);
+
+                // ...and show confirmation dialog.
+                showSaveConfirmationDialog(medication, true);
+
+            } else {
+                // It's an add. Create a new object...
+                Medication newMedication = new Medication(medName, brand, dosage, quantity);
+
+                // ...and show confirmation dialog.
+                showSaveConfirmationDialog(newMedication, false);
+            }
+            // Dismiss the add/edit dialog
+            dialog.dismiss();
+        });
+
+        cancelButton.setOnClickListener(view -> showQuitConfirmationDialog());
+
+        dialog.show();
+    }
+
+    /**
+     * Shows a confirmation dialog before adding or updating a medication.
+     * Uses the med_add_confirmation_dialog layout.
+     * @param medication The medication object to be added or updated.
+     * @param isUpdate True if this is an update, false if it's a new addition.
+     */
+    private void showSaveConfirmationDialog(final Medication medication, final boolean isUpdate) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        // Reuse the same confirmation dialog layout
+        View dialogView = inflater.inflate(R.layout.med_add_confirmation_dialog, null);
+        builder.setView(dialogView);
+
+        final TextView messageTextView = dialogView.findViewById(R.id.confirmationMessageTextView);
+        final Button positiveButton = dialogView.findViewById(R.id.positiveButton);
+        final Button negativeButton = dialogView.findViewById(R.id.negativeButton);
+
+        // Set text based on whether it's an add or update
+        if (isUpdate) {
+            messageTextView.setText(getString(R.string.confirm_update_med, medication.getMedName()));
+            positiveButton.setText(R.string.update);
+        } else {
+            messageTextView.setText(getString(R.string.confirm_add_med, medication.getMedName()));
+            positiveButton.setText(R.string.add);
+        }
+        final AlertDialog dialog = builder.create();
+
+        // Make the dialog window background transparent to show custom corners
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
+
+        positiveButton.setOnClickListener(v -> {
+            // User confirmed, perform the add or update
+            if (isUpdate) {
                 userViewModel.updateMedication(medication);
                 Toast.makeText(this, getString(R.string.med_update_message), Toast.LENGTH_SHORT).show();
             } else {
-                // Add new medication
-                Medication newMedication = new Medication(medName, brand, dosage, quantity);
-                userViewModel.insertMedication(newMedication);
+                userViewModel.insertMedication(medication);
                 Toast.makeText(this, getString(R.string.med_add_message), Toast.LENGTH_SHORT).show();
             }
             dialog.dismiss();
         });
 
-        cancelButton.setOnClickListener(view -> dialog.dismiss());
+        negativeButton.setOnClickListener(v -> dialog.dismiss());
 
         dialog.show();
     }
@@ -313,8 +371,14 @@ public class ViewMedicationActivity extends AppCompatActivity {
         final Button negativeButton = dialogView.findViewById(R.id.negativeButton);
 
         messageTextView.setText(getString(R.string.confirm_delete_med, medication.getMedName()));
+        positiveButton.setText(getString(R.string.yes)); // Ensure delete button says "Yes" or "Delete"
 
         final AlertDialog dialog = builder.create();
+
+        // Make the dialog window background transparent to show custom corners
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
 
         positiveButton.setOnClickListener(v -> {
             userViewModel.deleteMedication(medication);
@@ -323,6 +387,38 @@ public class ViewMedicationActivity extends AppCompatActivity {
         });
 
         negativeButton.setOnClickListener(v -> dialog.dismiss());
+
+        dialog.show();
+    }
+    private void showQuitConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        // Use the general confirmation dialog layout
+        View dialogView = inflater.inflate(R.layout.general_confirm_dialog, null);
+        builder.setView(dialogView);
+
+        final Button yesButton = dialogView.findViewById(R.id.positiveButton);
+        final Button noButton = dialogView.findViewById(R.id.negativeButton);
+        final TextView messageTextView = dialogView.findViewById(R.id.confirmationMessageTextView);
+
+        // Set a specific message for quitting
+        // You should add this string to your strings.xml
+        // messageTextView.setText(getString(R.string.confirm_quit));
+        // For now, I'll use the default text from the layout or hardcode it:
+        messageTextView.setText("Are you sure you want to quit?");
+
+        final AlertDialog dialog = builder.create();
+
+        // Make the dialog window background transparent
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
+
+        yesButton.setOnClickListener(v -> {
+            dialog.dismiss();
+            finish(); // Quit the activity
+        });
+        noButton.setOnClickListener(v -> dialog.dismiss());
 
         dialog.show();
     }

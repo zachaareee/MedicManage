@@ -156,45 +156,7 @@ public class ReviewAppointmentActivity extends AppCompatActivity {
         }
     }
 
-    private void showEditDialog(final Appointment appointmentToEdit) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.appnt_edit, null);
-        builder.setView(dialogView);
 
-        final EditText dateEditText = dialogView.findViewById(R.id.dateEditText);
-        final EditText timeEditText = dialogView.findViewById(R.id.timeEditText);
-        final Button saveButton = dialogView.findViewById(R.id.saveButton);
-        final Button cancelButton = dialogView.findViewById(R.id.cancelButton);
-
-        dateEditText.setText(appointmentToEdit.getDate());
-        timeEditText.setText(appointmentToEdit.getTime());
-
-        // This is the first (edit) dialog
-        final AlertDialog editDialog = builder.create();
-
-        saveButton.setOnClickListener(v -> {
-            String newDate = dateEditText.getText().toString().trim();
-            String newTime = timeEditText.getText().toString().trim();
-
-            if (TextUtils.isEmpty(newDate) || TextUtils.isEmpty(newTime)) {
-                Toast.makeText(this, "Fields cannot be empty", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            // Set the new values on the object
-            appointmentToEdit.setDate(newDate);
-            appointmentToEdit.setTime(newTime);
-
-            // FIX: Instead of updating, show the confirmation dialog
-            // We pass the appointment object and the first dialog (editDialog)
-            // so we can dismiss it if the user confirms.
-            showUpdateConfirmationDialog(appointmentToEdit, editDialog);
-        });
-
-        cancelButton.setOnClickListener(v -> editDialog.dismiss());
-        editDialog.show();
-    }
 
     /**
      * NEW METHOD
@@ -295,21 +257,7 @@ public class ReviewAppointmentActivity extends AppCompatActivity {
             });
         });
     }
-    private void showQuitConfirmationDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.general_confirm_dialog, null);
-        builder.setView(dialogView);
 
-        final Button yesButton = dialogView.findViewById(R.id.positiveButton);
-        final Button noButton = dialogView.findViewById(R.id.negativeButton);
-
-        final AlertDialog dialog = builder.create();
-        dialog.show();
-
-        yesButton.setOnClickListener(v -> finish());
-        noButton.setOnClickListener(v -> dialog.dismiss());
-    }
 
     private void showAppointmentView() {
         noAppointmentText.setVisibility(View.GONE);
@@ -325,5 +273,80 @@ public class ReviewAppointmentActivity extends AppCompatActivity {
         appointmentDetailsContainer.setVisibility(View.GONE);
         editButton.setVisibility(View.GONE);
         deleteButton.setVisibility(View.GONE);
+    }
+    private void showQuitConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        // Use the general confirmation dialog layout
+        View dialogView = inflater.inflate(R.layout.general_confirm_dialog, null);
+        builder.setView(dialogView);
+
+        final Button yesButton = dialogView.findViewById(R.id.positiveButton);
+        final Button noButton = dialogView.findViewById(R.id.negativeButton);
+        final TextView messageTextView = dialogView.findViewById(R.id.confirmationMessageTextView);
+
+        // Set a specific message for quitting
+        // You should add this string to your strings.xml
+        // messageTextView.setText(getString(R.string.confirm_quit));
+        // For now, I'll use the default text from the layout or hardcode it:
+        messageTextView.setText("Are you sure you want to quit?");
+
+        final AlertDialog dialog = builder.create();
+
+        // Make the dialog window background transparent
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
+
+        yesButton.setOnClickListener(v -> {
+            dialog.dismiss();
+            finish(); // Quit the activity
+        });
+        noButton.setOnClickListener(v -> dialog.dismiss());
+
+        dialog.show();
+    }
+    private void showEditDialog(final Appointment appointmentToEdit) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.appnt_edit, null);
+        builder.setView(dialogView);
+
+        final EditText dateEditText = dialogView.findViewById(R.id.dateEditText);
+        final EditText timeEditText = dialogView.findViewById(R.id.timeEditText);
+        final Button saveButton = dialogView.findViewById(R.id.saveButton);
+        final Button cancelButton = dialogView.findViewById(R.id.cancelButton);
+
+        dateEditText.setText(appointmentToEdit.getDate());
+        timeEditText.setText(appointmentToEdit.getTime());
+
+        // This is the first (edit) dialog
+        final AlertDialog editDialog = builder.create();
+
+        // CHANGED: Added transparent background
+        if (editDialog.getWindow() != null) {
+            editDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
+
+        saveButton.setOnClickListener(v -> {
+            String newDate = dateEditText.getText().toString().trim();
+            String newTime = timeEditText.getText().toString().trim();
+
+            if (TextUtils.isEmpty(newDate) || TextUtils.isEmpty(newTime)) {
+                Toast.makeText(this, "Fields cannot be empty", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // Set the new values on the object
+            appointmentToEdit.setDate(newDate);
+            appointmentToEdit.setTime(newTime);
+
+            // We pass the appointment object and the first dialog (editDialog)
+            // so we can dismiss it if the user confirms.
+            showUpdateConfirmationDialog(appointmentToEdit, editDialog);
+        });
+
+        cancelButton.setOnClickListener(v -> editDialog.dismiss());
+        editDialog.show();
     }
 }

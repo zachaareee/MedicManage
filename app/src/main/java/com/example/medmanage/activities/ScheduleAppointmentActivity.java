@@ -176,17 +176,34 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
     private void showQuitConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
+        // Use the general confirmation dialog layout
         View dialogView = inflater.inflate(R.layout.general_confirm_dialog, null);
         builder.setView(dialogView);
 
         final Button yesButton = dialogView.findViewById(R.id.positiveButton);
         final Button noButton = dialogView.findViewById(R.id.negativeButton);
+        final TextView messageTextView = dialogView.findViewById(R.id.confirmationMessageTextView);
+
+        // Set a specific message for quitting
+        // You should add this string to your strings.xml
+        // messageTextView.setText(getString(R.string.confirm_quit));
+        // For now, I'll use the default text from the layout or hardcode it:
+        messageTextView.setText("Are you sure you want to quit?");
 
         final AlertDialog dialog = builder.create();
-        dialog.show();
 
-        yesButton.setOnClickListener(v -> finish());
+        // Make the dialog window background transparent
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
+
+        yesButton.setOnClickListener(v -> {
+            dialog.dismiss();
+            finish(); // Quit the activity
+        });
         noButton.setOnClickListener(v -> dialog.dismiss());
+
+        dialog.show();
     }
 
     private List<String> generateTimeSlots() {

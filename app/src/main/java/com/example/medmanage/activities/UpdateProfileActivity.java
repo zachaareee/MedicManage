@@ -1,13 +1,16 @@
 package com.example.medmanage.activities;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -35,6 +38,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
     // Common UI Elements
     private EditText firstNameEditText, lastNameEditText, usernameEditText, passwordEditText;
     private Button confirmButton, cancelButton;
+    private ImageView passwordToggle;
 
     // Nurse-Specific UI
     private EditText staffNoEditText;
@@ -52,6 +56,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
     private Object currentUser;
     private String username;
     private String userType;
+    private boolean isPasswordVisible = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,14 +74,26 @@ public class UpdateProfileActivity extends AppCompatActivity {
 
         fetchUser();
 
-        // **CHANGE**: The confirm button now calls the dialog method instead of updating directly.
         confirmButton.setOnClickListener(v -> showUpdateConfirmationDialog());
         cancelButton.setOnClickListener(v -> finish());
+        passwordToggle.setOnClickListener(v -> togglePasswordVisibility());
     }
 
-    /**
-     * **NEW METHOD**: Inflates and displays the custom confirmation dialog.
-     */
+    private void togglePasswordVisibility() {
+        isPasswordVisible = !isPasswordVisible;
+        if (isPasswordVisible) {
+            passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            passwordToggle.setImageResource(R.drawable.icon_password_visible);
+            passwordEditText.setTypeface(Typeface.DEFAULT);
+        } else {
+            passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            passwordToggle.setImageResource(R.drawable.icon_password_hidden);
+            passwordEditText.setTypeface(Typeface.MONOSPACE);
+        }
+        passwordEditText.setSelection(passwordEditText.length());
+    }
+
+
     private void showUpdateConfirmationDialog() {
         // Create a builder for the dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -159,13 +176,13 @@ public class UpdateProfileActivity extends AppCompatActivity {
         });
     }
 
-    // --- NO CHANGES NEEDED IN THE METHODS BELOW ---
 
     private void initializeViews() {
         firstNameEditText = findViewById(R.id.editText_firstName);
         lastNameEditText = findViewById(R.id.editText_lastName);
         usernameEditText = findViewById(R.id.editText_username);
         passwordEditText = findViewById(R.id.editText_password);
+        passwordToggle = findViewById(R.id.password_toggle);
         confirmButton = findViewById(R.id.button_confirm);
         cancelButton = findViewById(R.id.button_cancel);
         staffNoEditText = findViewById(R.id.editText_staffNo);
