@@ -146,26 +146,45 @@
             app:layout_constraintTop_toBottomOf="@id/label_studentNo"
             tools:ignore="SpeakableTextPresentCheck" />
 
-        <com.google.android.material.textfield.TextInputLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/textField_medication"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginTop="16dp"
+            android:background="@drawable/btn_white_rounded"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editText_studentNo">
 
             <AutoCompleteTextView
                 android:id="@+id/autoComplete_medication"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/btn_white_rounded"
-                android:hint="@string/medication"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:hint="@string/medication_requirement"
                 android:inputType="none"
+                android:paddingStart="16dp"
+                android:paddingEnd="40dp"
                 android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="SpeakableTextPresentCheck" />
-        </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageView
+                android:id="@+id/medicationDropdownArrow"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="16dp"
+                android:contentDescription="@string/Drop_down_arrow"
+                android:src="@drawable/icon_arrow"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/black" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/label_foodReq"
