@@ -181,8 +181,8 @@
     <string name="cancel_sign_up">Are you sure you want to go back to the main screen?</string>
     <string name="decrease_quantity">Decrease Quantity</string>
     <string name="increase_quantity">Increase Quantity\n</string>
-    <string name="time_hh_mm">time_hh_mm</string>
-    <string name="date_yyyy_mm_dd">date_yyyy_mm_dd</string>
+    <string name="time_hh_mm">Time</string>
+    <string name="date_yyyy_mm_dd">Date</string>
     <string name="edit_food_quantity">Edit Food Quantity</string>
     <string name="zero">0</string>
     <string name="delete_appointment">Are you sure you want to delete the student_s appointment</string>

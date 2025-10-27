@@ -309,7 +309,6 @@ public class ReviewAppointmentActivity extends AppCompatActivity {
         dateEditText.setText(appointmentToEdit.getDate());
         timeEditText.setText(appointmentToEdit.getTime());
 
-        // --- START OF CHANGES ---
 
         // Make fields non-editable by keyboard
         dateEditText.setFocusable(false);
@@ -322,7 +321,6 @@ public class ReviewAppointmentActivity extends AppCompatActivity {
         dateEditText.setOnClickListener(v -> showDatePicker(dateEditText));
         timeEditText.setOnClickListener(v -> showTimePicker(timeEditText));
 
-        // --- END OF CHANGES ---
 
         final AlertDialog editDialog = builder.create();
 

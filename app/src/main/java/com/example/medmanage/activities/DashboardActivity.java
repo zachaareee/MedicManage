@@ -87,10 +87,7 @@ public class DashboardActivity extends AppCompatActivity {
                 return false;
             }
 
-            // These options are the key:
-            // They pop the navigation stack back to your start destination (Home)
-            // before navigating to the new tab. This is the standard behavior
-            // you want for bottom navigation.
+
             NavOptions navOptions = new NavOptions.Builder()
                     .setLaunchSingleTop(true) // Don't re-create fragment if it's on top
                     .setPopUpTo(navController.getGraph().getStartDestinationId(), false)
