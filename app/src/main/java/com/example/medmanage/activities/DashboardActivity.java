@@ -118,6 +118,5 @@ public class DashboardActivity extends AppCompatActivity {
             // Fallback for any other item
             return false;
         });
-        // --- END OF THE FIX ---
     }
 }
