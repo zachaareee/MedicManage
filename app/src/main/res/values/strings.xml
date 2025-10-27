@@ -93,8 +93,8 @@
     <string name="select_med_to_update">Please select a medication to update.</string>
     <string name="select_med_to_delete">Please select a medication to delete.</string>
     <string name="error_fill_all_fields">Please fill all fields.</string>
-    <string name="confirm_delete_med">Are you sure you want to delete %1$s?</string>
-    <string name="med_deleted_success">%1$s deleted.</string>
+    <string name="confirm_delete_med">Are you sure you want to delete %1$s?</string> <!-- Now uses Brand Name -->
+    <string name="med_deleted_success">%1$s deleted.</string> <!-- Now uses Brand Name -->
     <string name="view_profile_details">View Profile Details</string>
     <string name="review_appointment_dialog">Are you sure want to make permanent changes to the student_s appointment</string>
 
@@ -108,6 +108,11 @@
     <string name="error_dosage_format">Dosage must include \'mg\' (e.g., 500mg).</string>
     <string name="error_negative_quantity">Quantity cannot be a negative number.</string>
     <string name="error_invalid_number">Please enter a valid number for quantity.</string>
+    <string name="error_quantity_too_large">Quantity cannot exceed 10,000.</string>
+    <string name="error_dosage_too_large">Dosage cannot exceed 5000.</string>
+    <string name="error_invalid_med_name">Med name can only contain letters, numbers, spaces, and hyphens.</string>
+    <string name="error_invalid_brand_name">Brand name can only contain letters, numbers, spaces, and hyphens.</string>
+    <string name="error_invalid_dosage_value">Please enter a valid number for dosage.</string>
 
     <string name="select_date_and_time">Please select a date and time.</string>
     <string name="appointment_booked_success">Appointment booked successfully!</string>
@@ -187,9 +192,10 @@
     <string name="profile_update">Are you want to make changes to your profile ?</string>
     <string name="sign_out">Are you sure you want to sign out  ?</string>
     <string name="cancel_appointment_stu">Are you sure you want to cancel your appointment?</string>
-    <string name="confirm_add_med">Are you sure you want to add %1$s?</string>
-    <string name="confirm_update_med">Are you sure you want to update %1$s?</string>
+    <string name="confirm_add_med">Are you sure you want to add %1$s?</string> <!-- Now uses Brand Name -->
+    <string name="confirm_update_med">Are you sure you want to update %1$s?</string> <!-- Now uses Brand Name -->
     <string name="quit_dialog">Are you sure you want to quit?</string>
+    <string name="general_confirm_dialog">general_confirm_dialog</string>
 
 
     <string-array name="illness_array">
@@ -209,3 +215,4 @@
 
 
 </resources>
+

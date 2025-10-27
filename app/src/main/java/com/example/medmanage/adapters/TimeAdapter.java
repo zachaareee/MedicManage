@@ -18,6 +18,7 @@ public class TimeAdapter extends RecyclerView.Adapter<TimeAdapter.TimeViewHolder
     private int selectedPosition = -1;
     private final OnItemClickListener listener;
     private List<String> bookedTimes = new ArrayList<>();
+    private boolean isEnabled = false;
 
     public interface OnItemClickListener {
         void onItemClick(String time);
@@ -34,6 +35,11 @@ public class TimeAdapter extends RecyclerView.Adapter<TimeAdapter.TimeViewHolder
         notifyDataSetChanged();
     }
 
+    public void setEnabled(boolean enabled) {
+        this.isEnabled = enabled;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public TimeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -47,25 +53,26 @@ public class TimeAdapter extends RecyclerView.Adapter<TimeAdapter.TimeViewHolder
         holder.timeSlotTextView.setText(time);
 
         if (bookedTimes.contains(time)) {
-            // This slot is booked and unavailable
             holder.itemView.setEnabled(false);
             holder.itemView.setSelected(false);
-
             holder.itemView.setAlpha(0.4f);
-        } else {
-            // This slot is available
+
+        } else if (isEnabled) {
             holder.itemView.setEnabled(true);
             holder.itemView.setSelected(selectedPosition == position);
-
             holder.itemView.setAlpha(1.0f);
+
+        } else {
+            holder.itemView.setEnabled(false);
+            holder.itemView.setSelected(false);
+            holder.itemView.setAlpha(0.4f);
         }
 
-        // The click listener logic remains the same
         holder.itemView.setOnClickListener(v -> {
-            if (listener != null) {
+            if (isEnabled && !bookedTimes.contains(time) && listener != null) {
                 int previousPosition = selectedPosition;
                 if (position == selectedPosition) {
-                    selectedPosition = -1; // Deselect
+                    selectedPosition = -1;
                     listener.onItemClick(null);
                 } else {
                     selectedPosition = holder.getAdapterPosition();

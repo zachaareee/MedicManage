@@ -184,7 +184,7 @@
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appointmentDetailsContainer"
-        app:layout_constraintVertical_bias="0.5"
+        app:layout_constraintVertical_bias="0.287"
         tools:visibility="visible" />
 
     <Button
@@ -215,18 +215,20 @@
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.612"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appointmentDetailsContainer"
-        app:layout_constraintVertical_bias="0.217"
+        app:layout_constraintVertical_bias="0.034"
         tools:visibility="visible" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/negativeButton"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="360dp"
-        android:layout_height="61dp"
-        android:layout_marginTop="20dp"
-        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="100dp"
         android:padding="12dp"
         android:text="@string/Cancel"
         android:textColor="@color/yellow"
@@ -234,10 +236,9 @@
         app:cornerRadius="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.473"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/deleteButton"
-        app:layout_constraintVertical_bias="0.016"
         app:strokeColor="@color/yellow"
         app:strokeWidth="2dp" />
 

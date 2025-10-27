@@ -45,17 +45,13 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.appnt_schedule);
-        //FOR TESTING (hi phumi)
 
         currentStudentId = getIntent().getIntExtra(STUDENT_ID_EXTRA, -1);
         if (currentStudentId == -1) {
-            // If no ID was passed, show an error and close the activity.
             Toast.makeText(this, "Error: User not identified.", Toast.LENGTH_LONG).show();
             finish();
             return;
         }
-
-
 
         appDb = databaseMedicManage.getDatabase(getApplicationContext());
         databaseExecutor = databaseMedicManage.databaseWriteExecutor;
@@ -71,7 +67,7 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
 
         setupDateRecyclerView();
         setupTimeRecyclerView();
-        setTimeSlotsActive(false);
+        timeAdapter.setEnabled(false);
 
         bookButton.setOnClickListener(v -> bookAppointment());
         quitButton.setOnClickListener(v -> showQuitConfirmationDialog());
@@ -85,10 +81,10 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
             selectedTime = null;
             if (date != null) {
                 fetchBookedSlotsForDate(date);
-                setTimeSlotsActive(true);
+                timeAdapter.setEnabled(true);
             } else {
                 timeAdapter.setBookedTimes(new ArrayList<>());
-                setTimeSlotsActive(false);
+                timeAdapter.setEnabled(false);
             }
         });
         dateRecyclerView.setAdapter(dateAdapter);
@@ -99,10 +95,6 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
         List<String> times = generateTimeSlots();
         timeAdapter = new TimeAdapter(this, times, time -> selectedTime = time);
         timeSlotsRecyclerView.setAdapter(timeAdapter);
-    }
-
-    private void setTimeSlotsActive(boolean isActive) {
-        timeSlotsRecyclerView.setAlpha(isActive ? 1.0f : 0.4f);
     }
 
     private void fetchBookedSlotsForDate(Date date) {
@@ -127,16 +119,13 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
         final String todayDate = dbFormat.format(new Date());
 
         databaseExecutor.execute(() -> {
-            // Get the latest appointment for the student
             Appointment latestAppointment = appDb.appointmentDAO().getActiveAppointmentForStudent(currentStudentId);
 
-            // Check if the latest appointment is active (date >= today)
             if (latestAppointment != null) {
                 String appointmentDate = latestAppointment.getDate();
 
-                // Compare dates lexicographically (since they're in yyyy-MM-dd format)
                 if (appointmentDate.compareTo(todayDate) >= 0) {
-                    runOnUiThread(() -> Toast.makeText(this, R.string.error_existing_booking, Toast.LENGTH_LONG).show());
+                    runOnUiThread(this::showExistingBookingDialog);
                     return;
                 }
             }
@@ -153,7 +142,6 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
             Appointment newAppointment = new Appointment(currentStudentId, nurseId, foodId, dateToStore, selectedTime);
             appDb.appointmentDAO().insertAppointment(newAppointment);
 
-            // Get the appointment we just created to link its medication
             Appointment insertedAppointment = appDb.appointmentDAO().getAppointmentByDateTime(dateToStore, selectedTime);
             if (insertedAppointment != null) {
                 Student student = appDb.studentDAO().getStudentById(currentStudentId);
@@ -173,10 +161,28 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
         });
     }
 
+    private void showExistingBookingDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.appnt_previous_dialog, null);
+        builder.setView(dialogView);
+
+        final Button okButton = dialogView.findViewById(R.id.positiveButton);
+
+        final AlertDialog dialog = builder.create();
+
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
+
+        okButton.setOnClickListener(v -> dialog.dismiss());
+
+        dialog.show();
+    }
+
     private void showQuitConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        // Use the general confirmation dialog layout
         View dialogView = inflater.inflate(R.layout.general_confirm_dialog, null);
         builder.setView(dialogView);
 
@@ -188,14 +194,13 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
 
         final AlertDialog dialog = builder.create();
 
-        // Make the dialog window background transparent
         if (dialog.getWindow() != null) {
             dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         }
 
         yesButton.setOnClickListener(v -> {
             dialog.dismiss();
-            finish(); // Quit the activity
+            finish();
         });
         noButton.setOnClickListener(v -> dialog.dismiss());
 
@@ -239,3 +244,4 @@ public class ScheduleAppointmentActivity extends AppCompatActivity {
         return dateList;
     }
 }
+

@@ -67,7 +67,6 @@
         android:textSize="16sp"
         app:layout_constraintBaseline_toBaselineOf="@id/label_firstName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@id/guideline_vertical" />
 
     <TextView
@@ -143,6 +142,7 @@
         android:textSize="16sp"
         app:layout_constraintBaseline_toBaselineOf="@id/label_medicationReq"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@id/guideline_vertical" />
 
     <TextView
@@ -215,6 +215,7 @@
         app:layout_constraintEnd_toStartOf="@+id/button_update"
         app:layout_constraintStart_toStartOf="parent"
         app:strokeColor="@color/yellow"
+        android:padding="12dp"
         app:strokeWidth="2dp" />
 
     <com.google.android.material.button.MaterialButton
@@ -227,6 +228,7 @@
         android:textColor="@color/white"
         android:textSize="20sp"
         app:cornerRadius="24dp"
+        android:padding="12dp"
         app:layout_constraintBaseline_toBaselineOf="@id/button_delete"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/button_delete" />
