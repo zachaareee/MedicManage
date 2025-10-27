@@ -42,6 +42,7 @@
         android:layout_marginEnd="32dp"
         android:background="@drawable/border_white_rounded"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/medicationLabel">
 
@@ -60,13 +61,15 @@
 
         <Spinner
             android:id="@+id/medicationSpinner"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_width="348dp"
+            android:layout_height="50dp"
             android:background="@android:color/transparent"
             android:paddingStart="16dp"
             android:paddingEnd="40dp"
             app:layout_constraintEnd_toStartOf="@+id/medicationDropdownArrow"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="0dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
@@ -87,7 +90,6 @@
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginTop="4dp"
-        android:alpha="0.5"
         android:background="@drawable/border_white_rounded"
         app:layout_constraintEnd_toEndOf="@id/medicationSpinnerContainer"
         app:layout_constraintStart_toStartOf="@id/medicationSpinnerContainer"
@@ -97,7 +99,6 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
-            android:enabled="false"
             android:paddingStart="16dp"
             android:paddingEnd="40dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -136,7 +137,6 @@
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginTop="4dp"
-        android:alpha="0.5"
         android:background="@drawable/border_white_rounded"
         app:layout_constraintEnd_toEndOf="@id/brandSpinnerContainer"
         app:layout_constraintStart_toStartOf="@id/brandSpinnerContainer"
@@ -146,7 +146,6 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
-            android:enabled="false"
             android:paddingStart="16dp"
             android:paddingEnd="40dp"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,7 +31,7 @@ public class ViewMedicationActivity extends AppCompatActivity {
     private Spinner medicationSpinner, brandSpinner, dosageSpinner;
     private TextView quantityTextView;
     private Button addButton, updateButton, deleteButton, quitButton;
-    private View brandSpinnerContainer, dosageSpinnerContainer;
+    private ImageView brandDropdownArrow, dosageDropdownArrow;
     private UserViewModel userViewModel;
     private Medication currentlySelectedMedication;
     private int currentQuantity = 0;
@@ -50,8 +51,8 @@ public class ViewMedicationActivity extends AppCompatActivity {
         updateButton = findViewById(R.id.updateButton);
         deleteButton = findViewById(R.id.deleteButton);
         quitButton = findViewById(R.id.quitButton);
-        brandSpinnerContainer = findViewById(R.id.brandSpinnerContainer);
-        dosageSpinnerContainer = findViewById(R.id.dosageSpinnerContainer);
+        brandDropdownArrow = findViewById(R.id.brandDropdownArrow);
+        dosageDropdownArrow = findViewById(R.id.dosageDropdownArrow);
 
         String userType = getIntent().getStringExtra("USER_TYPE");
         if (userType != null && userType.equals("student")) {
@@ -60,6 +61,8 @@ public class ViewMedicationActivity extends AppCompatActivity {
             deleteButton.setVisibility(View.GONE);
         }
 
+        setupArrowClickListeners();
+        setupSpinnerTouchListeners();
         resetBrandSpinner();
         resetDosageSpinner();
 
@@ -83,7 +86,38 @@ public class ViewMedicationActivity extends AppCompatActivity {
                 Toast.makeText(this, getString(R.string.select_med_to_delete), Toast.LENGTH_SHORT).show();
             }
         });
+
         quitButton.setOnClickListener(v -> showQuitConfirmationDialog());
+    }
+
+    private void setupArrowClickListeners() {
+        brandDropdownArrow.setOnClickListener(v -> {
+            if (brandSpinner.getAdapter() != null && brandSpinner.getAdapter().getCount() > 1) {
+                brandSpinner.performClick();
+            }
+        });
+
+        dosageDropdownArrow.setOnClickListener(v -> {
+            if (dosageSpinner.getAdapter() != null && dosageSpinner.getAdapter().getCount() > 1) {
+                dosageSpinner.performClick();
+            }
+        });
+    }
+
+    private void setupSpinnerTouchListeners() {
+        brandSpinner.setOnTouchListener((v, event) -> {
+            if (brandSpinner.getAdapter() != null && brandSpinner.getAdapter().getCount() <= 1) {
+                return true;
+            }
+            return false;
+        });
+
+        dosageSpinner.setOnTouchListener((v, event) -> {
+            if (dosageSpinner.getAdapter() != null && dosageSpinner.getAdapter().getCount() <= 1) {
+                return true;
+            }
+            return false;
+        });
     }
 
     private void loadMedicationNames() {
@@ -130,8 +164,11 @@ public class ViewMedicationActivity extends AppCompatActivity {
                         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         brandSpinner.setAdapter(adapter);
 
-                        brandSpinner.setEnabled(true);
-                        brandSpinnerContainer.setAlpha(1.0f);
+                        if (brands.size() <= 1) {
+                            brandDropdownArrow.setAlpha(0.5f);
+                        } else {
+                            brandDropdownArrow.setAlpha(1.0f);
+                        }
                     }
                 });
             }
@@ -168,8 +205,11 @@ public class ViewMedicationActivity extends AppCompatActivity {
                         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         dosageSpinner.setAdapter(adapter);
 
-                        dosageSpinner.setEnabled(true);
-                        dosageSpinnerContainer.setAlpha(1.0f);
+                        if (dosages.size() <= 1) {
+                            dosageDropdownArrow.setAlpha(0.5f);
+                        } else {
+                            dosageDropdownArrow.setAlpha(1.0f);
+                        }
                     }
                 });
             }
@@ -222,16 +262,13 @@ public class ViewMedicationActivity extends AppCompatActivity {
 
     private void resetBrandSpinner() {
         brandSpinner.setAdapter(null);
-        brandSpinner.setEnabled(false);
-        brandSpinnerContainer.setAlpha(0.5f);
+        brandDropdownArrow.setAlpha(0.5f);
     }
 
     private void resetDosageSpinner() {
         dosageSpinner.setAdapter(null);
-        dosageSpinner.setEnabled(false);
-        dosageSpinnerContainer.setAlpha(0.5f);
+        dosageDropdownArrow.setAlpha(0.5f);
     }
-
 
     private void showAddDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -511,9 +548,9 @@ public class ViewMedicationActivity extends AppCompatActivity {
             dialog.dismiss();
             finish();
         });
+
         noButton.setOnClickListener(v -> dialog.dismiss());
 
         dialog.show();
     }
 }
-
